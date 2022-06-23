@@ -1,0 +1,8 @@
+{
+  "short_name": "Shen.AI SDK",
+  "name": "Shen.AI SDK Web example",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

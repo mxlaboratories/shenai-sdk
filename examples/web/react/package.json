@@ -1,0 +1,45 @@
+{
+  "name": "shenai-sdk-example-react",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@types/node": "^18.0.0",
+    "@types/react": "^18.0.14",
+    "@types/react-dom": "^18.0.5",
+    "@types/styled-components": "^5.1.25",
+    "antd": "^4.21.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "react-use": "^17.4.0",
+    "shenai-sdk": "file:./shenai-sdk",
+    "styled-components": "^5.3.5",
+    "styled-normalize": "^8.0.7",
+    "typescript": "^4.7.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "clean": "yarn upgrade shenai-sdk && rm -rf node_modules/.cache",
+    "serve": "serve -s build --config=../serve.json"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
