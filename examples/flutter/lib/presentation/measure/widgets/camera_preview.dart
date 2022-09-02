@@ -8,7 +8,7 @@ class MeasureCameraPreview extends StatelessWidget {
   final int textureId;
   final bool isMeasurement;
 
-  const MeasureCameraPreview({Key? key, required this.textureId, required this.isMeasurement}) : super(key: key);
+  const MeasureCameraPreview({super.key, required this.textureId, required this.isMeasurement});
 
   @override
   Widget build(BuildContext context) {

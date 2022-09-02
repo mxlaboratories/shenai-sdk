@@ -5,7 +5,7 @@ class SnrIcon extends StatelessWidget {
   final int snr;
   final int limit;
 
-  const SnrIcon({Key? key, required this.snr, required this.limit}) : super(key: key);
+  const SnrIcon({super.key, required this.snr, required this.limit});
 
   @override
   Widget build(BuildContext context) {

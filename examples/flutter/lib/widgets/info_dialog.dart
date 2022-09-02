@@ -25,46 +25,47 @@ class InfoDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Dialog(
-    backgroundColor: Colors.transparent,
-    child: Material(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(Dimens.spacingM)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(Dimens.spacingL),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: message != null ? MainAxisAlignment.spaceBetween : MainAxisAlignment.end,
-              children: [
-                if (message != null)
-                  Expanded(
-                    child:Text(
-                      message!,
-                      textAlign: TextAlign.center,
+        backgroundColor: Colors.transparent,
+        child: Material(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(Dimens.spacingM)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(Dimens.spacingL),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: message != null ? MainAxisAlignment.spaceBetween : MainAxisAlignment.end,
+                  children: [
+                    if (message != null)
+                      Expanded(
+                        child: Text(
+                          message!,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    InkWell(
+                      onTap: () => Navigator.of(context).pop(),
+                      child: const Icon(Icons.close),
                     ),
-                  ),
-                InkWell(
-                  onTap: () => Navigator.of(context).pop(),
-                  child:const Icon(Icons.close),
+                  ],
+                ),
+                const SizedBox(height: Dimens.spacingXL),
+                if (richText != null) richText!,
+                RoundedFlatButton(
+                  color: AppColors.valueBarColorRed,
+                  disabledColor: AppColors.mainColorLightGrey,
+                  label: ConstantsValues.closeText,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
                 ),
               ],
-            ),const SizedBox(height: Dimens.spacingXL),
-            if (richText != null) richText!,
-            RoundedFlatButton(
-              color: AppColors.valueBarColorRed,
-              disabledColor: AppColors.mainColorLightGrey,
-              label: ConstantsValues.closeText,
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-              },
             ),
-          ],
+          ),
         ),
-      ),
-    ),
-  );
+      );
 }

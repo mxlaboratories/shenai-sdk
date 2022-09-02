@@ -9,14 +9,14 @@ class RoundedOutlineButton extends StatelessWidget {
   final BorderSide side;
 
   const RoundedOutlineButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.onPressed,
     required this.color,
     required this.textColor,
     this.icon,
     this.side = const BorderSide(color: Colors.white),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

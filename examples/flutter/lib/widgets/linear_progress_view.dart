@@ -9,12 +9,12 @@ class LinearProgressView extends StatelessWidget {
   final Color color;
 
   const LinearProgressView({
-    Key? key,
+    super.key,
     this.progress = 1,
     this.padding = const EdgeInsets.symmetric(horizontal: Dimens.spacingSM, vertical: Dimens.spacingM),
     this.bgColor = AppColors.mainColorLightGrey,
     this.color = AppColors.mainColorTeal,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

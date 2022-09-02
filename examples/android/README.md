@@ -10,8 +10,6 @@ var result = shenaiSDKHandler.initialize(YOUR_API_KEY, YOUR_USER_ID)
 ```
 Now you can compile and run the app using Android Studio.
 
-## **TODO (when the app is finished)** Using the app
-
 ## Documentation
 
 To understand better the integration with Shen.AI SDK, please see the [Android documentation](https://developer.shen.ai/platforms/android).

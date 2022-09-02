@@ -12,11 +12,11 @@ class FaceFrame extends StatefulWidget {
   final int textureId;
 
   const FaceFrame({
-    Key? key,
+    super.key,
     required this.isPosCorrect,
     required this.textureId,
     required this.isMeasurement,
-  }) : super(key: key);
+  });
 
   @override
   _FaceFrameState createState() => _FaceFrameState();

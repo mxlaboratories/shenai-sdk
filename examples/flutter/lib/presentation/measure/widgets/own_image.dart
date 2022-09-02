@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class OwnImage extends StatefulWidget {
   final ImageProvider imageProvider;
 
-  const OwnImage(this.imageProvider, {Key? key}) : super(key: key);
+  const OwnImage(this.imageProvider, {super.key});
 
   @override
   _OwnImageState createState() => _OwnImageState();

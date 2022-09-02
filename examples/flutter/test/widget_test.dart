@@ -1,27 +1,27 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
+import 'package:shenai_sdk_example/domain/constants_values.dart';
+import 'package:shenai_sdk_example/injection/bloc_factory.dart';
+import 'package:shenai_sdk_example/injection/modules.dart';
 import 'package:shenai_sdk_example/shen_ai_example_app.dart';
+import 'package:shenai_sdk_example/style/typography.dart';
 
 void main() {
-  testWidgets('Verify Platform version', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const ShenAiExampleApp());
-
-    // Verify that platform version is retrieved.
-    expect(
-      find.byWidgetPredicate(
-            (Widget widget) => widget is Text &&
-            widget.data!.startsWith('Running on:'),
+  testWidgets("display welcome page", (WidgetTester tester) async {
+    final welcomeTitleText = find.text(ConstantsValues.welcomeTitleText);
+    final GetIt injector = GetIt.instance;
+    registerModules(injector);
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          Provider<AppTypography>.value(value: AppTypography.shenAiSdkExample),
+          Provider<BlocFactory>(create: (context) => BlocFactory(injector: injector)),
+        ],
+        child: const ShenAiExampleApp(),
       ),
-      findsOneWidget,
     );
+
+    expect(welcomeTitleText, findsOneWidget);
   });
 }

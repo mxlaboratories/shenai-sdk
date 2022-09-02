@@ -20,7 +20,9 @@ class MeasurementArea extends StatelessWidget {
                 color: AppColors.white,
               ),
             MeasureButton(
-              isReadyForMeasurement: state is MeasureReady,
+              isReadyForMeasurement:
+                  (state is MeasureReady && state.isReadyForMeasurement) ||
+                      state is MeasureEnded,
               isMeasuring: state is MeasureInProgress,
             ),
             MeasureResultArea(),

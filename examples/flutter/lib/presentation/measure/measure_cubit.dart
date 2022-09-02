@@ -15,7 +15,9 @@ class MeasureCubit extends Cubit<MeasureCubitState> {
   final MeasurementEventsService _measurementService;
 
   late StreamSubscription _measureStateSubscription;
+  late StreamSubscription _readyForMeasurementSubscription;
   int? _textureId;
+  bool? _hasResult;
 
   MeasureCubit(this._measurementService) : super(MeasureInitial());
 
@@ -33,14 +35,22 @@ class MeasureCubit extends Cubit<MeasureCubitState> {
       if (state is MeasurementFail && _textureId != null) {
         emit(MeasureFailure());
       } else if (state is MeasurementEnd && _textureId != null) {
+        _hasResult = true;
         emit(MeasureEnded(texture: _textureId!, summaryData: state.summaryData));
       } else if (state is MeasurementInProgress && _textureId != null) {
         emit(MeasureInProgress(progress: state.progress, texture: _textureId!));
       }
     });
+
+    _readyForMeasurementSubscription = _measurementService.observeReadyForMeasurement().listen((state) {
+      if (_hasResult == null || _hasResult == false) {
+        emit(MeasureReady(_textureId!, isReadyForMeasurement: state));
+      }
+    });
   }
 
   Future<void> startMeasurement() async {
+    _hasResult = false;
     await _measurementService.attach();
     if (_textureId != null) {
       emit(MeasureStarted(_textureId!));
@@ -62,6 +72,7 @@ class MeasureCubit extends Cubit<MeasureCubitState> {
   @override
   Future<void> close() {
     _measureStateSubscription.cancel();
+    _readyForMeasurementSubscription.cancel();
     _measurementService.deinitializeEngine();
     return super.close();
   }

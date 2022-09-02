@@ -13,14 +13,14 @@ class RoundedFlatButton extends StatelessWidget {
   final EdgeInsetsGeometry padding;
 
   const RoundedFlatButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.onPressed,
     required this.disabledColor,
     this.color = AppColors.white,
     this.icon,
     this.padding = const EdgeInsets.symmetric(horizontal: Dimens.spacing2XL, vertical: Dimens.spacingXs),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

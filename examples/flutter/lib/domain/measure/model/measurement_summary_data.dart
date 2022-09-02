@@ -1,7 +1,7 @@
 class MeasurementSummaryData {
-  MeasurementSummaryData({this.heartRate, this.hrv, this.respiratoryRate});
+  MeasurementSummaryData({this.heartRate, this.hrv, this.breathingRate});
 
   final double? heartRate;
   final double? hrv;
-  final double? respiratoryRate;
+  final double? breathingRate;
 }

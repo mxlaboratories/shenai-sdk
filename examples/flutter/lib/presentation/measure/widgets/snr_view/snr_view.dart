@@ -11,7 +11,7 @@ class SnrView extends StatelessWidget {
         builder: (_, state) {
           return Positioned(
             top: Dimens.spacingL,
-            right: Dimens.spacingM,
+            right: Dimens.spacingXL,
             child: Row(
               children: [
                 SnrIcon(

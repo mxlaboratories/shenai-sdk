@@ -12,7 +12,7 @@ import 'package:shenai_sdk_example/presentation/welcome_page.dart';
 import 'package:shenai_sdk_example/style/theme.dart';
 
 class ShenAiExampleApp extends StatelessWidget {
-  const ShenAiExampleApp({Key? key}) : super(key: key);
+  const ShenAiExampleApp({super.key});
 
   @override
   Widget build(BuildContext context) {

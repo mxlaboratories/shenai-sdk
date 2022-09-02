@@ -5,7 +5,7 @@ import 'package:shenai_sdk_example/presentation/measure/widgets/warning_icon/war
 import 'package:shenai_sdk_example/style/app_images.dart';
 
 class WarningIcon extends StatelessWidget {
-  const WarningIcon({Key? key}) : super(key: key);
+  const WarningIcon({super.key});
 
   @override
   Widget build(BuildContext context) {

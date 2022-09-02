@@ -11,13 +11,13 @@ class CustomValueTile extends StatelessWidget {
   final bool isProgress;
 
   const CustomValueTile({
-    Key? key,
+    super.key,
     required this.label,
     required this.value,
     required this.unit,
     this.image,
     this.isProgress = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +26,7 @@ class CustomValueTile extends StatelessWidget {
       image: image,
       child: Row(
         children: [
-          if (isProgress)
-            const LinearProgressView(),
+          if (isProgress) const LinearProgressView(),
           if (!isProgress)
             RichText(
               text: TextSpan(

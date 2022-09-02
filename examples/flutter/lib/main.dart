@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:shenai_sdk_example/domain/measure/measure_events_service.dart';
 import 'package:shenai_sdk_example/injection/bloc_factory.dart';
 import 'package:shenai_sdk_example/injection/modules.dart';
 import 'package:shenai_sdk_example/shen_ai_example_app.dart';
@@ -12,7 +13,9 @@ Future<void> main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   final GetIt injector = GetIt.instance;
-  registerModules(injector);
+  if(!GetIt.instance.isRegistered<MeasurementEventsService>()) {
+    registerModules(injector);
+  }
 
   runApp(
     MultiProvider(

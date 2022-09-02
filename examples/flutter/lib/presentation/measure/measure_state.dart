@@ -11,11 +11,12 @@ class MeasureInitial extends MeasureCubitState {
 
 class MeasureReady extends MeasureCubitState {
   final int textureId;
+  final bool isReadyForMeasurement;
 
-  const MeasureReady(this.textureId);
+  const MeasureReady(this.textureId, {this.isReadyForMeasurement = false});
 
   @override
-  List<Object> get props => [textureId];
+  List<Object> get props => [textureId, isReadyForMeasurement];
 }
 
 class MeasureStarted extends MeasureReady {

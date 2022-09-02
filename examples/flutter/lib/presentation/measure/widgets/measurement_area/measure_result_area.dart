@@ -16,7 +16,8 @@ class _MeasureResultAreaState extends State<MeasureResultArea> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).textScaleFactor * Dimens.spacingXL + Dimens.spacing4XL,
+      height: MediaQuery.of(context).textScaleFactor * Dimens.spacingXL +
+          Dimens.spacing4XL,
       child: BlocBuilder<MeasureCubit, MeasureCubitState>(
         builder: (_, measureState) {
           return Row(
@@ -28,7 +29,8 @@ class _MeasureResultAreaState extends State<MeasureResultArea> {
                   builder: (_, state) {
                     return CustomValueTile(
                       label: ConstantsValues.pulseText,
-                      value: measureState is MeasureEnded && measureState.summaryData != null
+                      value: measureState is MeasureEnded &&
+                              measureState.summaryData != null
                           ? "${measureState.summaryData?.heartRate?.toInt()}"
                           : state is PulseValue
                               ? "${state.pulse.toInt()}"
@@ -43,8 +45,10 @@ class _MeasureResultAreaState extends State<MeasureResultArea> {
                 child: CustomValueTile(
                   label: ConstantsValues.hrvText,
                   isProgress: measureState is MeasureInProgress,
-                  value:
-                      measureState is MeasureEnded ? (measureState.summaryData?.hrv?.toInt().toString() ?? "0") : "0",
+                  value: measureState is MeasureEnded
+                      ? (measureState.summaryData?.hrv?.toInt().toString() ??
+                          "?")
+                      : "-",
                   unit: ConstantsValues.msUnitText,
                   image: AppImages.heart,
                 ),
@@ -54,8 +58,11 @@ class _MeasureResultAreaState extends State<MeasureResultArea> {
                   label: ConstantsValues.breathText,
                   isProgress: measureState is MeasureInProgress,
                   value: measureState is MeasureEnded
-                      ? (measureState.summaryData?.respiratoryRate?.toInt().toString() ?? "0")
-                      : "0",
+                      ? (measureState.summaryData?.breathingRate
+                              ?.toInt()
+                              .toString() ??
+                          "?")
+                      : "-",
                   unit: ConstantsValues.bpmUnitText,
                   image: AppImages.lungs,
                 ),

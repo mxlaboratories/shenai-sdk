@@ -4,7 +4,7 @@ import 'package:shenai_sdk_example/presentation/measure/measure_cubit.dart';
 import 'package:shenai_sdk_example/style/dimens.dart';
 
 class CloseIcon extends StatelessWidget {
-  const CloseIcon({Key? key}) : super(key: key);
+  const CloseIcon({super.key});
 
   @override
   Widget build(BuildContext context) {

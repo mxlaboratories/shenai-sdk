@@ -9,12 +9,12 @@ class CloseIconButton extends StatelessWidget {
   final EdgeInsetsGeometry padding;
 
   const CloseIconButton({
-    Key? key,
+    super.key,
     this.onTap,
     this.color = AppColors.mainColorBlue,
     this.backgroundColor = AppColors.closeButtonBackgroundColor,
     this.padding = const EdgeInsets.only(top: Dimens.spacingM, right: Dimens.spacingM),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

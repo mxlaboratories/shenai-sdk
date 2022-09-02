@@ -70,3 +70,11 @@ unzip shenai-sdk-flutter.zip
 
 1. **Change texts:**
    - Replace existing texts with your own in the file `lib/domain/constants_values.dart`
+
+## Tests
+
+To run integration tests use:
+
+```
+fvm flutter drive --driver test_driver/integration_test.dart --target integration_test/general_tests.dart
+```

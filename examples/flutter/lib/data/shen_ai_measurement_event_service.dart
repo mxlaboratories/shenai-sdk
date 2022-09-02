@@ -14,11 +14,15 @@ import 'package:shenai_sdk_example/domain/measure/model/user_face_pos.dart';
 class ShenAiMeasurementEventService implements MeasurementEventsService {
   final PublishSubject<double> _latestHeartRate = PublishSubject<double>();
   final PublishSubject<double> _signalQualityMetric = PublishSubject<double>();
-  final PublishSubject<MeasureState> _measurementState = PublishSubject<MeasureState>();
+  final PublishSubject<MeasureState> _measurementState =
+      PublishSubject<MeasureState>();
   final PublishSubject<bool> _isReadyForMeasurement = PublishSubject<bool>();
-  final PublishSubject<UserFacePos> _facePosition = PublishSubject<UserFacePos>();
-  final PublishSubject<LightingState> _lightningCond = PublishSubject<LightingState>();
-  final PublishSubject<List<double>> _latestHeartSignal = PublishSubject<List<double>>();
+  final PublishSubject<UserFacePos> _facePosition =
+      PublishSubject<UserFacePos>();
+  final PublishSubject<LightingState> _lightningCond =
+      PublishSubject<LightingState>();
+  final PublishSubject<List<double>> _latestHeartSignal =
+      PublishSubject<List<double>>();
 
   late StreamSubscription _latestHeartRateSubscription;
   late StreamSubscription _signalQualityMetricSubscription;
@@ -51,17 +55,20 @@ class ShenAiMeasurementEventService implements MeasurementEventsService {
 
   @override
   Future<int?> initMeasurement() async {
-    final _result = await ShenaiSdk.initialize(ConstantsValues.shenAiAPIkey, "");
+    final result = await ShenaiSdk.initialize(ConstantsValues.shenAiAPIkey, "");
 
-    if (_result == InitializationResult.success) {
-      final _displayTexture = await ShenaiSdk.createDisplayTexture();
+    if (result == InitializationResult.success) {
+      final displayTexture = await ShenaiSdk.createDisplayTexture();
 
-      _isReadyForMeasurementSubscription = ShenaiSdk.isReadyForMeasurementStream().listen((isReadyForMeasurementEvent) {
+      _isReadyForMeasurementSubscription =
+          ShenaiSdk.isReadyForMeasurementStream()
+              .listen((isReadyForMeasurementEvent) {
         _isReadyForMeasurement.add(isReadyForMeasurementEvent);
       });
 
-      _facePositionSubscription = ShenaiSdk.getFacePosStream().listen((position) {
-        switch(position) {
+      _facePositionSubscription =
+          ShenaiSdk.getFacePosStream().listen((position) {
+        switch (position) {
           case FacePos.ok:
             _facePosition.add(UserFacePos.ok);
             break;
@@ -83,8 +90,9 @@ class ShenAiMeasurementEventService implements MeasurementEventsService {
         }
       });
 
-      _lightningCondSubscription = ShenaiSdk.getLightingCondStream().listen((light) {
-        switch(light) {
+      _lightningCondSubscription =
+          ShenaiSdk.getLightingCondStream().listen((light) {
+        switch (light) {
           case LightingCond.ok:
             _lightningCond.add(LightingState.ok);
             break;
@@ -106,7 +114,7 @@ class ShenAiMeasurementEventService implements MeasurementEventsService {
         }
       });
 
-      return _displayTexture;
+      return displayTexture;
     }
     return null;
   }
@@ -114,40 +122,46 @@ class ShenAiMeasurementEventService implements MeasurementEventsService {
   @override
   Future<void> attach() async {
     await ShenaiSdk.startMeasurement();
-    _latestHeartRateSubscription = ShenaiSdk.getLatestHeartRateStream().listen((heartRateEvent) {
+    _latestHeartRateSubscription =
+        ShenaiSdk.getLatestHeartRateStream().listen((heartRateEvent) {
       _latestHeartRate.add(heartRateEvent);
     });
 
-    _signalQualityMetricSubscription = ShenaiSdk.getCurrentSignalQualityMetricStream().listen((signalQualityMetricEvent) {
+    _signalQualityMetricSubscription =
+        ShenaiSdk.getCurrentSignalQualityMetricStream()
+            .listen((signalQualityMetricEvent) {
       if (!signalQualityMetricEvent.isNaN) {
         _signalQualityMetric.add(signalQualityMetricEvent);
       }
     });
 
-    _measurementStateSubscription = ShenaiSdk.getMeasurementStatusStream().listen((status) {
-      switch(status) {
+    _measurementStateSubscription =
+        ShenaiSdk.getMeasurementStatusStream().listen((status) {
+      switch (status) {
         case MeasurementState.failure:
           _measurementState.add(MeasurementFail());
           break;
         case MeasurementState.inProgress:
         case MeasurementState.starting:
-          final double _progress = ShenaiSdk.getMeasurementProgressPercentage();
-          _measurementState.add(MeasurementInProgress(_progress/100));
+          final double progress = ShenaiSdk.getMeasurementProgressPercentage;
+          _measurementState.add(MeasurementInProgress(progress / 100));
           break;
         case MeasurementState.success:
-          final MeasurementResult _result = ShenaiSdk.getMeasurementResult();
-          final _summaryData = MeasurementSummaryData(
-            heartRate: _result.heartRate,
-            hrv: _result.hrv,
-            respiratoryRate: _result.respiratoryRate,
+          final MeasurementResult result = ShenaiSdk.getMeasurementResult();
+          final summaryData = MeasurementSummaryData(
+            heartRate: result.heartRateBpm,
+            hrv: result.hrvSdnnMs,
+            breathingRate: result.breathingRateBpm,
           );
-          _measurementState.add(MeasurementEnd(_summaryData));
+          _measurementState.add(MeasurementEnd(summaryData));
           break;
-        default: break;
+        default:
+          break;
       }
     });
 
-    _latestHeartSignalSubscription = ShenaiSdk.getLatestHeartSignalStream().listen((signal) {
+    _latestHeartSignalSubscription =
+        ShenaiSdk.getLatestHeartSignalStream().listen((signal) {
       _latestHeartSignal.add(signal);
     });
   }

@@ -8,11 +8,11 @@ class LabeledCard extends StatelessWidget {
   final String? image;
 
   const LabeledCard({
-    Key? key,
+    super.key,
     this.label,
     this.image,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
