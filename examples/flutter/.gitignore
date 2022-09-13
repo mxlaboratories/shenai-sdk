@@ -44,4 +44,4 @@ app.*.map.json
 
 
 /.fvm/flutter_sdk
-/shenai_sdk
+/shenai_sdk_flutter

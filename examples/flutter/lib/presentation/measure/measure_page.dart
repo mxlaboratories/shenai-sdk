@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shenai_sdk/shenai_sdk.dart';
+import 'package:shenai_sdk_flutter/shenai_sdk_flutter.dart';
 import 'package:shenai_sdk_example/domain/constants_values.dart';
 import 'package:shenai_sdk_example/presentation/measure/measure_cubit.dart';
 import 'package:shenai_sdk_example/presentation/measure/widgets/camera_preview.dart';
@@ -40,7 +40,8 @@ class _MeasurePageState extends State<MeasurePage> {
         child: BlocConsumer<MeasureCubit, MeasureCubitState>(
           listener: (_, state) {
             if (state is MeasureFailure) {
-              const InfoDialog(message: ConstantsValues.errorText).show(context);
+              const InfoDialog(message: ConstantsValues.errorText)
+                  .show(context);
             }
           },
           builder: (_, state) {

@@ -8,24 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
-		353781F4281B34AB0069046E /* shenai_sdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35BE5F2D281B256300C2007D /* shenai_sdk.framework */; };
-		353781F6281B34B60069046E /* libshenai_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 353781F5281B34B60069046E /* libshenai_sdk.a */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
-		4914AAC7674E5B7ACC45F180 /* libPods-Runner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BD500418B63700522A4C63 /* libPods-Runner.a */; };
 		978B8F6F1D3862AE00F588F7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AFFD8EE1D35381100E5BB4D /* AppDelegate.m */; };
 		97C146F31CF9000F007C117D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C146F21CF9000F007C117D /* main.m */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		FE0A0043295104A0295B2684 /* libPods-Runner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE0C16E63EAA69775FD74B6F /* libPods-Runner.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		04BD500418B63700522A4C63 /* libPods-Runner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Runner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		21DEE4B51E12AC5C88170561 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
-		353781F5281B34B60069046E /* libshenai_sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libshenai_sdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		35BE5F2D281B256300C2007D /* shenai_sdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = shenai_sdk.framework; path = ../../ios/Frameworks/shenai_sdk.framework; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
 		7AFFD8ED1D35381100E5BB4D /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -40,6 +35,7 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DE0C16E63EAA69775FD74B6F /* libPods-Runner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Runner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,9 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				353781F6281B34B60069046E /* libshenai_sdk.a in Frameworks */,
-				353781F4281B34AB0069046E /* shenai_sdk.framework in Frameworks */,
-				4914AAC7674E5B7ACC45F180 /* libPods-Runner.a in Frameworks */,
+				FE0A0043295104A0295B2684 /* libPods-Runner.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,9 +117,7 @@
 		CE69858B80294EE6617C1C9D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				353781F5281B34B60069046E /* libshenai_sdk.a */,
-				35BE5F2D281B256300C2007D /* shenai_sdk.framework */,
-				04BD500418B63700522A4C63 /* libPods-Runner.a */,
+				DE0C16E63EAA69775FD74B6F /* libPods-Runner.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
