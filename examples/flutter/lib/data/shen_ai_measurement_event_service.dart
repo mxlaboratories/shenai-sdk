@@ -1,15 +1,15 @@
 import 'dart:async';
 
 import 'package:rxdart/rxdart.dart';
-import 'package:shenai_sdk_flutter/domain/enums.dart';
-import 'package:shenai_sdk_flutter/domain/models.dart';
-import 'package:shenai_sdk_flutter/shenai_sdk_flutter.dart';
 import 'package:shenai_sdk_example/domain/constants_values.dart';
 import 'package:shenai_sdk_example/domain/measure/lighting_state.dart';
 import 'package:shenai_sdk_example/domain/measure/measure_events_service.dart';
 import 'package:shenai_sdk_example/domain/measure/measure_state.dart';
 import 'package:shenai_sdk_example/domain/measure/model/measurement_summary_data.dart';
 import 'package:shenai_sdk_example/domain/measure/model/user_face_pos.dart';
+import 'package:shenai_sdk_flutter/domain/enums.dart';
+import 'package:shenai_sdk_flutter/domain/models.dart';
+import 'package:shenai_sdk_flutter/shenai_sdk_flutter.dart';
 
 class ShenAiMeasurementEventService implements MeasurementEventsService {
   final PublishSubject<double> _latestHeartRate = PublishSubject<double>();
@@ -173,6 +173,11 @@ class ShenAiMeasurementEventService implements MeasurementEventsService {
     _signalQualityMetricSubscription.cancel();
     _measurementStateSubscription.cancel();
     _latestHeartSignalSubscription.cancel();
+  }
+
+  @override
+  Future<void> deinitialize() async {
+    ShenaiSdk.deinitialize();
   }
 
   @override

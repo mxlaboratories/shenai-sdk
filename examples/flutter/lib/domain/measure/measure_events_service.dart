@@ -7,6 +7,8 @@ abstract class MeasurementEventsService {
 
   Future<void> detach();
 
+  Future<void> deinitialize();
+
   Future<void> deinitializeEngine();
 
   Future<int?> initMeasurement();

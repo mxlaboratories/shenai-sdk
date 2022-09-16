@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shenai_sdk_example/domain/measure/warning_type.dart';
@@ -14,7 +16,8 @@ class WarningIcon extends StatelessWidget {
         if (state is WarningIconShow) {
           return Positioned(
             left: MediaQuery.of(context).size.width/2.5,
-            top: MediaQuery.of(context).size.height/10,
+            top: Platform.isIOS ? null : MediaQuery.of(context).size.height/15,
+            bottom: Platform.isIOS ? 0 : null,
             child: Image.asset(_getImage(state.type)),
           );
         } else {

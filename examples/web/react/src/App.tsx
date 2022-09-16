@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
-import CreateShenaiSDK, {ShenaiSDK} from "shenai-sdk";
-import {useInterval} from "react-use";
+import React, { useEffect, useState, useRef } from "react";
+import CreateShenaiSDK, { ShenaiSDK } from "shenai-sdk";
+import { useInterval } from "react-use";
 import styled from "styled-components";
 import Header from "./Header";
 import Loading from "./Loading";
@@ -36,7 +36,9 @@ const CanvasWrapper = styled.div`
   max-width: 100vw;
   min-height: 400px;
   @media (min-width: 1000px) and (min-aspect-ratio: 4/3) {
-    &{ margin-top: -100px; }
+    & {
+      margin-top: -100px;
+    }
   }
 `;
 
@@ -66,8 +68,12 @@ const InstructionsContainer = styled.div`
 
 const Instructions = styled.div`
   font-size: 0.45em;
-  @media (min-width: 768px) { font-size: 0.55em; }
-  @media (min-width: 1024px) { font-size: 0.7em; }
+  @media (min-width: 768px) {
+    font-size: 0.55em;
+  }
+  @media (min-width: 1024px) {
+    font-size: 0.7em;
+  }
   background: #fff;
   border-radius: 5px;
   padding: 5px 20px;
@@ -87,8 +93,10 @@ const FacePositioningOverlay = styled.img`
   width: 90%;
   height: 100%;
   transition: opacity 0.2s;
-  opacity: 0.0;
-  &.show { opacity: 0.7; }
+  opacity: 0;
+  &.show {
+    opacity: 0.7;
+  }
 `;
 
 const MeasurementContainer = styled.div`
@@ -108,7 +116,7 @@ const ButtonContainer = styled.div`
 `;
 
 const Button = styled.button`
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: bold;
   font-size: 0.7em;
   color: #56b0b0;
@@ -117,10 +125,18 @@ const Button = styled.button`
   border: 0;
   border-radius: 5px;
   transition: background 0.2s;
-  &:hover { background: #eee; }
-  &:disabled { color: #ccc; }
-  &:disabled:hover { background: #fff; }
-  &.red { color: #ffab98; }
+  &:hover {
+    background: #eee;
+  }
+  &:disabled {
+    color: #ccc;
+  }
+  &:disabled:hover {
+    background: #fff;
+  }
+  &.red {
+    color: #ffab98;
+  }
 `;
 
 const ProgressBarContainer = styled.div`
@@ -154,7 +170,7 @@ const InfoWrapper = styled.div`
   }
 `;
 
-const API_KEY = "";
+const API_KEY = "eff92074fd0748ddb1381299a67f744c";
 const USER_ID = "";
 
 function App() {
@@ -166,7 +182,8 @@ function App() {
   const [readyForMeasurement, setReadyForMeasurement] =
     useState<boolean>(false);
   const [measurementStarted, setMeasurementStarted] = useState<boolean>(false);
-  const [facePositionInstruction, setFacePositionInstruction] = useState("Please wait...");
+  const [facePositionInstruction, setFacePositionInstruction] =
+    useState("Please wait...");
   const [faceWellPositioned, setFaceWellPositioned] = useState<number>(-1);
 
   useEffect(() => {
@@ -184,16 +201,16 @@ function App() {
     if (shenai) {
       shenai.initialize(API_KEY, USER_ID, (result) => {
         if (result !== shenai.InitializationResult.OK) {
-          let info: string = ''
+          let info: string = "";
           switch (result) {
             case shenai.InitializationResult.CONNECTION_ERROR:
-              info = 'connection error'
-              break
+              info = "connection error";
+              break;
             case shenai.InitializationResult.INVALID_API_KEY:
-              info = 'invalid api key'
-              break
+              info = "invalid api key";
+              break;
             default:
-              info = 'unknown error'
+              info = "unknown error";
           }
           alert("Shen.ai license activation error: " + info);
         }
@@ -202,7 +219,7 @@ function App() {
   }, [shenai]);
 
   useInterval(() => {
-    const hr = shenai?.getLatestHR();
+    const hr = shenai?.getLatestHeartRate();
     if (hr && hr !== 0) {
       setHr(Math.round(hr));
     }
@@ -212,54 +229,112 @@ function App() {
     }
     if (shenai) {
       let faceState = shenai.getFaceState();
-      setFacePositionInstruction(((state) => {
-        switch (state) {
-          case shenai.FaceState.OK: return "Face well positioned";
-          case shenai.FaceState.NOT_CENTERED: return "Move your head to the center";
-          case shenai.FaceState.TOO_CLOSE: return "Move your head further from the camera";
-          case shenai.FaceState.TOO_FAR: return "Move your head closer to the camera";
-          case shenai.FaceState.UNSTABLE: return "Too much head movement";
-          default: return shenai.isRenderingInitialized() ?
-            "Position your face in the middle of the screen" : "Please wait...";
-        }
-      })(faceState));
-      setFaceWellPositioned(shenai.isRenderingInitialized() ? (faceState === shenai.FaceState.OK ? 1 : 0) : -1);
+      let measurementState = shenai.getEngineState();
+
+      if (measurementState === shenai.EngineState.SUCCESS) {
+        setFacePositionInstruction("Measurement complete!");
+        setMeasurementStarted(false);
+        const result = shenai.getMeasurementResult();
+        setHr(result.heart_rate_bpm);
+        setHrv(result.hrv_sdnn_ms);
+        setBr(result.breathing_rate_bpm);
+      } else {
+        setFacePositionInstruction(
+          ((state) => {
+            switch (state) {
+              case shenai.FaceState.OK:
+                return "Face well positioned";
+              case shenai.FaceState.NOT_CENTERED:
+                return "Move your head to the center";
+              case shenai.FaceState.TOO_CLOSE:
+                return "Move your head further from the camera";
+              case shenai.FaceState.TOO_FAR:
+                return "Move your head closer to the camera";
+              case shenai.FaceState.UNSTABLE:
+                return "Too much head movement";
+              default:
+                return shenai.isRenderingInitialized()
+                  ? "Position your face in the middle of the screen"
+                  : "Please wait...";
+            }
+          })(faceState)
+        );
+      }
+      setFaceWellPositioned(
+        shenai.isRenderingInitialized()
+          ? faceState === shenai.FaceState.OK
+            ? 1
+            : 0
+          : -1
+      );
     }
-    const progress = shenai?.getSuccessPercentage();
+    const progress = shenai?.getMeasurementProgressPercentage();
     if (progress) setProgress(progress);
   }, 300);
 
   useInterval(() => {
     if (measurementStarted && shenai?.isReadyForMeasurement()) {
       const status = shenai?.startMeasurement();
-      if (status !== shenai.BeginMeasurementStatus.STARTED &&
-          status !== shenai.BeginMeasurementStatus.RESUMED) {
-        let info: string = '';
+      if (
+        status !== shenai.BeginMeasurementStatus.STARTED &&
+        status !== shenai.BeginMeasurementStatus.RESUMED
+      ) {
+        let info: string = "";
         switch (status) {
           case shenai.BeginMeasurementStatus.NOT_STARTED_CAMERA:
-            info = 'camera not ready';
+            info = "camera not ready";
             break;
           case shenai.BeginMeasurementStatus.NOT_STARTED_FACE:
-            info = 'face not properly positioned';
+            info = "face not properly positioned";
             break;
           case shenai.BeginMeasurementStatus.NOT_STARTED_LIGHTING:
-            info = 'bad lighting';
+            info = "bad lighting";
             break;
           default:
-            info = 'Unknown error'
+            info = "Unknown error";
         }
         alert("Couldn't start the measurement: " + info);
       }
     }
   }, 1000);
-  
+
+  // Press D+B+G to toggle debug mode
+  const debugHotkeyD = useRef<boolean>(false);
+  const debugHotkeyB = useRef<boolean>(false);
+  const debugHotkeyG = useRef<boolean>(false);
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === "KeyD") debugHotkeyD.current = true;
+      else if (e.code === "KeyB") debugHotkeyB.current = true;
+      else if (e.code === "KeyG") debugHotkeyG.current = true;
+      if (
+        debugHotkeyD.current &&
+        debugHotkeyB.current &&
+        debugHotkeyG.current
+      ) {
+        shenai?.toggleDebug();
+      }
+    };
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.code === "KeyD") debugHotkeyD.current = false;
+      else if (e.code === "KeyB") debugHotkeyB.current = false;
+      else if (e.code === "KeyG") debugHotkeyG.current = false;
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [shenai]);
+
   function startStopMeasurement() {
     if (!measurementStarted) {
       console.log(shenai);
       shenai?.startMeasurement();
       setMeasurementStarted(true);
-    }
-    else {
+    } else {
       // shenai?.stopMeasurement();
       // setMeasurementStarted(false);
     }
@@ -282,16 +357,22 @@ function App() {
               <Instructions>{facePositionInstruction}</Instructions>
             </InstructionsContainer>
             <FacePositioningContainer>
-              <FacePositioningOverlay src="face-position-overlay-green.png"
-                className={faceWellPositioned == 1 ? "show" : undefined}></FacePositioningOverlay>
-              <FacePositioningOverlay src="face-position-overlay-red.png"
-                className={faceWellPositioned == 0 ? "show" : undefined}></FacePositioningOverlay>
+              <FacePositioningOverlay
+                src="face-position-overlay-green.png"
+                className={faceWellPositioned == 1 ? "show" : undefined}
+              ></FacePositioningOverlay>
+              <FacePositioningOverlay
+                src="face-position-overlay-red.png"
+                className={faceWellPositioned == 0 ? "show" : undefined}
+              ></FacePositioningOverlay>
             </FacePositioningContainer>
             <MeasurementContainer>
               <ButtonContainer>
-                <Button onClick={startStopMeasurement}
+                <Button
+                  onClick={startStopMeasurement}
                   disabled={!readyForMeasurement /*&& !measurementStarted*/}
-                  className={/*measurementStarted ? "red" :*/ undefined}>
+                  className={/*measurementStarted ? "red" :*/ undefined}
+                >
                   {/*measurementStarted ? "STOP" :*/ "START"}
                 </Button>
               </ButtonContainer>
@@ -299,10 +380,31 @@ function App() {
                 <ProgressBar progress={progress}></ProgressBar>
               </ProgressBarContainer>
               <ResultContainer>
-                <ResultWrapper><Result title={"PULSE"} value={hr ? '' + hr : '?'} unit={'bpm'} bkg={'result_heart_bkg.svg'}/></ResultWrapper>
-                <ResultWrapper><Result title={"HRV"} value={hrv ? '' + hrv : '?'} unit={'ms'} bkg={'result_heart_bkg.svg'}/></ResultWrapper>
-                <ResultWrapper><Result title={"BREATH"} value={br ? '' + br : '?'} unit={'bpm'} bkg={'result_lungs_bkg.svg'} /></ResultWrapper>
-              </ResultContainer>    
+                <ResultWrapper>
+                  <Result
+                    title={"PULSE"}
+                    value={hr ? "" + hr : "?"}
+                    unit={"bpm"}
+                    bkg={"result_heart_bkg.svg"}
+                  />
+                </ResultWrapper>
+                <ResultWrapper>
+                  <Result
+                    title={"HRV"}
+                    value={hrv ? "" + hrv : "?"}
+                    unit={"ms"}
+                    bkg={"result_heart_bkg.svg"}
+                  />
+                </ResultWrapper>
+                <ResultWrapper>
+                  <Result
+                    title={"BREATH"}
+                    value={br ? "" + br : "?"}
+                    unit={"bpm"}
+                    bkg={"result_lungs_bkg.svg"}
+                  />
+                </ResultWrapper>
+              </ResultContainer>
             </MeasurementContainer>
           </CanvasOverlayContainer>
         </CanvasWrapper>

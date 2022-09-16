@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shenai_sdk_flutter/shenai_sdk_flutter.dart';
 import 'package:shenai_sdk_example/domain/constants_values.dart';
 import 'package:shenai_sdk_example/presentation/measure/measure_cubit.dart';
 import 'package:shenai_sdk_example/presentation/measure/widgets/camera_preview.dart';
@@ -10,6 +9,7 @@ import 'package:shenai_sdk_example/presentation/measure/widgets/measurement_area
 import 'package:shenai_sdk_example/presentation/measure/widgets/snr_view/snr_view.dart';
 import 'package:shenai_sdk_example/presentation/measure/widgets/warning_icon/warning_icon_cubit.dart';
 import 'package:shenai_sdk_example/widgets/info_dialog.dart';
+import 'package:shenai_sdk_flutter/shenai_sdk_flutter.dart';
 
 class MeasurePage extends StatefulWidget {
   @override

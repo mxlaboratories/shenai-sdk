@@ -28,7 +28,7 @@ class RoundedFlatButton extends StatelessWidget {
       style: TextButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimens.spacingS)),
         backgroundColor: color,
-        onSurface: disabledColor,
+        onSurface: disabledColor.withOpacity(0.38),
         padding: padding,
       ),
       onPressed: onPressed,

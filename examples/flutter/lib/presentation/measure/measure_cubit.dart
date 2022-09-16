@@ -69,6 +69,10 @@ class MeasureCubit extends Cubit<MeasureCubitState> {
     _measurementService.deinitializeEngine();
   }
 
+  Future<void> deinitializeEngine() async {
+    _measurementService.deinitialize();
+  }
+
   @override
   Future<void> close() {
     _measureStateSubscription.cancel();

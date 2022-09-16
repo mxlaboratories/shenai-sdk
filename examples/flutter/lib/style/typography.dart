@@ -101,7 +101,7 @@ class AppTypography {
 
   static AppTypography of(BuildContext context) => Provider.of<AppTypography>(context, listen: false);
 
-  static AppTypography ofWithListen(BuildContext context) => Provider.of<AppTypography>(context, listen: true);
+  static AppTypography ofWithListen(BuildContext context) => Provider.of<AppTypography>(context);
 }
 
 extension TextStyleExtensions on TextStyle {

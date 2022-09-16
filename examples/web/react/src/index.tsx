@@ -21,9 +21,9 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
+  <>
     <Normalize />
     <GlobalStyle />
     {isBrowserCompatible() ? <App /> : <UpgradeBrowser />}
-  </React.StrictMode>
+  </>
 );
