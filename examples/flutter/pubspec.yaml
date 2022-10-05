@@ -1,6 +1,6 @@
 name: shenai_sdk_example
 description: Demonstrates how to use the shenai_sdk plugin.
-version: 1.0.0
+version: 1.0.2
 
 publish_to: "none"
 

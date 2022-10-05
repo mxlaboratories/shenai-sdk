@@ -22,6 +22,7 @@ class MeasureCubit extends Cubit<MeasureCubitState> {
   MeasureCubit(this._measurementService) : super(MeasureInitial());
 
   void initMeasurement() {
+    _hasResult = false;
     Permission.camera.request().then((permission) async {
       if (permission == PermissionStatus.granted || permission == PermissionStatus.limited) {
         _textureId = await _measurementService.initMeasurement();
@@ -65,12 +66,12 @@ class MeasureCubit extends Cubit<MeasureCubitState> {
   }
 
   Future<void> deinitialize() async {
+    emit(MeasureLoading());
+    _measureStateSubscription.cancel();
+    _readyForMeasurementSubscription.cancel();
     await Future<void>.delayed(const Duration(milliseconds: 100));
-    _measurementService.deinitializeEngine();
-  }
-
-  Future<void> deinitializeEngine() async {
-    _measurementService.deinitialize();
+    await _measurementService.deinitializeEngine();
+    emit(MeasureDeinitialized());
   }
 
   @override

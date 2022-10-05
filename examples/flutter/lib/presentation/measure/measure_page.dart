@@ -43,22 +43,31 @@ class _MeasurePageState extends State<MeasurePage> {
               const InfoDialog(message: ConstantsValues.errorText)
                   .show(context);
             }
+            if (state is MeasureDeinitialized) {
+              Navigator.of(context).pop();
+            }
           },
           builder: (_, state) {
-            return Stack(
-              children: [
-                if (state is MeasureReady)
-                  MeasureCameraPreview(
-                    textureId: state.textureId,
-                    isMeasurement: state is MeasureInProgress,
-                  )
-                else
-                  const Center(child: Text(ConstantsValues.notInitText)),
-                MeasurementArea(),
-                const CloseIcon(),
-                SnrView(),
-              ],
-            );
+            if (state is MeasureLoading) {
+              return const Center(
+                child: Text("Loading..."),
+              );
+            } else {
+              return Stack(
+                children: [
+                  if (state is MeasureReady)
+                    MeasureCameraPreview(
+                      textureId: state.textureId,
+                      isMeasurement: state is MeasureInProgress,
+                    )
+                  else
+                    const Center(child: Text(ConstantsValues.notInitText)),
+                  MeasurementArea(),
+                  const CloseIcon(),
+                  SnrView(),
+                ],
+              );
+            }
           },
         ),
       ),

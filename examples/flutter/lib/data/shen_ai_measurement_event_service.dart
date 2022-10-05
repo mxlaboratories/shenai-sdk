@@ -168,7 +168,7 @@ class ShenAiMeasurementEventService implements MeasurementEventsService {
 
   @override
   Future<void> detach() async {
-    await ShenaiSdk.dispose();
+    await ShenaiSdk.abortMeasurement();
     _latestHeartRateSubscription.cancel();
     _signalQualityMetricSubscription.cancel();
     _measurementStateSubscription.cancel();
@@ -185,6 +185,6 @@ class ShenAiMeasurementEventService implements MeasurementEventsService {
     _facePositionSubscription.cancel();
     _lightningCondSubscription.cancel();
     _isReadyForMeasurementSubscription.cancel();
-    ShenaiSdk.deinitialize();
+    await ShenaiSdk.deinitialize();
   }
 }

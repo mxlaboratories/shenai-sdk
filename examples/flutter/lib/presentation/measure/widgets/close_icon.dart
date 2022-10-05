@@ -22,7 +22,7 @@ class CloseIcon extends StatelessWidget {
           padding: EdgeInsets.zero,
           onPressed: () {
             BlocProvider.of<MeasureCubit>(context).deinitialize();
-            Navigator.of(context).pop();
+            // Navigator.of(context).pop();
           },
         ),
       ),

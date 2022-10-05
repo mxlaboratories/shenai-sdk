@@ -52,15 +52,13 @@ class MeasureFailure extends MeasureInitial {
   List<Object> get props => [];
 }
 
-class MeasureLoading extends MeasureReady {
-  const MeasureLoading(super.textureId);
+class MeasureLoading extends MeasureCubitState {
 
   @override
   List<Object> get props => [];
 }
 
-class MeasureLoadingEnd extends MeasureReady {
-  const MeasureLoadingEnd(super.textureId);
+class MeasureDeinitialized extends MeasureCubitState {
 
   @override
   List<Object> get props => [];
