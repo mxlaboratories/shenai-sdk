@@ -7,6 +7,7 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import kotlinx.coroutines.*
+import model.MeasurementView
 
 class MeasurePage {
   private val shenaiSDKHandler = ShenAIAndroidSDK()
@@ -14,7 +15,7 @@ class MeasurePage {
   private var measurementJob: Job? = null
   private val scope = MainScope()
 
-  fun showMeasurementView(bottomBar: ComposeView) {
+  fun showMeasurementView(bottomBar: ComposeView, buttonOnClick: () -> Unit,) {
     checkMeasurementData()
     bottomBar.setContent {
       ShenaiSdkAndroidTheme {
@@ -35,6 +36,7 @@ class MeasurePage {
                 startMeasurement()
               }
             },
+            risksButtonOnClick = buttonOnClick,
           )
         }
       }
@@ -65,9 +67,9 @@ class MeasurePage {
             if (status == ShenAIAndroidSDK.EngineState.SUCCESS.name) {
               val measurementSummary = shenaiSDKHandler.latestMeasurementSummary
               measurementView.updateModelValues(
-                heartRateVal = measurementSummary.hr_bpm.toInt(),
-                hrvVal = measurementSummary.hr_bpm.toInt(),
-                breathingRateVal = measurementSummary.br_bpm.toInt(),
+                heartRateVal = measurementSummary.hrBpm.toInt(),
+                hrvVal = measurementSummary.hrvSdnnMs.toInt(),
+                breathingRateVal = measurementSummary.brBpm.orElse(null).toInt()
               )
             }
           }

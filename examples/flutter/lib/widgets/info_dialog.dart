@@ -56,7 +56,6 @@ class InfoDialog extends StatelessWidget {
                 if (richText != null) richText!,
                 RoundedFlatButton(
                   color: AppColors.valueBarColorRed,
-                  disabledColor: AppColors.mainColorLightGrey,
                   label: ConstantsValues.closeText,
                   onPressed: () {
                     Navigator.of(context).pop();

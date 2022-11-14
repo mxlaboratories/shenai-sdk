@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shenai_sdk_example/domain/constants_values.dart';
 import 'package:shenai_sdk_example/domain/measure/lighting_state.dart';
@@ -24,13 +25,13 @@ class ShenAiMeasurementEventService implements MeasurementEventsService {
   final PublishSubject<List<double>> _latestHeartSignal =
       PublishSubject<List<double>>();
 
-  late StreamSubscription _latestHeartRateSubscription;
-  late StreamSubscription _signalQualityMetricSubscription;
-  late StreamSubscription _measurementStateSubscription;
-  late StreamSubscription _isReadyForMeasurementSubscription;
-  late StreamSubscription _facePositionSubscription;
-  late StreamSubscription _latestHeartSignalSubscription;
-  late StreamSubscription _lightningCondSubscription;
+  StreamSubscription? _latestHeartRateSubscription;
+  StreamSubscription? _signalQualityMetricSubscription;
+  StreamSubscription? _measurementStateSubscription;
+  StreamSubscription? _isReadyForMeasurementSubscription;
+  StreamSubscription? _facePositionSubscription;
+  StreamSubscription? _latestHeartSignalSubscription;
+  StreamSubscription? _lightningCondSubscription;
 
   @override
   Stream<double> observeCurrentSignalQualityMetric() => _signalQualityMetric;
@@ -56,10 +57,8 @@ class ShenAiMeasurementEventService implements MeasurementEventsService {
   @override
   Future<int?> initMeasurement() async {
     final result = await ShenaiSdk.initialize(ConstantsValues.shenAiAPIkey, "");
-
     if (result == InitializationResult.success) {
       final displayTexture = await ShenaiSdk.createDisplayTexture();
-
       _isReadyForMeasurementSubscription =
           ShenaiSdk.isReadyForMeasurementStream()
               .listen((isReadyForMeasurementEvent) {
@@ -134,7 +133,6 @@ class ShenAiMeasurementEventService implements MeasurementEventsService {
         _signalQualityMetric.add(signalQualityMetricEvent);
       }
     });
-
     _measurementStateSubscription =
         ShenaiSdk.getMeasurementStatusStream().listen((status) {
       switch (status) {
@@ -147,7 +145,7 @@ class ShenAiMeasurementEventService implements MeasurementEventsService {
           _measurementState.add(MeasurementInProgress(progress / 100));
           break;
         case MeasurementState.success:
-          final MeasurementResult result = ShenaiSdk.getMeasurementResult();
+          final MeasurementResult result = ShenaiSdk.getLatestMeasurementSummary();
           final summaryData = MeasurementSummaryData(
             heartRate: result.heartRateBpm,
             hrv: result.hrvSdnnMs,
@@ -169,22 +167,22 @@ class ShenAiMeasurementEventService implements MeasurementEventsService {
   @override
   Future<void> detach() async {
     await ShenaiSdk.abortMeasurement();
-    _latestHeartRateSubscription.cancel();
-    _signalQualityMetricSubscription.cancel();
-    _measurementStateSubscription.cancel();
-    _latestHeartSignalSubscription.cancel();
+    _latestHeartRateSubscription?.cancel();
+    _signalQualityMetricSubscription?.cancel();
+    _measurementStateSubscription?.cancel();
+    _latestHeartSignalSubscription?.cancel();
   }
 
   @override
   Future<void> deinitialize() async {
-    ShenaiSdk.deinitialize();
+    compute((val) => ShenaiSdk.deinitialize, null);
   }
 
   @override
   Future<void> deinitializeEngine() async {
-    _facePositionSubscription.cancel();
-    _lightningCondSubscription.cancel();
-    _isReadyForMeasurementSubscription.cancel();
-    await ShenaiSdk.deinitialize();
+    _facePositionSubscription?.cancel();
+    _lightningCondSubscription?.cancel();
+    _isReadyForMeasurementSubscription?.cancel();
+    await deinitialize();
   }
 }

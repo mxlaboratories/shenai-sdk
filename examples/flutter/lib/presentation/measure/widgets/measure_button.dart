@@ -21,7 +21,6 @@ class MeasureButton extends StatelessWidget {
       color: isReadyForMeasurement || isMeasuring
           ? AppColors.mainColorTeal
           : AppColors.mainColorLightGrey,
-      disabledColor: AppColors.mainColorLightGrey,
       label: isMeasuring ? ConstantsValues.stopText : ConstantsValues.startText,
       onPressed: () => isReadyForMeasurement && !isMeasuring
           ? BlocProvider.of<MeasureCubit>(context).startMeasurement()

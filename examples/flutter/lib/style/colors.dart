@@ -16,4 +16,5 @@ class AppColors {
   static const Color closeButtonBackgroundColor = Color(0x7fffffff);
   static const Color cameraOverlayBackgroundColor = Color.fromARGB(255, 255, 255, 255);
   static const Color cameraOverlayBackgroundFadedColor = Color.fromARGB(127, 255, 255, 255);
+  static const Color mainColorDarkGrey = Color(0xff424242);
 }

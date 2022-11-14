@@ -1,11 +1,17 @@
 import React, { useEffect, useState, useRef } from "react";
-import CreateShenaiSDK, { ShenaiSDK } from "shenai-sdk";
+import CreateShenaiSDK, {
+  ShenaiSDK,
+  RisksFactors,
+  HealthRisks,
+  Heartbeat,
+} from "shenai-sdk";
 import { useInterval } from "react-use";
 import styled from "styled-components";
 import Header from "./Header";
 import Loading from "./Loading";
 import Result from "./Result";
 import ProgressBar from "./ProgressBar";
+import { HeartbeatsPreview } from "./HeartbeatsPreview";
 
 const LoadingWrapper = styled.div`
   position: absolute;
@@ -19,6 +25,14 @@ const LoadingWrapper = styled.div`
   z-index: 1;
 `;
 
+const OverallWrapper = styled.div`
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -26,6 +40,7 @@ const Wrapper = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
+  margin-bottom: 20px;
   overflow: hidden;
 `;
 
@@ -158,19 +173,14 @@ const ResultWrapper = styled.div`
   width: 33.333%;
 `;
 
-const InfoWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  height: 110px;
-  padding: 20px 60px;
-  button {
-    margin: 0 30px;
-  }
+const RisksContainer = styled.div`
+  background-color: black;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 20px;
 `;
 
-const API_KEY = "eff92074fd0748ddb1381299a67f744c";
+const API_KEY = "";
 const USER_ID = "";
 
 function App() {
@@ -178,6 +188,7 @@ function App() {
   const [hr, setHr] = useState<number>();
   const [hrv, setHrv] = useState<number>();
   const [br, setBr] = useState<number>();
+  const [heartbeats, setHeartbeats] = useState<Heartbeat[]>();
   const [progress, setProgress] = useState<number>(0);
   const [readyForMeasurement, setReadyForMeasurement] =
     useState<boolean>(false);
@@ -185,6 +196,9 @@ function App() {
   const [facePositionInstruction, setFacePositionInstruction] =
     useState("Please wait...");
   const [faceWellPositioned, setFaceWellPositioned] = useState<number>(-1);
+  const [healthRisks, setHealthRisks] = useState<HealthRisks>();
+  const [minHealthRisks, setMinHealthRisks] = useState<HealthRisks>();
+  const [maxHealthRisks, setMaxHealthRisks] = useState<HealthRisks>();
 
   useEffect(() => {
     (async () => {
@@ -238,6 +252,7 @@ function App() {
         setHr(result.heart_rate_bpm);
         setHrv(result.hrv_sdnn_ms);
         setBr(result.breathing_rate_bpm);
+        setHeartbeats(result.heartbeats);
       } else {
         setFacePositionInstruction(
           ((state) => {
@@ -340,8 +355,34 @@ function App() {
     }
   }
 
+  function computeHealthRisks() {
+    if (shenai) {
+      // sample risks factors
+      const risksFactors: RisksFactors = {
+        age: 45,
+        cholesterol: 220,
+        cholesterolHdl: 47,
+        sbp: 137,
+        isSmoker: true,
+        hypertensionTreatment: true,
+        hasDiabetes: true,
+        // bodyHeight: 180,
+        // bodyWeight: 80.0,
+        gender: shenai.Gender.MALE,
+        country: "GB",
+        race: shenai.Race.OTHER,
+      };
+      const risks = shenai.computeHealthRisks(risksFactors);
+      const minRisks = shenai.getMinimalRisks(risksFactors);
+      const maxRisks = shenai.getMaximalRisks(risksFactors);
+      setHealthRisks(risks);
+      setMaxHealthRisks(maxRisks);
+      setMinHealthRisks(minRisks);
+    }
+  }
+
   return (
-    <>
+    <OverallWrapper>
       <Wrapper>
         <Header />
 
@@ -409,7 +450,93 @@ function App() {
           </CanvasOverlayContainer>
         </CanvasWrapper>
       </Wrapper>
-    </>
+      {heartbeats && <HeartbeatsPreview heartbeats={heartbeats} />}
+      <RisksContainer>
+        <ButtonContainer>
+          <Button onClick={computeHealthRisks}>{"Compute Health Risks"}</Button>
+        </ButtonContainer>
+        <Result
+          title={"Vascular Age"}
+          value={
+            healthRisks && healthRisks.vascularAge.hasValue()
+              ? "" + healthRisks.vascularAge.getValue()
+              : "?"
+          }
+          unit={
+            "" +
+            (minHealthRisks && minHealthRisks.vascularAge.hasValue()
+              ? minHealthRisks.vascularAge.getValue() + "-"
+              : "") +
+            (maxHealthRisks && maxHealthRisks.vascularAge.hasValue()
+              ? maxHealthRisks.vascularAge.getValue() + " "
+              : "") +
+            "years"
+          }
+        />
+        <Result
+          title={"Overall CVD Risk"}
+          value={
+            healthRisks && healthRisks.cvDiseases.overallRisk.hasValue()
+              ? "" + healthRisks.cvDiseases.overallRisk.getValue().toFixed(1)
+              : "?"
+          }
+          unit={
+            "" +
+            (minHealthRisks && minHealthRisks.cvDiseases.overallRisk.hasValue()
+              ? minHealthRisks.cvDiseases.overallRisk.getValue() + "-"
+              : "") +
+            (maxHealthRisks && maxHealthRisks.cvDiseases.overallRisk.hasValue()
+              ? maxHealthRisks.cvDiseases.overallRisk.getValue() + " "
+              : "") +
+            "%"
+          }
+        />
+        <Result
+          title={"Hard CV Event Risk"}
+          value={
+            healthRisks &&
+            healthRisks.hardAndFatalEvents.hardCVEventRisk.hasValue()
+              ? "" +
+                healthRisks.hardAndFatalEvents.hardCVEventRisk
+                  .getValue()
+                  .toFixed(1)
+              : "?"
+          }
+          unit={
+            "" +
+            (minHealthRisks &&
+            minHealthRisks.hardAndFatalEvents.hardCVEventRisk.hasValue()
+              ? minHealthRisks.hardAndFatalEvents.hardCVEventRisk.getValue() +
+                "-"
+              : "") +
+            (maxHealthRisks &&
+            maxHealthRisks.hardAndFatalEvents.hardCVEventRisk.hasValue()
+              ? maxHealthRisks.hardAndFatalEvents.hardCVEventRisk.getValue() +
+                " "
+              : "") +
+            "%"
+          }
+        />
+        <Result
+          title={"Total score"}
+          value={
+            healthRisks && healthRisks.scores.totalScore.hasValue()
+              ? "" + healthRisks.scores.totalScore.getValue()
+              : "?"
+          }
+          unit={
+            "" +
+            (minHealthRisks && minHealthRisks.scores.totalScore.hasValue()
+              ? minHealthRisks.scores.totalScore.getValue() + "-"
+              : "") +
+            (maxHealthRisks && maxHealthRisks.scores.totalScore.hasValue()
+              ? maxHealthRisks.scores.totalScore.getValue() + " "
+              : "") +
+            "points"
+          }
+        />
+      </RisksContainer>
+    </OverallWrapper>
   );
 }
 

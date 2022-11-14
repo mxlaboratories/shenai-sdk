@@ -16,7 +16,7 @@ class RoundedFlatButton extends StatelessWidget {
     super.key,
     required this.label,
     required this.onPressed,
-    required this.disabledColor,
+    this.disabledColor = AppColors.mainColorLightGrey,
     this.color = AppColors.white,
     this.icon,
     this.padding = const EdgeInsets.symmetric(horizontal: Dimens.spacing2XL, vertical: Dimens.spacingXs),
@@ -28,7 +28,7 @@ class RoundedFlatButton extends StatelessWidget {
       style: TextButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimens.spacingS)),
         backgroundColor: color,
-        onSurface: disabledColor.withOpacity(0.38),
+        disabledForegroundColor: disabledColor.withOpacity(0.38).withOpacity(0.38),
         padding: padding,
       ),
       onPressed: onPressed,

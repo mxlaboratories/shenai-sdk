@@ -1,6 +1,7 @@
 package ai.mxlabs.sdk_android_example
 
 import ai.mxlabs.sdk_android_example.measurement.MeasurePage
+import ai.mxlabs.sdk_android_example.risks.RiskPage
 import ai.mxlabs.shenai_sdk_android.ShenAIAndroidSDK
 import android.Manifest
 import android.content.pm.PackageManager
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
   private var holder: SurfaceHolder? = null
   private val shenaiSDKHandler = ShenAIAndroidSDK()
   private val cameraRequest = 1888
+  private var showRisks = false
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     if (checkPermissions()) {
@@ -62,7 +64,13 @@ class MainActivity : AppCompatActivity() {
       holder!!.addCallback(SurfaceCallback())
       shenaiSDKHandler.attachToActivity(this)
       val bottomBar = findViewById<ComposeView>(R.id.bottomBar)
-      MeasurePage().showMeasurementView(bottomBar)
+      MeasurePage().showMeasurementView(bottomBar, buttonOnClick = {
+        showRisks = true
+        setContentView(R.layout.risks_page)
+        val pageView = findViewById<ComposeView>(R.id.risksFormView)
+        RiskPage().showMeasurementView(pageView, shenaiSDKHandler)
+      })
+
     }
   }
 
@@ -84,10 +92,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun surfaceDestroyed(surface: SurfaceHolder) {
-      if (shenaiSDKHandler.isInitialized) {
-        shenaiSDKHandler.deinitialize()
+      if (!showRisks) {
+        if (shenaiSDKHandler.isInitialized) {
+          shenaiSDKHandler.deinitialize()
+        }
+        showWelcomePage()
       }
-      showWelcomePage()
     }
 
     override fun surfaceChanged(holder2: SurfaceHolder, format: Int, width: Int, height: Int) {

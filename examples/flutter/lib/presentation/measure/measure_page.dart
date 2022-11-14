@@ -49,9 +49,7 @@ class _MeasurePageState extends State<MeasurePage> {
           },
           builder: (_, state) {
             if (state is MeasureLoading) {
-              return const Center(
-                child: Text("Loading..."),
-              );
+              return const Center(child: CircularProgressIndicator());
             } else {
               return Stack(
                 children: [

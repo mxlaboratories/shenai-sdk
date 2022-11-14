@@ -1,4 +1,4 @@
-package ai.mxlabs.sdk_android_example.ui
+package model
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel

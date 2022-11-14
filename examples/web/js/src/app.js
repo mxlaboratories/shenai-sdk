@@ -12,7 +12,7 @@ async function initialize() {
   try {
     const shenai = await SHEN({
       onRuntimeInitialized: () => {
-        console.log("SHENAI initialized");
+        console.log("SHEN.AI initialized");
       },
     });
 
@@ -20,6 +20,9 @@ async function initialize() {
       if (result === shenai.InitializationResult.OK) {
         document.getElementById("stage").className = "state-loaded";
         beginPolling(shenai);
+        document
+          .getElementById("compute-risks")
+          .addEventListener("click", () => computeRisks(shenai));
       } else {
         error("Shen.ai license activation error " + result.toString());
       }
@@ -96,12 +99,71 @@ function pollMeasurement(shenai) {
       " ms, BR: " +
       Math.round(result.breathing_rate_bpm) +
       " BPM";
+    let intervalsEl = document.getElementById("intervals");
+    let intervals = result.heartbeats;
+    if (intervals) {
+      let download = document.getElementById("download-intervals");
+      download.href =
+        "data:text/csv," +
+        encodeURI(
+          "\nstart_time_sec,end_time_sec,duration_ms\n" +
+            intervals
+              .map(
+                (i) =>
+                  i.start_location_sec.toFixed(3) +
+                  "," +
+                  i.end_location_sec.toFixed(3) +
+                  "," +
+                  i.duration_ms.toString()
+              )
+              .join("\n")
+        );
+      download.style = "";
+    }
     return;
   }
 
   if (isMeasuring && shenai.isReadyForMeasurement()) shenai.startMeasurement();
 
   if (shenai.isReadyForMeasurement()) isMeasuring = true;
+}
+
+function computeRisks(shenai) {
+  // sample risks factors
+  const risksFactors = {
+    age: 45,
+    cholesterol: 220.0,
+    cholesterolHdl: 47.0,
+    sbp: 137,
+    isSmoker: true,
+    hypertensionTreatment: true,
+    hasDiabetes: true,
+    // bodyHeight: 180,
+    // bodyWeight: 80.0,
+    gender: shenai.Gender.MALE,
+    country: "GB",
+    race: shenai.Race.OTHER,
+  };
+  const risks = shenai.computeHealthRisks(risksFactors);
+  const minRisks = shenai.getMinimalRisks(risksFactors);
+  const maxRisks = shenai.getMaximalRisks(risksFactors);
+  if (
+    risks &&
+    minRisks &&
+    maxRisks &&
+    risks.vascularAge.hasValue() &&
+    minRisks.vascularAge.hasValue() &&
+    maxRisks.vascularAge.hasValue()
+  ) {
+    document.getElementById("risks").innerText =
+      "Vascular age (" +
+      minRisks.vascularAge.getValue() +
+      "-" +
+      maxRisks.vascularAge.getValue() +
+      "): " +
+      risks.vascularAge.getValue() +
+      " years";
+  }
 }
 
 await initialize();

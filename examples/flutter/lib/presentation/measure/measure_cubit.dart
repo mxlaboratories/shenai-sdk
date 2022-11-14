@@ -69,8 +69,9 @@ class MeasureCubit extends Cubit<MeasureCubitState> {
     emit(MeasureLoading());
     _measureStateSubscription.cancel();
     _readyForMeasurementSubscription.cancel();
-    await Future<void>.delayed(const Duration(milliseconds: 100));
     await _measurementService.deinitializeEngine();
+    // Time required to deinitialize the engine
+    await Future<void>.delayed(const Duration(seconds: 1));
     emit(MeasureDeinitialized());
   }
 

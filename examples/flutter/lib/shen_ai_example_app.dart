@@ -8,6 +8,9 @@ import 'package:shenai_sdk_example/presentation/measure/measure_values_cubits/pu
 import 'package:shenai_sdk_example/presentation/measure/widgets/face_position/face_position_cubit.dart';
 import 'package:shenai_sdk_example/presentation/measure/widgets/snr_view/snr_cubit.dart';
 import 'package:shenai_sdk_example/presentation/measure/widgets/warning_icon/warning_icon_cubit.dart';
+import 'package:shenai_sdk_example/presentation/risks/form/risk_form_page.dart';
+import 'package:shenai_sdk_example/presentation/risks/risks_cubit.dart';
+import 'package:shenai_sdk_example/presentation/risks/risks_page.dart';
 import 'package:shenai_sdk_example/presentation/welcome_page.dart';
 import 'package:shenai_sdk_example/style/theme.dart';
 
@@ -27,6 +30,7 @@ class ShenAiExampleApp extends StatelessWidget {
         BlocProvider<SnrCubit>(create: (context) => blocFactory.get<SnrCubit>()),
         BlocProvider<FacePositionCubit>(create: (context) => blocFactory.get<FacePositionCubit>()),
         BlocProvider<WarningIconCubit>(create: (context) => blocFactory.get<WarningIconCubit>()),
+        BlocProvider<RisksCubit>(create: (context) => blocFactory.get<RisksCubit>()),
       ],
       child: MaterialApp(
         theme: mainTheme(),
@@ -34,6 +38,8 @@ class ShenAiExampleApp extends StatelessWidget {
         home: const WelcomePage(),
         routes: <String, WidgetBuilder>{
           '/measure': (BuildContext context) => MeasurePage(),
+          '/risks_form': (BuildContext context) => const RiskFormPage(),
+          '/risks': (BuildContext context) => const RisksPage(),
         },
       ),
     );

@@ -618,7 +618,7 @@ packages:
       path: shenai_sdk_flutter
       relative: true
     source: path
-    version: "1.0.2"
+    version: "1.1.0"
   sky_engine:
     dependency: transitive
     description: flutter

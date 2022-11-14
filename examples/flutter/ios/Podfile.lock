@@ -8,7 +8,7 @@ PODS:
     - Flutter
   - permission_handler_apple (9.0.4):
     - Flutter
-  - shenai_sdk_flutter (1.0.2):
+  - shenai_sdk_flutter (1.1.0):
     - Flutter
   - wakelock (0.0.1):
     - Flutter

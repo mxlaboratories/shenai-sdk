@@ -15,12 +15,14 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import model.MeasurementView
 
 class BottomBarClass {
     @Composable
     fun BuildView(
         measurementViewModel: MeasurementView,
-        measurementButtonOnClick: () -> Unit
+        measurementButtonOnClick: () -> Unit,
+        risksButtonOnClick: () -> Unit,
     ) {
         val pulseValue by remember { measurementViewModel.heartRate }
         val hrvValue by remember { measurementViewModel.hrv }
@@ -51,6 +53,17 @@ class BottomBarClass {
                     text = if (isMeasurementValue) "STOP" else "START"
                 )
             }
+            if (hrvValue != 0)
+                Button(
+                    colors = buttonColors(AppColors().mainColorTeal),
+                    modifier = Modifier.width(150.dp),
+                    onClick = risksButtonOnClick,
+                ) {
+                    Text(
+                        color = AppColors().white,
+                        text = "SHOW RISKS"
+                    )
+                }
             CustomLinearProgressBar(measurementViewModel.progress.value/10)
             Spacer(modifier = Modifier.height(8.dp))
             Row(

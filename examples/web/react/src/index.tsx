@@ -5,7 +5,6 @@ import App from "./App";
 import UpgradeBrowser from "./UpgradeBrowser";
 import { Normalize } from "styled-normalize";
 import { createGlobalStyle } from "styled-components";
-import "antd/dist/antd.css";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -13,6 +12,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Raleway', sans-serif;
     font-size: 20pt;
     color: #333;
+    overflow-x: hidden;
   }
 `;
 

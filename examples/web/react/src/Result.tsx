@@ -41,13 +41,13 @@ type ResultProps = {
   title: string,
   value: string,
   unit: string,
-  bkg: string
+  bkg?: string
 }
 
 function Result(props: ResultProps) {
     return (
       <>
-        <Container style={{backgroundImage: "url('" + props.bkg + "')"}}>
+        <Container style={{backgroundImage: props.bkg && "url('" + props.bkg + "')"}}>
           <Title>{props.title}</Title>
           <InnerContainer>
             <Value>{props.value}</Value>

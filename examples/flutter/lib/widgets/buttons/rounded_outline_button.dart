@@ -22,7 +22,7 @@ class RoundedOutlineButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       style: TextButton.styleFrom(
-        primary: color,
+        foregroundColor: color,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
           side: side,
