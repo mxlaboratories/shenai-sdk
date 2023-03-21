@@ -1,6 +1,6 @@
 import SHEN from "./shenai-sdk/index.mjs";
 
-const API_KEY = "";
+const API_KEY = "YOUR_API_KEY";
 const USER_ID = "";
 
 function error(message) {
@@ -16,13 +16,57 @@ async function initialize() {
       },
     });
 
-    shenai.initialize(API_KEY, USER_ID, (result) => {
+    shenai.initialize(API_KEY, USER_ID, {}, (result) => {
       if (result === shenai.InitializationResult.OK) {
         document.getElementById("stage").className = "state-loaded";
         beginPolling(shenai);
         document
           .getElementById("compute-risks")
-          .addEventListener("click", () => computeRisks(shenai));
+          .addEventListener("click", () => {
+            let form = document.getElementById("health-risks-factors");
+            form.style.display = "flex";
+            form.style.flexDirection = "column";
+          });
+        document
+          .getElementById("health-risks-factors")
+          .addEventListener("submit", (e) => {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(e.target).entries());
+            console.log(data);
+
+            const risksFactors = {
+              age: data.age,
+              cholesterol: data.cholesterol,
+              cholesterolHdl: data.cholesterolHdl,
+              sbp: data.sbp,
+              isSmoker: !!data.smoker,
+              hypertensionTreatment: !!data.hypertensionTreatment,
+              hasDiabetes: !!data.diabetes,
+              bodyHeight: data.bodyHeight,
+              bodyWeight: data.bodyWeight,
+              gender:
+                data.gender === "Male"
+                  ? shenai.Gender.MALE
+                  : data.gender === "Female"
+                  ? shenai.Gender.FEMALE
+                  : shenai.Gender.OTHER,
+              country: data.country,
+              race:
+                data.race === "White"
+                  ? shenai.Race.WHITE
+                  : data.race === "African-American"
+                  ? shenai.Race.AFRICAN_AMERICAN
+                  : shenai.Race.OTHER,
+            };
+
+            console.log(risksFactors);
+
+            computeRisks(shenai, risksFactors);
+
+            const form = document.getElementById("health-risks-factors");
+            form.reset();
+            form.style.display = "none";
+          });
       } else {
         error("Shen.ai license activation error " + result.toString());
       }
@@ -42,7 +86,7 @@ function beginPolling(shenai) {
 
 function pollHeartRate(shenai) {
   if (finished) return;
-  const hr = shenai.getLatestHeartRate();
+  const hr = shenai.getHeartRate10s();
 
   document.getElementById("heart-rate").innerText =
     hr && hr > 0 ? Math.round(hr) : "  ";
@@ -83,19 +127,20 @@ function pollFacePosition(shenai) {
 let isMeasuring = false;
 
 function pollMeasurement(shenai) {
-  const measurementState = shenai.getEngineState();
+  const measurementState = shenai.getMeasurementState();
 
-  if (measurementState === shenai.EngineState.SUCCESS) {
+  if (measurementState === shenai.MeasurementState.FINISHED) {
     finished = true;
-    document.getElementById("instruction").innerText = "Measurement complete!";
-    const result = shenai.getMeasurementResult();
+    const result = shenai.getMeasurementResults();
     document.getElementById("heart-rate").innerText = "";
     document.getElementById("progress").innerText = "";
     document.getElementById("results").innerText =
       "HR: " +
       result.heart_rate_bpm +
-      " BPM, HRV: " +
+      " BPM, HRV SDNN: " +
       result.hrv_sdnn_ms +
+      " ms, HRV lnRMSSD: " +
+      result.hrv_lnrmssd_ms +
       " ms, BR: " +
       Math.round(result.breathing_rate_bpm) +
       " BPM";
@@ -119,50 +164,106 @@ function pollMeasurement(shenai) {
               .join("\n")
         );
       download.style = "";
+      document.getElementById("intervals-value").innerText = intervals
+        .map(
+          (i) =>
+            i.start_location_sec.toFixed(3) +
+            "," +
+            i.end_location_sec.toFixed(3) +
+            "," +
+            i.duration_ms.toString()
+        )
+        .join(" ");
     }
+    document.getElementById("instruction").innerText = "Measurement complete!";
     return;
   }
 
-  if (isMeasuring && shenai.isReadyForMeasurement()) shenai.startMeasurement();
+  //if (isMeasuring && shenai.isReadyForMeasurement()) {
+  //  document.getElementById("measuring").innerText = "Measuring...";
+  //  //shenai.startMeasurement();
+  //}
 
-  if (shenai.isReadyForMeasurement()) isMeasuring = true;
+  //if (shenai.isReadyForMeasurement()) isMeasuring = true;
 }
 
-function computeRisks(shenai) {
+function computeRisks(shenai, risksFactors) {
   // sample risks factors
-  const risksFactors = {
-    age: 45,
-    cholesterol: 220.0,
-    cholesterolHdl: 47.0,
-    sbp: 137,
-    isSmoker: true,
-    hypertensionTreatment: true,
-    hasDiabetes: true,
-    // bodyHeight: 180,
-    // bodyWeight: 80.0,
-    gender: shenai.Gender.MALE,
-    country: "GB",
-    race: shenai.Race.OTHER,
-  };
   const risks = shenai.computeHealthRisks(risksFactors);
   const minRisks = shenai.getMinimalRisks(risksFactors);
   const maxRisks = shenai.getMaximalRisks(risksFactors);
-  if (
-    risks &&
-    minRisks &&
-    maxRisks &&
-    risks.vascularAge.hasValue() &&
-    minRisks.vascularAge.hasValue() &&
-    maxRisks.vascularAge.hasValue()
-  ) {
-    document.getElementById("risks").innerText =
-      "Vascular age (" +
-      minRisks.vascularAge.getValue() +
-      "-" +
-      maxRisks.vascularAge.getValue() +
-      "): " +
-      risks.vascularAge.getValue() +
-      " years";
+  if (risks && minRisks && maxRisks) {
+    document.getElementById("risks").style.display = "block";
+
+    const displayRisks = (subRisks, subMinRisks, subMaxRisks) => (name) => {
+      console.log(
+        "Shall display risks for ",
+        name,
+        " theya re: ",
+        subRisks[name],
+        subMinRisks[name],
+        subMaxRisks[name]
+      );
+      if (
+        subRisks[name] !== null &&
+        subMinRisks[name] !== null &&
+        subMaxRisks[name] !== null
+      ) {
+        document.getElementById(name).innerText +=
+          "(" +
+          subMinRisks[name] +
+          "-" +
+          subMaxRisks[name] +
+          "): " +
+          subRisks[name].toFixed(1);
+      }
+    };
+
+    if (
+      risks.hardAndFatalEvents &&
+      minRisks.hardAndFatalEvents &&
+      maxRisks.hardAndFatalEvents
+    ) {
+      const subRisks = risks.hardAndFatalEvents;
+      const subMinRisks = minRisks.hardAndFatalEvents;
+      const subMaxRisks = maxRisks.hardAndFatalEvents;
+      [
+        "coronaryDeathEventRisk",
+        "fatalStrokeEventRisk",
+        "totalCVMortalityRisk",
+        "hardCVEventRisk",
+      ].forEach(displayRisks(subRisks, subMinRisks, subMaxRisks));
+    }
+    if (risks.cvDiseases && minRisks.cvDiseases && maxRisks.cvDiseases) {
+      const subRisks = risks.cvDiseases;
+      const subMinRisks = minRisks.cvDiseases;
+      const subMaxRisks = maxRisks.cvDiseases;
+      [
+        "overallRisk",
+        "coronaryHeartDiseaseRisk",
+        "strokeRisk",
+        "heartFailureRisk",
+        "peripheralVascularDiseaseRisk",
+      ].forEach(displayRisks(subRisks, subMinRisks, subMaxRisks));
+    }
+    if (risks.scores && minRisks.scores && maxRisks.scores) {
+      const subRisks = risks.scores;
+      const subMinRisks = minRisks.scores;
+      const subMaxRisks = maxRisks.scores;
+      [
+        "ageScore",
+        "sbpScore",
+        "smokingScore",
+        "diabetesScore",
+        "bmiScore",
+        "cholesterolScore",
+        "cholesterolHdlScore",
+        "totalScore",
+      ].forEach(displayRisks(subRisks, subMinRisks, subMaxRisks));
+    }
+    if (risks.vascularAge && minRisks.vascularAge && maxRisks.vascularAge) {
+      displayRisks(risks, minRisks, maxRisks)("vascularAge");
+    }
   }
 }
 

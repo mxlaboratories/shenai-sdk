@@ -1,0 +1,30 @@
+{
+  "name": "shenai-sdk-playground",
+  "version": "2.0.0-beta.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.0.1",
+    "@next/font": "13.2.4",
+    "@types/node": "18.15.5",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
+    "@types/react-syntax-highlighter": "^15.5.6",
+    "antd": "^5.3.2",
+    "eslint": "8.36.0",
+    "eslint-config-next": "13.2.4",
+    "next": "13.2.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-syntax-highlighter": "^15.5.0",
+    "shenai-sdk": "file:shenai-sdk",
+    "typescript": "5.0.2",
+    "uplot": "^1.6.24",
+    "uplot-react": "^1.1.4"
+  }
+}

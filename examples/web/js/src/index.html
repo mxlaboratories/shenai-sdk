@@ -3,14 +3,32 @@
   <head>
     <script type="module" src="app.js"></script>
     <link rel="stylesheet" href="app.css" />
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 5px;
+        text-align: left;
+      }
+    </style>
   </head>
 
   <body>
     <div id="stage" class="state-loading">
       <div id="instruction"></div>
+      <div id="measuring" style="display: none">""</div>
       <div id="progress"></div>
       <div id="canvas-wrapper">
-        <canvas id="mxcanvas" width="480" height="720"></canvas>
+        <canvas
+          id="mxcanvas"
+          style="max-height: 80vh; aspect-ratio: 480/894"
+        ></canvas>
       </div>
       <div id="heart-rate"></div>
       <div id="results"></div>
@@ -22,8 +40,93 @@
       >
         <button>Download heartbeat intervals</button>
       </a>
+      <div id="intervals-value" style="display: none">""</div>
       <button id="compute-risks">Compute Risks</button>
-      <div id="risks"></div>
+      <form id="health-risks-factors" style="display: none">
+        <label for="age">Age (years):</label>
+        <input type="number" name="age" id="age" />
+        <label for="cholesterol">Cholesterol:</label
+        ><input type="number" name="cholesterol" id="cholesterol" />
+        <label for="cholesterolHdl">Cholesterol HDL:</label
+        ><input type="number" name="cholesterolHdl" id="cholesterolHdl" />
+        <label for="sbp">Systolic blood pressure:</label
+        ><input type="number" name="sbp" id="sbp" />
+        <label for="smoker">Current smoker:</label
+        ><input type="checkbox" name="smoker" id="smoker" />
+        <label for="hypertensionTreatment">Have hypertension treatment:</label
+        ><input
+          type="checkbox"
+          name="hypertensionTreatment"
+          id="hypertensionTreatment"
+        />
+        <label for="diabetes">Have diabetes:</label
+        ><input type="checkbox" name="diabetes" id="diabetes" />
+        <label for="bodyHeight">Body height (cm):</label
+        ><input type="number" name="bodyHeight" id="bodyHeight" />
+        <label for="bodyWeight">Body weight (kg):</label
+        ><input type="number" name="bodyWeight" id="bodyWeight" />
+        <label for="gender">Gender:</label
+        ><input type="text" list="gender-list" name="gender" id="gender" />
+        <label for="country">Country ISO code:</label
+        ><input type="text" name="country" id="country" />
+        <label for="race">Race</label
+        ><input type="text" list="race-list" name="race" id="race" />
+        <input
+          id="health-risks-submit"
+          name="submit"
+          type="submit"
+          value="Compute health risks"
+        />
+      </form>
+
+      <datalist id="gender-list">
+        <option value="Male"></option>
+        <option value="Female"></option>
+        <option value="Other"></option>
+      </datalist>
+
+      <datalist id="race-list">
+        <option value="White"></option>
+        <option value="African-American"></option>
+        <option value="Other"></option>
+      </datalist>
+
+      <div id="risks" style="display: none">
+        <table id="health-risks-results">
+          <tr>
+            <th>Hard and fatal events risks</th>
+            <td id="coronaryDeathEventRisk">Coronary death event risk</td>
+            <td id="fatalStrokeEventRisk">Fatal stroke event risk</td>
+            <td id="totalCVMortalityRisk">Total CV mortality risk</td>
+            <td id="hardCVEventRisk">Hard CV event risk</td>
+          </tr>
+          <tr>
+            <th>CV diseases risks</th>
+            <td id="overallRisk">Overall risk</td>
+            <td id="coronaryHeartDiseaseRisk">Coronary heart disease risk</td>
+            <td id="strokeRisk">Stroke risk</td>
+            <td id="heartFailureRisk">Heart failure risk</td>
+            <td id="peripheralVascularDiseaseRisk">
+              Peripheral vascular disease risk
+            </td>
+          </tr>
+          <tr>
+            <th>Risks factors scores</th>
+            <td id="ageScore">Age score</td>
+            <td id="sbpScore">SBP score</td>
+            <td id="smokingScore">Smoking score</td>
+            <td id="diabetesScore">Diabetes score</td>
+            <td id="bmiScore">BMI score</td>
+            <td id="cholesterolScore">Cholesterol score</td>
+            <td id="cholesterolHdlScore">Cholesterol HDL score</td>
+            <td id="totalScore">Total score</td>
+          </tr>
+          <tr>
+            <th>Vascular age</th>
+            <td id="vascularAge">Vascular age</td>
+          </tr>
+        </table>
+      </div>
     </div>
   </body>
 </html>

@@ -1,0 +1,52 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.1'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.application'
+
+android {
+    namespace 'ai.mxlabs.sdk_android_minimal_example'
+    compileSdkVersion 33 
+    defaultConfig {
+        targetSdkVersion 33
+        minSdkVersion 26
+        versionCode 12
+    }
+
+    signingConfigs {
+        release {
+            keyAlias System.getenv("UPLOAD_KEY_ALIAS")
+            keyPassword System.getenv("UPLOAD_KEY_PASSWORD")
+            storeFile file(System.getenv("UPLOAD_STORE_FILE"))
+            storePassword System.getenv("UPLOAD_STORE_PASSWORD")
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
+            debuggable false
+        }
+    }
+}
+
+dependencies {
+    implementation "androidx.activity:activity:1.6.1"
+    implementation "androidx.fragment:fragment:1.5.5"
+    implementation files('libs/shenai_sdk.aar')
+}

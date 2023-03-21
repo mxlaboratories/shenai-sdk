@@ -1,0 +1,64 @@
+.main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.controlsCol {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.controlTitle {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.controlRow {
+  margin: 5px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.outputsCol {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  padding-right: 10px;
+}
+
+.outputRow {
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.outputBicol {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.bicolcol {
+}
+
+.outputLabel {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.outputValue {
+  margin-left: 10px;
+}

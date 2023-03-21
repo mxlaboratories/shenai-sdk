@@ -1,0 +1,23 @@
+name: shenai_sdk_minimal_example
+description: Demonstrates how to use the shenai_sdk plugin.
+version: 2.0.0-beta.0
+
+publish_to: 'none'
+
+environment:
+  sdk: ">=2.16.1 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  shenai_sdk:
+      # Specify a local relative path to the Shen.AI SDK
+      path: ./shenai_sdk
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.1
+
+flutter:
+  uses-material-design: true

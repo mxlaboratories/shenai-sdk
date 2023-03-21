@@ -1,0 +1,10 @@
+.codeSnippet {
+  margin-right: 5px;
+  opacity: 0.5;
+  font-size: 12px;
+}
+
+.codeSnippet:hover {
+  opacity: 1;
+  color: rgb(64, 150, 255);
+}
