@@ -58,6 +58,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  bool _isInitialized = true;
+
   String _title = "Shen.ai SDK";
 
   Timer? timer;
@@ -117,10 +119,17 @@ class _MyHomePageState extends State<MyHomePage> {
           onTap: () async { 
             if (await ShenaiSdk.isInitialized()) {
               ShenaiSdk.deinitialize().then((value) => print("Deinitialized!"));
+              setState(() {
+                _isInitialized = false;
+              });
             } else {
               await ShenaiSdk.initialize(shenApiKey, "");
 
-              var risks = await ShenaiSdk.computeHealthRisks(RisksFactors(
+              setState(() {
+                _isInitialized = true;
+              });
+
+              var factors = RisksFactors(
                 age: 45,
                 cholesterol: 220,
                 cholesterolHdl: 47,
@@ -133,7 +142,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 gender: Gender.male,
                 race: Race.white,
                 country: "US",      
-              ));
+              );
+
+              var risks = await ShenaiSdk.computeHealthRisks(factors);
               print("Risks:");
               print(risks.hardAndFatalEvents.coronaryDeathEventRisk);
               print(risks.cvDiseases.overallRisk);
@@ -147,7 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       body: Center(         
-        child: ShenaiView(),
+        child: _isInitialized ? ShenaiView() : Text("Not initialized"),
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
       ),

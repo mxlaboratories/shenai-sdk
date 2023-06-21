@@ -127,6 +127,7 @@ interface ShenaiSdkState {
   enableCameraSwap: boolean;
   showFaceMask: boolean;
   showBloodFlow: boolean;
+  enableStartAfterSuccess: boolean;
 
   bbox: NormalizedFaceBbox | null;
   measurementState: MeasurementState;
@@ -140,6 +141,7 @@ interface ShenaiSdkState {
 
   recordingEnabled: boolean;
   badSignal: number | null;
+  signalQuality: number | null;
 }
 
 export default function Home() {
@@ -176,6 +178,7 @@ export default function Home() {
           enableCameraSwap: shenaiSDK.getEnableCameraSwap(),
           showFaceMask: shenaiSDK.getShowFaceMask(),
           showBloodFlow: shenaiSDK.getShowBloodFlow(),
+          enableStartAfterSuccess: shenaiSDK.getEnableStartAfterSuccess(),
 
           bbox: shenaiSDK.getNormalizedFaceBbox(),
           measurementState: shenaiSDK.getMeasurementState(),
@@ -190,6 +193,7 @@ export default function Home() {
           recordingEnabled: shenaiSDK.getRecordingEnabled(),
 
           badSignal: shenaiSDK.getTotalBadSignalSeconds(),
+          signalQuality: shenaiSDK.getCurrentSignalQualityMetric(),
         };
         setSdkState(newState);
         //console.log(newState);
@@ -343,6 +347,8 @@ shenaiSDK.getPrecisionMode();
                 code={`shenaiSDK.setMeasurementPreset(shenaiSDK.MeasurementPreset.ONE_MINUTE_HR_HRV_BR);
 shenaiSDK.setMeasurementPreset(shenaiSDK.MeasurementPreset.ONE_MINUTE_BETA_METRICS);
 shenaiSDK.setMeasurementPreset(shenaiSDK.MeasurementPreset.INFINITE_HR);
+shenaiSDK.setMeasurementPreset(shenaiSDK.MeasurementPreset.FOURTY_FIVE_SECONDS_UNVALIDATED);
+shenaiSDK.setMeasurementPreset(shenaiSDK.MeasurementPreset.THIRTY_SECONDS_UNVALIDATED);
 shenaiSDK.getMeasurementPreset();`}
               />
             </div>
@@ -394,6 +400,38 @@ shenaiSDK.getMeasurementPreset();`}
                 }
               >
                 Infinite HR
+              </Button>
+              <Button
+                type={
+                  sdkState?.measurementPreset &&
+                  sdkState?.measurementPreset ===
+                    shenaiSDK?.MeasurementPreset.FOURTY_FIVE_SECONDS_UNVALIDATED
+                    ? "primary"
+                    : "default"
+                }
+                onClick={() =>
+                  shenaiSDK?.setMeasurementPreset(
+                    shenaiSDK.MeasurementPreset.FOURTY_FIVE_SECONDS_UNVALIDATED
+                  )
+                }
+              >
+                45s (Unvalidated)
+              </Button>
+              <Button
+                type={
+                  sdkState?.measurementPreset &&
+                  sdkState?.measurementPreset ===
+                    shenaiSDK?.MeasurementPreset.THIRTY_SECONDS_UNVALIDATED
+                    ? "primary"
+                    : "default"
+                }
+                onClick={() =>
+                  shenaiSDK?.setMeasurementPreset(
+                    shenaiSDK.MeasurementPreset.THIRTY_SECONDS_UNVALIDATED
+                  )
+                }
+              >
+                30s (Unvalidated)
               </Button>
             </Button.Group>
           </div>
@@ -544,6 +582,21 @@ shenaiSDK.setShowBloodFlow(false);`}
           </div>
           <div className={styles.controlRow}>
             <div className={styles.controlTitle}>
+              Enable start after success:
+              <TypescriptSnippet
+                code={`shenaiSDK.getEnableStartAfterSuccess();
+shenaiSDK.setEnableStartAfterSuccess(false);`}
+              />
+            </div>
+            <Switch
+              checked={sdkState?.enableStartAfterSuccess}
+              onChange={(v) => {
+                shenaiSDK?.setEnableStartAfterSuccess(v);
+              }}
+            />
+          </div>
+          <div className={styles.controlRow}>
+            <div className={styles.controlTitle}>
               Debug record measurement:
               <TypescriptSnippet
                 code={`shenaiSDK.getRecordingEnabled();
@@ -643,6 +696,19 @@ switch (measurementState) {
             </div>
             <div className={styles.outputValue}>
               {sdkState?.badSignal ? `${sdkState.badSignal.toFixed(0)}s` : ""}
+            </div>
+          </div>
+          <div className={styles.outputRow}>
+            <div className={styles.outputLabel}>
+              Signal quality:
+              <TypescriptSnippet
+                code={`shenaiSDK.getCurrentSignalQualityMetric();`}
+              />
+            </div>
+            <div className={styles.outputValue}>
+              {sdkState?.signalQuality
+                ? `${sdkState.signalQuality.toFixed(1)} dB`
+                : ""}
             </div>
           </div>
           Results:

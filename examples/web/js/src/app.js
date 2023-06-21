@@ -124,8 +124,6 @@ function pollFacePosition(shenai) {
   document.getElementById("instruction").innerText = instruction;
 }
 
-let isMeasuring = false;
-
 function pollMeasurement(shenai) {
   const measurementState = shenai.getMeasurementState();
 
@@ -179,12 +177,10 @@ function pollMeasurement(shenai) {
     return;
   }
 
-  //if (isMeasuring && shenai.isReadyForMeasurement()) {
-  //  document.getElementById("measuring").innerText = "Measuring...";
-  //  //shenai.startMeasurement();
-  //}
-
-  //if (shenai.isReadyForMeasurement()) isMeasuring = true;
+  if (shenai.getOperatingMode() !== shenai.OperatingMode.MEASURE) {
+    document.getElementById("measuring").innerText = "Measuring...";
+    shenai.setOperatingMode(shenai.OperatingMode.MEASURE);
+  }
 }
 
 function computeRisks(shenai, risksFactors) {

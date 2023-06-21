@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.1'
+        classpath 'com.android.tools.build:gradle:7.4.0'
     }
 }
 
@@ -20,10 +20,11 @@ apply plugin: 'com.android.application'
 android {
     namespace 'ai.mxlabs.sdk_android_minimal_example'
     compileSdkVersion 33 
+    buildToolsVersion "34.0.0-rc4"
     defaultConfig {
         targetSdkVersion 33
         minSdkVersion 26
-        versionCode 12
+        versionCode 18
     }
 
     signingConfigs {
@@ -36,11 +37,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            debuggable true
+        }
         release {
             signingConfig signingConfigs.release
             minifyEnabled false
             shrinkResources false
-            debuggable false
         }
     }
 }

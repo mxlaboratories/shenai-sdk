@@ -19,18 +19,18 @@ const chartOptions: Uplot.Options = {
   series: [
     {
       label: "Time",
-      value: (_, v) => `${v.toFixed(2)} s`,
+      value: (_, v) => v && `${v.toFixed(2)} s`,
     },
     {
       label: "Realtime intervals",
       stroke: "red",
-      value: (_, v) => `${v} ms`,
+      value: (_, v) => v && `${v} ms`,
       spanGaps: true,
     },
     {
       label: "Final intervals",
       stroke: "blue",
-      value: (_, v) => `${v} ms`,
+      value: (_, v) => v && `${v} ms`,
       spanGaps: true,
     },
   ],

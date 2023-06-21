@@ -12,13 +12,11 @@ _Note: These examples are for version 2 (beta) of the SDK. Please see the [v1](h
 
 ## Developer Portal
 
-For more information and SDK documentation please visit the Shen.AI Developer Portal. Documentation for version 2 of the SDK is being prepared at:
+For more information and SDK documentation please visit the Shen.AI Developer Portal. Documentation for version 2 of the SDK is available at:
 
-- [docs-beta.shen.ai](https://docs-beta.shen.ai)
+- [developer.shen.ai](https://developer.shen.ai)
 
-You'll need to download the SDK from the Developer Portal and place it in the relevant example directory in order to run the example. You'll also need an API key that can be generated on the Developer Portal.
-
-> To see documentation for v1 of the SDK, go to [developer.shen.ai](https://developer.shen.ai)
+You'll need to download the SDK from the Developer Portal and place it in the relevant example directory in order to run the example. You'll also need an API key that can be accessed on the Developer Portal.
 
 ## Supported platforms
 

@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - shenai_sdk (2.0.0-beta.0):
+  - shenai_sdk (2.0.0-beta.15):
     - Flutter
 
 DEPENDENCIES:
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  shenai_sdk: a88becd8549c6bc916fa0768c3c46f641a90a19b
+  shenai_sdk: ce8a231e1503afe5528630901d76e859d2909be9
 
 PODFILE CHECKSUM: 775997f741c536251164e3eacf6e34abf2eb7a17
 
