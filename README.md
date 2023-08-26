@@ -4,12 +4,6 @@ This repository contains integration examples of Shen.AI SDK for all supported p
 
 Please see readme files in the relevant example directory for quickstart instructions and customization notes.
 
----
-
-_Note: These examples are for version 2 (beta) of the SDK. Please see the [v1](https://github.com/mxlaboratories/shenai-sdk/tree/v1) branch for examples of the previous version._
-
----
-
 ## Developer Portal
 
 For more information and SDK documentation please visit the Shen.AI Developer Portal. Documentation for version 2 of the SDK is available at:
@@ -24,7 +18,7 @@ Shen.AI SDK currently supports the following platforms:
 
 - [Flutter](./examples/flutter/) (both iOS and Android)
 - [Android](./examples/android/)
-- [iOS](./examples/ios/)
+- [iOS](./examples/ios/) (Swift/Obj-C)
 - [Web](./examples/web/)
 
 Code examples and apps can be found under `examples` in subdirectories corresponding to the platforms.
@@ -35,4 +29,4 @@ To easily see what methods are available in the SDK, you can use the **SDK Web P
 
 ## Integration problems, questions and issues
 
-In case of problems with SDK integration or questions, please search in both open and closed **Issues** or post a new issue if it can be discussed in the public domain. You can also contact us privately using business channels opened as part of your contract.
+In case of problems with SDK integration or questions, please contact us using business channels opened as part of your contract. If the issue can be discussed in the public domain, you can also use the **Issues** functionality of GitHub.
