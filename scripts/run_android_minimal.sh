@@ -8,7 +8,7 @@ mkdir -p $rootdir/examples/android/java-minimal/libs/
 
 sdk_target="$rootdir/examples/android/java-minimal/libs/shenai_sdk.aar"
 
-if [ ! -d "$sdk_target" ]; then
+if [ ! -f "$sdk_target" ]; then
     echo "Shen.ai SDK not found - please place the SDK in $sdk_target"
     exit 1
 fi

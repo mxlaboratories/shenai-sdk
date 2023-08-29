@@ -27,21 +27,11 @@ android {
         versionCode 18
     }
 
-    signingConfigs {
-        release {
-            keyAlias System.getenv("UPLOAD_KEY_ALIAS")
-            keyPassword System.getenv("UPLOAD_KEY_PASSWORD")
-            storeFile file(System.getenv("UPLOAD_STORE_FILE"))
-            storePassword System.getenv("UPLOAD_STORE_PASSWORD")
-        }
-    }
-
     buildTypes {
         debug {
             debuggable true
         }
         release {
-            signingConfig signingConfigs.release
             minifyEnabled false
             shrinkResources false
         }
