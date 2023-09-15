@@ -11,6 +11,10 @@ body {
     line-height: 1.5em;
 }
 
+.hidden {
+    display: none !important;
+}
+
 #stage {
     height: 100%;
     display: flex;
@@ -56,10 +60,30 @@ body {
     flex: 1;
 }
 
-#canvas-wrapper canvas {
+#mxcanvas {
     height: 100%;
+    max-height: 80vh;
+    aspect-ratio: 480/894;
 }
 
 #heart-rate:not(:empty)::before {
     content: "Heart rate: ";
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 5px;
+  text-align: left;
+}
+
+#health-risks-factors {
+    display: flex;
+    flex-direction: column;
 }

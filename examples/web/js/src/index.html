@@ -1,48 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"
+    />
     <script type="module" src="app.js"></script>
     <link rel="stylesheet" href="app.css" />
-    <style>
-      table,
-      th,
-      td {
-        border: 1px solid black;
-        border-collapse: collapse;
-      }
-
-      th,
-      td {
-        padding: 5px;
-        text-align: left;
-      }
-    </style>
   </head>
 
   <body>
     <div id="stage" class="state-loading">
       <div id="instruction"></div>
-      <div id="measuring" style="display: none">""</div>
       <div id="progress"></div>
       <div id="canvas-wrapper">
-        <canvas
-          id="mxcanvas"
-          style="max-height: 80vh; aspect-ratio: 480/894"
-        ></canvas>
+        <canvas id="mxcanvas"></canvas>
       </div>
       <div id="heart-rate"></div>
       <div id="results"></div>
       <a
         id="download-intervals"
-        style="display: none"
+        class="hidden"
         href=""
         download="heartbeats.csv"
       >
         <button>Download heartbeat intervals</button>
       </a>
-      <div id="intervals-value" style="display: none">""</div>
       <button id="compute-risks">Compute Risks</button>
-      <form id="health-risks-factors" style="display: none">
+      <form id="health-risks-factors" class="hidden">
         <label for="age">Age (years):</label>
         <input type="number" name="age" id="age" />
         <label for="cholesterol">Cholesterol:</label
@@ -91,7 +76,7 @@
         <option value="Other"></option>
       </datalist>
 
-      <div id="risks" style="display: none">
+      <div id="risks" class="hidden">
         <table id="health-risks-results">
           <tr>
             <th>Hard and fatal events risks</th>

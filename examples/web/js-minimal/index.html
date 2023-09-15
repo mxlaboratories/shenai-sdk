@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"
+    />
     <script type="module">
       import CreateShenaiSDK from "./shenai-sdk/index.mjs";
-      const Shenai = CreateShenaiSDK().then((shenai) => {
-        shenai.initialize("YOUR_API_KEY", "", {}, (result) => {
-          if (result !== shenai.InitializationResult.OK) {
-            error("Shen.ai license activation error " + result.toString());
+      const API_KEY = "YOUR_API_KEY";
+      const USER_ID = "";
+      CreateShenaiSDK().then((shenai) => {
+        shenai.initialize(API_KEY, USER_ID, {}, (result) => {
+          if (result === shenai.InitializationResult.OK) {
+            console.log("Shen.AI initialized (license activated)");
+          } else {
+            alert("Shen.AI license activation error " + result.toString());
           }
         });
       });

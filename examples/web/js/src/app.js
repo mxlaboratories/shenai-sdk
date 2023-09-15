@@ -1,4 +1,4 @@
-import SHEN from "./shenai-sdk/index.mjs";
+import CreateShenaiSDK from "./shenai-sdk/index.mjs";
 
 const API_KEY = "YOUR_API_KEY";
 const USER_ID = "";
@@ -8,67 +8,39 @@ function error(message) {
   alert(message);
 }
 
+function showElement(elem) {
+  elem.classList.remove("hidden");
+}
+
+function hideElement(elem) {
+  elem.classList.add("hidden");
+}
+
 async function initialize() {
   try {
-    const shenai = await SHEN({
-      onRuntimeInitialized: () => {
-        console.log("SHEN.AI initialized");
-      },
+    const shenai = await CreateShenaiSDK({
+      onRuntimeInitialized: () => console.log("Shen.AI SDK ready"),
     });
 
     shenai.initialize(API_KEY, USER_ID, {}, (result) => {
       if (result === shenai.InitializationResult.OK) {
+        console.log("Shen.AI initialized (license activated)");
         document.getElementById("stage").className = "state-loaded";
         beginPolling(shenai);
         document
           .getElementById("compute-risks")
-          .addEventListener("click", () => {
-            let form = document.getElementById("health-risks-factors");
-            form.style.display = "flex";
-            form.style.flexDirection = "column";
-          });
+          .addEventListener("click", () =>
+            showElement(document.getElementById("health-risks-factors"))
+          );
         document
           .getElementById("health-risks-factors")
           .addEventListener("submit", (e) => {
             e.preventDefault();
             const data = Object.fromEntries(new FormData(e.target).entries());
-            console.log(data);
-
-            const risksFactors = {
-              age: data.age,
-              cholesterol: data.cholesterol,
-              cholesterolHdl: data.cholesterolHdl,
-              sbp: data.sbp,
-              isSmoker: !!data.smoker,
-              hypertensionTreatment: !!data.hypertensionTreatment,
-              hasDiabetes: !!data.diabetes,
-              bodyHeight: data.bodyHeight,
-              bodyWeight: data.bodyWeight,
-              gender:
-                data.gender === "Male"
-                  ? shenai.Gender.MALE
-                  : data.gender === "Female"
-                  ? shenai.Gender.FEMALE
-                  : shenai.Gender.OTHER,
-              country: data.country,
-              race:
-                data.race === "White"
-                  ? shenai.Race.WHITE
-                  : data.race === "African-American"
-                  ? shenai.Race.AFRICAN_AMERICAN
-                  : shenai.Race.OTHER,
-            };
-
-            console.log(risksFactors);
-
-            computeRisks(shenai, risksFactors);
-
-            const form = document.getElementById("health-risks-factors");
-            form.reset();
-            form.style.display = "none";
+            computeRisks(shenai, data);
           });
       } else {
-        error("Shen.ai license activation error " + result.toString());
+        error("Shen.AI license activation error " + result.toString());
       }
     });
   } catch (e) {
@@ -77,6 +49,7 @@ async function initialize() {
 }
 
 let finished = false;
+let wakeLock = "wakeLock" in navigator ? null : false;
 
 function beginPolling(shenai) {
   setInterval(() => pollHeartRate(shenai), 300);
@@ -87,9 +60,8 @@ function beginPolling(shenai) {
 function pollHeartRate(shenai) {
   if (finished) return;
   const hr = shenai.getHeartRate10s();
-
-  document.getElementById("heart-rate").innerText =
-    hr && hr > 0 ? Math.round(hr) : "  ";
+  const hrElem = document.getElementById("heart-rate");
+  hrElem.innerText = hr ? Math.round(hr) : "  ";
 }
 
 function FacePositionInstructions(shenai, faceState) {
@@ -104,24 +76,62 @@ function FacePositionInstructions(shenai, faceState) {
       return "Move your head closer to the camera";
     case shenai.FaceState.UNSTABLE:
       return "Too much head movement";
-    default:
-      return "";
   }
+  return "";
 }
 
 function pollFacePosition(shenai) {
   if (finished) return;
   const facePosition = shenai.getFaceState();
   const instruction = FacePositionInstructions(shenai, facePosition);
+  document.getElementById("instruction").innerText = instruction;
 
   const progress = shenai.getMeasurementProgressPercentage();
-
   if (progress > 0) {
-    document.getElementById("progress").innerText =
-      "Progress: " + Math.round(progress) + "%";
+    const progressElem = document.getElementById("progress");
+    progressElem.innerText = `Progress: ${Math.round(progress)}%`;
   }
+}
 
-  document.getElementById("instruction").innerText = instruction;
+function makeCsvHref(columnNames, dataRows) {
+  return (
+    "data:text/csv," +
+    encodeURI(
+      "\n" +
+        columnNames.join(",") +
+        "\n" +
+        dataRows.map((row) => row.join(",")).join("\n")
+    )
+  );
+}
+
+function presentResults(results) {
+  document.getElementById("results").innerText = [
+    `HR: ${results.heart_rate_bpm} BPM`,
+    `HRV SDNN: ${results.hrv_sdnn_ms} ms`,
+    `HRV lnRMSSD: ${results.hrv_lnrmssd_ms} ms`,
+    `BR: ${Math.round(results.breathing_rate_bpm)} BPM`,
+  ].join(", ");
+
+  const intervals = results.heartbeats;
+  if (intervals) {
+    const csvColumnNames = ["start_time_sec", "end_time_sec", "duration_ms"];
+    const csvDataRows = intervals.map((i) => [
+      i.start_location_sec.toFixed(3),
+      i.end_location_sec.toFixed(3),
+      i.duration_ms.toString(),
+    ]);
+    const download = document.getElementById("download-intervals");
+    download.href = makeCsvHref(csvColumnNames, csvDataRows);
+    showElement(download);
+    sessionStorage.setItem(
+      "intervals",
+      csvDataRows.map((row) => row.join(",")).join(" ")
+    );
+  }
+  document.getElementById("instruction").innerText = "Measurement complete!";
+  document.getElementById("heart-rate").innerText = "";
+  document.getElementById("progress").innerText = "";
 }
 
 function pollMeasurement(shenai) {
@@ -129,89 +139,36 @@ function pollMeasurement(shenai) {
 
   if (measurementState === shenai.MeasurementState.FINISHED) {
     finished = true;
-    const result = shenai.getMeasurementResults();
-    document.getElementById("heart-rate").innerText = "";
-    document.getElementById("progress").innerText = "";
-    document.getElementById("results").innerText =
-      "HR: " +
-      result.heart_rate_bpm +
-      " BPM, HRV SDNN: " +
-      result.hrv_sdnn_ms +
-      " ms, HRV lnRMSSD: " +
-      result.hrv_lnrmssd_ms +
-      " ms, BR: " +
-      Math.round(result.breathing_rate_bpm) +
-      " BPM";
-    let intervalsEl = document.getElementById("intervals");
-    let intervals = result.heartbeats;
-    if (intervals) {
-      let download = document.getElementById("download-intervals");
-      download.href =
-        "data:text/csv," +
-        encodeURI(
-          "\nstart_time_sec,end_time_sec,duration_ms\n" +
-            intervals
-              .map(
-                (i) =>
-                  i.start_location_sec.toFixed(3) +
-                  "," +
-                  i.end_location_sec.toFixed(3) +
-                  "," +
-                  i.duration_ms.toString()
-              )
-              .join("\n")
-        );
-      download.style = "";
-      document.getElementById("intervals-value").innerText = intervals
-        .map(
-          (i) =>
-            i.start_location_sec.toFixed(3) +
-            "," +
-            i.end_location_sec.toFixed(3) +
-            "," +
-            i.duration_ms.toString()
-        )
-        .join(" ");
-    }
-    document.getElementById("instruction").innerText = "Measurement complete!";
+    if (wakeLock) wakeLock.release().then(() => (wakeLock = null));
+    const results = shenai.getMeasurementResults();
+    presentResults(results);
     return;
   }
 
   if (shenai.getOperatingMode() !== shenai.OperatingMode.MEASURE) {
-    document.getElementById("measuring").innerText = "Measuring...";
+    console.log("Start measuring");
     shenai.setOperatingMode(shenai.OperatingMode.MEASURE);
+    sessionStorage.setItem("measuring", "true");
+    if (wakeLock === null)
+      navigator.wakeLock.request("screen").then((l) => (wakeLock = l));
   }
 }
 
-function computeRisks(shenai, risksFactors) {
+function presentRisks(shenai, risksFactors) {
   // sample risks factors
   const risks = shenai.computeHealthRisks(risksFactors);
   const minRisks = shenai.getMinimalRisks(risksFactors);
   const maxRisks = shenai.getMaximalRisks(risksFactors);
   if (risks && minRisks && maxRisks) {
-    document.getElementById("risks").style.display = "block";
+    showElement(document.getElementById("risks"));
 
     const displayRisks = (subRisks, subMinRisks, subMaxRisks) => (name) => {
-      console.log(
-        "Shall display risks for ",
-        name,
-        " theya re: ",
-        subRisks[name],
-        subMinRisks[name],
-        subMaxRisks[name]
-      );
-      if (
-        subRisks[name] !== null &&
-        subMinRisks[name] !== null &&
-        subMaxRisks[name] !== null
-      ) {
-        document.getElementById(name).innerText +=
-          "(" +
-          subMinRisks[name] +
-          "-" +
-          subMaxRisks[name] +
-          "): " +
-          subRisks[name].toFixed(1);
+      const risk = subRisks[name];
+      const minRisk = subMinRisks[name];
+      const maxRisk = subMaxRisks[name];
+      if (risk !== null && minRisk !== null && maxRisk !== null) {
+        const riskElem = document.getElementById(name);
+        riskElem.innerText += `(${minRisk}-${maxRisk}): ${risk.toFixed(1)}`;
       }
     };
 
@@ -261,6 +218,41 @@ function computeRisks(shenai, risksFactors) {
       displayRisks(risks, minRisks, maxRisks)("vascularAge");
     }
   }
+}
+
+function computeRisks(shenai, data) {
+  const risksFactors = {
+    age: data.age,
+    cholesterol: data.cholesterol,
+    cholesterolHdl: data.cholesterolHdl,
+    sbp: data.sbp,
+    isSmoker: !!data.smoker,
+    hypertensionTreatment: !!data.hypertensionTreatment,
+    hasDiabetes: !!data.diabetes,
+    bodyHeight: data.bodyHeight,
+    bodyWeight: data.bodyWeight,
+    gender:
+      data.gender === "Male"
+        ? shenai.Gender.MALE
+        : data.gender === "Female"
+        ? shenai.Gender.FEMALE
+        : shenai.Gender.OTHER,
+    country: data.country,
+    race:
+      data.race === "White"
+        ? shenai.Race.WHITE
+        : data.race === "African-American"
+        ? shenai.Race.AFRICAN_AMERICAN
+        : shenai.Race.OTHER,
+  };
+
+  console.log(risksFactors);
+
+  presentRisks(shenai, risksFactors);
+
+  const form = document.getElementById("health-risks-factors");
+  form.reset();
+  hideElement(form);
 }
 
 await initialize();
