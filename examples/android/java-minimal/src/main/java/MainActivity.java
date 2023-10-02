@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.Handler;
 
 import androidx.activity.ComponentActivity;
 import androidx.activity.result.ActivityResultLauncher;
@@ -16,6 +17,23 @@ import ai.mxlabs.shenai_sdk.ShenAIAndroidSDK;
 import ai.mxlabs.shenai_sdk.ShenAIView;
 
 public class MainActivity extends ComponentActivity {
+    private ShenAIAndroidSDK shenaiSDKHandler = new ShenAIAndroidSDK();
+    final Handler handler = new Handler();
+    final int pollingIntervalMs = 1000;
+    final Runnable resultsTask = new Runnable() {
+         public void run() {
+             ShenAIAndroidSDK.MeasurementResults results = shenaiSDKHandler.getMeasurementResults();
+             int heartRate10s = shenaiSDKHandler.getHeartRate10s();
+             if (results != null) {
+                 System.out.println("Measurement result: HR " + results.hrBpm + ", SDNN " + results.hrvSdnnMs);
+             } else {
+                 System.out.println("Current heart rate: " + heartRate10s);
+             }
+             handler.postDelayed(this, pollingIntervalMs);
+         }
+     };
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,10 +43,10 @@ public class MainActivity extends ComponentActivity {
             initializeShenAI();
             ShenAIView shenaiView = new ShenAIView(this);
             setContentView(shenaiView);
+            handler.postDelayed(resultsTask, pollingIntervalMs);
         } else {
             requestPermissionLauncher.launch(Manifest.permission.CAMERA);
         }
-
     }
 
     private ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
@@ -37,13 +55,12 @@ public class MainActivity extends ComponentActivity {
                     initializeShenAI();
                     ShenAIView shenaiView = new ShenAIView(this);
                     setContentView(shenaiView);
+                    handler.postDelayed(resultsTask, pollingIntervalMs);
                 }
             });
 
     private void initializeShenAI() {
-        shenaiSDKHandler.initialize(this, "YOUR_API_KEY", "",
+        shenaiSDKHandler.initialize(this, "API_KEY", "",
                 shenaiSDKHandler.getDefaultInitializationSettings());
     }
-
-    private ShenAIAndroidSDK shenaiSDKHandler = new ShenAIAndroidSDK();
 }
