@@ -17,6 +17,7 @@ You'll need to download the SDK from the Developer Portal and place it in the re
 Shen.AI SDK currently supports the following platforms:
 
 - [Flutter](./examples/flutter/) (both iOS and Android)
+- [React Native](./examples/react-native/) (both iOS and Android)
 - [Android](./examples/android/)
 - [iOS](./examples/ios/) (Swift/Obj-C)
 - [Web](./examples/web/)
