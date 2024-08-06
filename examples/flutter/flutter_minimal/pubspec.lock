@@ -129,7 +129,7 @@ packages:
       path: shenai_sdk
       relative: true
     source: path
-    version: "2.0.0-beta.15"
+    version: "2.4.0"
   sky_engine:
     dependency: transitive
     description: flutter

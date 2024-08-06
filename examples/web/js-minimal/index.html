@@ -10,13 +10,27 @@
       const API_KEY = "YOUR_API_KEY";
       const USER_ID = "";
       CreateShenaiSDK().then((shenai) => {
-        shenai.initialize(API_KEY, USER_ID, {}, (result) => {
-          if (result === shenai.InitializationResult.OK) {
-            console.log("Shen.AI initialized (license activated)");
-          } else {
-            alert("Shen.AI license activation error " + result.toString());
+        shenai.initialize(
+          API_KEY,
+          USER_ID,
+          {
+            hideShenaiLogo: false,
+            measurementPreset:
+              shenai.MeasurementPreset.FOURTY_FIVE_SECONDS_UNVALIDATED,
+            eventCallback: (event) => {
+              console.log("Shen.AI event:", event);
+            },
+            onCameraError: () => console.log("camera error"),
+          },
+          (result) => {
+            if (result === shenai.InitializationResult.OK) {
+              console.log("Shen.AI initialized (license activated)");
+            } else {
+              alert("Shen.AI license activation error " + result.toString());
+            }
           }
-        });
+        );
+        window.shenai = shenai; // to be able to access shenai from the browser console
       });
     </script>
     <style>

@@ -9,6 +9,9 @@ const String shenApiKey = "YOUR_API_KEY";
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();  
   var res = await ShenaiSdk.initialize(shenApiKey, "");
+  ShenaiSdk.setEventCallback((event) {
+    print("Shen.AI event: " + event.toString());
+  });
   runApp(const MyApp());
 }
 

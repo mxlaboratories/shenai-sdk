@@ -15,7 +15,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        let result = ShenaiSDK.initialize("API_KEY", userID: nil, settings: nil)
+        let initSettings = InitializationSettings()
+        initSettings.eventCallback = { (e: Event) -> Void in
+            print("Shen.AI event: ", e.rawValue)
+        }
+        
+        let result = ShenaiSDK.initialize("API_KEY", userID: nil, settings: initSettings)
         if result == .success {
             print("SDK initialized successfully!")
         } else {
@@ -40,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let measurementResult = ShenaiSDK.getMeasurementResults()
 
         if measurementResult != nil {
-            print("Measurement result: HR \(measurementResult!.heartRateBpm) BPM, SDNN \(measurementResult!.hrvSdnnMs) ms")
+            print("Measurement result: HR \(measurementResult?.heartRateBpm) BPM, SDNN \(measurementResult?.hrvSdnnMs) ms")
         } else if currentHeartRate != nil {
             print("Current heart rate: \(currentHeartRate!)")
         }

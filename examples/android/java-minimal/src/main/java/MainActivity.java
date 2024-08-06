@@ -21,18 +21,17 @@ public class MainActivity extends ComponentActivity {
     final Handler handler = new Handler();
     final int pollingIntervalMs = 1000;
     final Runnable resultsTask = new Runnable() {
-         public void run() {
-             ShenAIAndroidSDK.MeasurementResults results = shenaiSDKHandler.getMeasurementResults();
-             int heartRate10s = shenaiSDKHandler.getHeartRate10s();
-             if (results != null) {
-                 System.out.println("Measurement result: HR " + results.hrBpm + ", SDNN " + results.hrvSdnnMs);
-             } else {
-                 System.out.println("Current heart rate: " + heartRate10s);
-             }
-             handler.postDelayed(this, pollingIntervalMs);
-         }
-     };
-
+        public void run() {
+            ShenAIAndroidSDK.MeasurementResults results = shenaiSDKHandler.getMeasurementResults();
+            int heartRate10s = shenaiSDKHandler.getHeartRate10s();
+            if (results != null) {
+                System.out.println("Measurement result: HR " + results.hrBpm + ", SDNN " + results.hrvSdnnMs);
+            } else {
+                System.out.println("Current heart rate: " + heartRate10s);
+            }
+            handler.postDelayed(this, pollingIntervalMs);
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +59,13 @@ public class MainActivity extends ComponentActivity {
             });
 
     private void initializeShenAI() {
-        shenaiSDKHandler.initialize(this, "API_KEY", "",
-                shenaiSDKHandler.getDefaultInitializationSettings());
+        ShenAIAndroidSDK.InitializationSettings settings = shenaiSDKHandler.getDefaultInitializationSettings();
+        settings.eventCallback = new ShenAIAndroidSDK.EventCallback() {
+            @Override
+            public void onEvent(ShenAIAndroidSDK.Event event) {
+                System.out.println("Shen.AI event: " + event);
+            }
+        };
+        shenaiSDKHandler.initialize(this, "API_KEY", "", settings);
     }
 }

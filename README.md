@@ -6,7 +6,7 @@ Please see readme files in the relevant example directory for quickstart instruc
 
 ## Developer Portal
 
-For more information and SDK documentation please visit the Shen.AI Developer Portal. Documentation for version 2 of the SDK is available at:
+For more information and SDK documentation please visit the Shen.AI Developer Portal. Documentation for the most recent version of the SDK is available at:
 
 - [developer.shen.ai](https://developer.shen.ai)
 

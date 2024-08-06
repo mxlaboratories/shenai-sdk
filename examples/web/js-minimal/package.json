@@ -1,12 +1,12 @@
 {
   "name": "shenai-sdk-example-js-minimal",
-  "version": "2.0.0-beta.18",
+  "version": "2.4.0",
   "private": true,
   "dependencies": {
     "serve": "^13.0.2"
   },
   "scripts": {
-    "build": "rm -rf build && mkdir build && cp -r index.html ./shenai-sdk build/",
+    "build": "rm -rf build && mkdir build && cp index.html build/ && cp -r ./shenai-sdk build/shenai-sdk",
     "serve": "serve -s build --config=../serve.json",
     "start": "yarn build && yarn serve"
   }
