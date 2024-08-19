@@ -6,5 +6,31 @@
 
 .codeSnippet:hover {
   opacity: 1;
-  color: rgb(64, 150, 255);
+  color: rgb(66, 180, 173);
+}
+
+.codeSnippetWrapper {
+  position: relative;
+}
+
+.codeInner {
+  padding-right: 50px !important;
+}
+
+.copyCodeButton {
+  position: absolute;
+  right: 8px;
+  top: 8px; 
+  background: rgba(255, 255, 255, 0.15);
+  color: #f0f0f0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.copyCodeButton:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+.copyCodeButton:active {
+  background: rgba(255, 255, 255, 0.35);
 }
