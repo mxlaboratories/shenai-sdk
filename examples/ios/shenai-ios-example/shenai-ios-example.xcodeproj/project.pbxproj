@@ -9,9 +9,8 @@
 /* Begin PBXBuildFile section */
 		35273FB62940C1AC00E6A2D8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 35273FB52940C1AC00E6A2D8 /* AppDelegate.m */; };
 		35273FC72940C1AD00E6A2D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 35273FC62940C1AD00E6A2D8 /* main.m */; };
+		35DB0C0A2D70A50E00368181 /* ShenaiSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35DB0C092D70A50E00368181 /* ShenaiSDK.xcframework */; };
 		35EA05002949029F00E5DD11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35EA04FF2949029F00E5DD11 /* Assets.xcassets */; };
-		35F68B6B2A9A0EC400C6F4A9 /* ShenaiSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35F68B6A2A9A0EC400C6F4A9 /* ShenaiSDK.framework */; };
-		35F68B6C2A9A0ED200C6F4A9 /* ShenaiSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 35F68B6A2A9A0EC400C6F4A9 /* ShenaiSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -21,7 +20,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				35F68B6C2A9A0ED200C6F4A9 /* ShenaiSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -34,8 +32,8 @@
 		35273FB52940C1AC00E6A2D8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		35273FC52940C1AD00E6A2D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		35273FC62940C1AD00E6A2D8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		35DB0C092D70A50E00368181 /* ShenaiSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = ShenaiSDK.xcframework; sourceTree = "<group>"; };
 		35EA04FF2949029F00E5DD11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		35F68B6A2A9A0EC400C6F4A9 /* ShenaiSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShenaiSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,7 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35F68B6B2A9A0EC400C6F4A9 /* ShenaiSDK.framework in Frameworks */,
+				35DB0C0A2D70A50E00368181 /* ShenaiSDK.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +80,7 @@
 		35273FCD2941304900E6A2D8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				35F68B6A2A9A0EC400C6F4A9 /* ShenaiSDK.framework */,
+				35DB0C092D70A50E00368181 /* ShenaiSDK.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -283,9 +281,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = S46GDQG7Y5;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(PROJECT_DIR)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "shenai-ios-example/Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Capture and analyze facial video";
@@ -316,9 +312,7 @@
 				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S46GDQG7Y5;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(PROJECT_DIR)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "shenai-ios-example/Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Capture and analyze facial video";
