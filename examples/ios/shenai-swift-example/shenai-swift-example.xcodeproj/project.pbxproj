@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		355A57762A9650630026F4C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A57752A9650630026F4C9 /* AppDelegate.swift */; };
 		355A577F2A9650630026F4C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 355A577E2A9650630026F4C9 /* Assets.xcassets */; };
-		355FC4842A9A04D9006505E9 /* ShenaiSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 355FC4832A9A04D9006505E9 /* ShenaiSDK.framework */; };
-		355FC4852A9A058D006505E9 /* ShenaiSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 355FC4832A9A04D9006505E9 /* ShenaiSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		357F42C72D819EE100E25586 /* ShenaiSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357F42C52D819E7E00E25586 /* ShenaiSDK.xcframework */; };
+		357F42C82D819EE100E25586 /* ShenaiSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 357F42C52D819E7E00E25586 /* ShenaiSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -20,7 +20,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				355FC4852A9A058D006505E9 /* ShenaiSDK.framework in Embed Frameworks */,
+				357F42C82D819EE100E25586 /* ShenaiSDK.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -32,7 +32,7 @@
 		355A57752A9650630026F4C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		355A577E2A9650630026F4C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		355A57832A9650630026F4C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		355FC4832A9A04D9006505E9 /* ShenaiSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShenaiSDK.framework; sourceTree = SOURCE_ROOT; };
+		357F42C52D819E7E00E25586 /* ShenaiSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = ShenaiSDK.xcframework; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,7 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				355FC4842A9A04D9006505E9 /* ShenaiSDK.framework in Frameworks */,
+				357F42C72D819EE100E25586 /* ShenaiSDK.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,7 +69,7 @@
 				355A57752A9650630026F4C9 /* AppDelegate.swift */,
 				355A577E2A9650630026F4C9 /* Assets.xcassets */,
 				355A57832A9650630026F4C9 /* Info.plist */,
-				355FC4832A9A04D9006505E9 /* ShenaiSDK.framework */,
+				357F42C52D819E7E00E25586 /* ShenaiSDK.xcframework */,
 			);
 			path = "shenai-swift-example";
 			sourceTree = "<group>";
@@ -273,9 +273,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S46GDQG7Y5;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(PROJECT_DIR)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "shenai-swift-example/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -302,9 +300,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S46GDQG7Y5;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(PROJECT_DIR)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "shenai-swift-example/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
