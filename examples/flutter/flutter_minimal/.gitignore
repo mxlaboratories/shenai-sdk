@@ -49,3 +49,6 @@ app.*.map.json
 /shenai_sdk
 
 /.fvm/flutter_sdk
+
+# FVM Version Cache
+.fvm/
