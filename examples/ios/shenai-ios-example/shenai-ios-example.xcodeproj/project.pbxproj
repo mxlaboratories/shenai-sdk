@@ -11,6 +11,7 @@
 		35273FC72940C1AD00E6A2D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 35273FC62940C1AD00E6A2D8 /* main.m */; };
 		35DB0C0A2D70A50E00368181 /* ShenaiSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35DB0C092D70A50E00368181 /* ShenaiSDK.xcframework */; };
 		35EA05002949029F00E5DD11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35EA04FF2949029F00E5DD11 /* Assets.xcassets */; };
+		35EB3C842D9EC31800F4E0C1 /* ShenaiSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 35DB0C092D70A50E00368181 /* ShenaiSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -20,6 +21,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				35EB3C842D9EC31800F4E0C1 /* ShenaiSDK.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
