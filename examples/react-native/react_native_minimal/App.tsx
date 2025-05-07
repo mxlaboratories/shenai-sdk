@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, SafeAreaView } from "react-native";
+import { View, Text, SafeAreaView, NativeEventEmitter, NativeModules } from "react-native";
 
 import {
   initialize,
@@ -10,6 +10,10 @@ import {
   useMeasurementResults,
 } from "react-native-shenai-sdk";
 
+const { ShenaiSdkNativeModule } = NativeModules;
+
+const sdkEventEmitter = new NativeEventEmitter(ShenaiSdkNativeModule);
+
 const App = () => {
   const [initResult, setInitResult] = useState<
     InitializationResult | null | false
@@ -18,6 +22,12 @@ const App = () => {
   useEffect(() => {
     async function initSDK() {
       try {
+        const subscription = sdkEventEmitter.addListener("ShenAIEvent", (event) => {    
+          const eventName = event?.EventName;
+          if (eventName) {
+            console.log("Event Name:", eventName);
+          }
+        });
         console.log("Initializing SDK");
         const result = await initialize("API_KEY", "", {
           measurementPreset: MeasurementPreset.THIRTY_SECONDS_UNVALIDATED,
