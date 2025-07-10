@@ -1,5 +1,6 @@
 # Shen.AI SDK library
 react-native-shenai-sdk/
+shenai_sdk_react_native.zip
 
 # OSX
 #
@@ -42,6 +43,7 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
+.yarn/
 
 # fastlane
 #
