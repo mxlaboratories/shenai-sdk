@@ -1,0 +1,26 @@
+{
+  "name": "capacitor_minimal",
+  "version": "1.0.0",
+  "description": "Shen.AI Capacitor Example",
+  "private": true,
+  "type": "module",
+  "keywords": [
+    "capacitor",
+    "mobile"
+  ],
+  "scripts": {
+    "start": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@capacitor/core": "latest",
+    "capacitor-shenai-sdk": "file:./capacitor-shenai-sdk",
+    "@capacitor/ios": "7.0.0",
+    "@capacitor/android": "7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "latest",
+    "vite": "^5.4.2"
+  }
+}

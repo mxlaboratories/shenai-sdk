@@ -1,0 +1,10 @@
+{
+  "appId": "com.example.app",
+  "appName": "Shen.AI Capacitor Example",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false
+    }
+  }
+}

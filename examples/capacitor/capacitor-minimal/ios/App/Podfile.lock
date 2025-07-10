@@ -1,0 +1,28 @@
+PODS:
+  - Capacitor (7.0.0):
+    - CapacitorCordova
+  - CapacitorCordova (7.0.0)
+  - CapacitorShenaiSdk (2.8.2-beta.0-25-gf7b03077):
+    - Capacitor
+
+DEPENDENCIES:
+  - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - CapacitorShenaiSdk (from `../../node_modules/capacitor-shenai-sdk`)
+
+EXTERNAL SOURCES:
+  Capacitor:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorCordova:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorShenaiSdk:
+    :path: "../../node_modules/capacitor-shenai-sdk"
+
+SPEC CHECKSUMS:
+  Capacitor: fcbee427ff437f414bbb3bc2d39364ad9bd2b8a5
+  CapacitorCordova: 345f93b7edd121db98e4ec20ac94d6d7bcaf7e48
+  CapacitorShenaiSdk: bb0130e53b627f703b7a0eaab87a25035e95d346
+
+PODFILE CHECKSUM: 2e6429b86a091a9f358895ec1cb618ab92b3b41c
+
+COCOAPODS: 1.16.2
