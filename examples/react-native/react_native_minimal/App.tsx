@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, SafeAreaView, NativeEventEmitter, NativeModules } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  NativeEventEmitter,
+  NativeModules,
+} from "react-native";
 
 import {
   initialize,
@@ -22,12 +28,15 @@ const App = () => {
   useEffect(() => {
     async function initSDK() {
       try {
-        const subscription = sdkEventEmitter.addListener("ShenAIEvent", (event) => {    
-          const eventName = event?.EventName;
-          if (eventName) {
-            console.log("Event Name:", eventName);
+        const subscription = sdkEventEmitter.addListener(
+          "ShenAIEvent",
+          (event) => {
+            const eventName = event?.EventName;
+            if (eventName) {
+              console.log("Event Name:", eventName);
+            }
           }
-        });
+        );
         console.log("Initializing SDK");
         const result = await initialize("API_KEY", "", {
           measurementPreset: MeasurementPreset.THIRTY_SECONDS_UNVALIDATED,
