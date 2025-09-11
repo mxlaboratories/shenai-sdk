@@ -1,0 +1,14 @@
+{
+  "name": "shenai-sdk-example-js-full",
+  "version": "2.8.1",
+  "private": true,
+  "main": "index.js",
+  "dependencies": {
+    "serve": "^14.2.4"
+  },
+  "scripts": {
+    "build": "rm -rf build && mkdir build && cp pages/*.html build/ && cp -r assets build/assets && cp -r shenai-sdk build/shenai-sdk && cp app-config.js build/",
+    "serve": "serve build --config=../serve.json",
+    "start": "yarn build && yarn serve"
+  }
+}

@@ -1,0 +1,140 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+.wrapper {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@supports (-webkit-touch-callout: none) {
+    .wrapper {
+        height: -webkit-fill-available;
+    }
+}
+
+.logo {
+    position: absolute;
+    top: 0%;
+    margin-top: 130px;
+    left: 50%;
+    width: 120px;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    pointer-events: none;
+}
+
+#mxcanvas {
+    aspect-ratio: 480/894;
+    max-width: 100%;
+    max-height: 100%;
+}
+@supports (-webkit-touch-callout: none) {
+    #mxcanvas {
+        max-height: -webkit-fill-available;
+    }
+}
+@media (max-aspect-ratio: 480/894) {
+    #mxcanvas {
+        width: 100%;
+        height: auto;
+    }
+}
+@media (min-aspect-ratio: 480/894) {
+    #mxcanvas {
+        height: 100%;
+        width: auto;
+    }
+}
+
+h2 {
+    margin-bottom: 2rem;
+}
+
+h4 {
+    margin-bottom: 2rem;
+}
+  
+.button-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+}
+  
+button {
+    font-size: 1.2rem;
+    padding: 0.75rem 2rem;
+    border: 2px solid #444;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+  
+button:hover {
+    background-color: #ddd;
+    transform: scale(1.05);
+    border-color: #222;
+}
+
+pre {
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    overflow-x: auto;
+}
+
+.controls {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(4px);
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    max-width: 220px;
+}
+.controls input {
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+.controls button {
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background: #0074d9;
+    color: #fff;
+    transition: background 0.2s ease;
+}
+.controls button:hover {
+    background: #005fa3;
+}
+.controls hr {
+    width: 100%;
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 4px 0;
+}
+  
