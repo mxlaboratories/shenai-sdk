@@ -1,0 +1,7 @@
+<linker>
+  <!-- Root the entire binding so dynamic registrar has all types/protocols available at runtime -->
+  <assembly fullname="Shenai.iOS.Binding" preserve="all" />
+  <!-- Also keep our platform assembly intact to be safe -->
+  <assembly fullname="Shenai.Maui" preserve="all" />
+</linker>
+
