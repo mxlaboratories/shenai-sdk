@@ -8,7 +8,9 @@ export class ShenaiSdkService {
   readyCallback: ((sdk: any) => void) | undefined;
 
   constructor() {
-    import('shenai-sdk').then((LoadSDK) => {
+      const sdkModuleUrl = '/shenai-sdk/index.mjs';
+      (import(/* @vite-ignore */ sdkModuleUrl) as Promise<typeof import('shenai-sdk')>)
+      .then((LoadSDK) => {
       LoadSDK.default({
         onRuntimeInitialized: () => {
           console.log('Shen.AI Runtime initialized');
