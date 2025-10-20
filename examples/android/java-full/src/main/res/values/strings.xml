@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_menu_title">Shen.AI Android examples</string>
+    <string name="full_flow_button">Full UI Flow</string>
+    <string name="no_ui_button">No Embedded UI</string>
+    <string name="calibration_button">Calibration Flow</string>
+    <string name="health_indices_button">Health Indices (No Scan)</string>
+    <string name="history_button">Measurements History</string>
+    <string name="start_measurement">Start measurement</string>
+    <string name="stop_measurement">Stop measurement</string>
+    <string name="heart_rate_placeholder">Heart rate: --</string>
+    <string name="progress_placeholder">Progress: --</string>
+    <string name="signal_quality_placeholder">Signal quality: --</string>
+    <string name="status_idle">Status: Not initialized</string>
+    <string name="status_ready">Status: Ready</string>
+    <string name="status_measuring">Status: Measuring</string>
+    <string name="compute_indices">Compute health indices</string>
+    <string name="health_indices_hint">Enter available risk factor values and tap compute.</string>
+    <string name="history_empty">Click "'"Show stored measurements"'" to see history</string>
+    <string name="show_history">Show stored measurements</string>
+    <string name="health_indices_result_header">Latest computation:</string>
+    <string name="hint_age">Age</string>
+    <string name="hint_height_cm">Height (cm)</string>
+    <string name="hint_weight_kg">Weight (kg)</string>
+    <string name="hint_sbp">Systolic BP (mmHg)</string>
+    <string name="hint_dbp">Diastolic BP (mmHg)</string>
+    <string name="measurement_result_title">Measurement result</string>
+    <string name="measurement_result_missing">No measurement data available.</string>
+    <string name="return_to_main_button">Back to main menu</string>
+</resources>
