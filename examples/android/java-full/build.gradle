@@ -1,0 +1,55 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.12.1'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.application'
+
+android {
+    namespace 'ai.mxlabs.sdk_android_full_example'
+    compileSdkVersion 35
+    buildToolsVersion "36.0.0"
+    defaultConfig {
+        targetSdkVersion 35
+        minSdkVersion 26
+        versionCode 52
+    }
+
+    signingConfigs {
+        release {
+            keyAlias "upload"
+            keyPassword System.getenv("UPLOAD_KEY_PASSWORD")
+            storeFile file("../../../scripts/ci/upload-keystore.jks")
+            storePassword System.getenv("UPLOAD_KEY_PASSWORD")
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+        }
+        release {
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+            shrinkResources false
+        }
+    }
+}
+
+dependencies {
+    implementation "androidx.activity:activity:1.6.1"
+    implementation "androidx.fragment:fragment:1.5.5"
+    implementation files('libs/shenai_sdk.aar')
+}
