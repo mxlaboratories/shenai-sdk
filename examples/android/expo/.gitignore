@@ -1,0 +1,23 @@
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Expo / React Native caches
+.expo/
+.expo-shared/
+metro-cache/
+
+# Build output
+web-build/
+dist/
+
+# Local SDK copy created by build scripts
+react-native-shenai-sdk/
+
+# OS files
+.DS_Store
+Thumbs.db
