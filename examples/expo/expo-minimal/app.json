@@ -15,7 +15,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "ai.shen.shenaitest",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow Shen.AI to access the camera for remote health assessments",
+        "NSLocalNetworkUsageDescription": "Allow Shen.AI to connect to the local development server on your network",
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        }
+      }
     },
     "android": {
       "package": "ai.shen.shenaitest",
