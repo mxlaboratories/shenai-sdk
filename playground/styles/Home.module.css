@@ -106,6 +106,7 @@
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
+  margin-right: 5px;
 }
 .outputLabel {
   font-size: 80%;
@@ -243,4 +244,32 @@
 .visualizationColTitle h4 {
   font-weight: bold;
   margin: 0;
+}
+
+.loginButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.logoutButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.configPanelComponent {
+  margin: 3px 0;
+  width: 100%;
+}
+
+.configElement {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 3px 0;
+  overflow: scroll;
 }

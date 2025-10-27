@@ -11,7 +11,7 @@ import {
 import { getEnumName } from "../helpers";
 
 export const MeasurementPresetChoice: React.FC<{
-  shenaiSDK: ShenaiSDK | undefined;
+  shenaiSDK: ShenaiSDK | null;
   sdkState?: ShenaiSdkState;
   setInitializationSettings: Dispatch<
     SetStateAction<InitializationSettings | undefined>
@@ -21,22 +21,20 @@ export const MeasurementPresetChoice: React.FC<{
     if (!shenaiSDK) return;
     const m = new Map<MeasurementPreset, string>();
     m.set(
-      shenaiSDK.MeasurementPreset.ONE_MINUTE_HR_HRV_BR,
-      "1 minute HR/HRV/BR"
+      shenaiSDK.MeasurementPreset.ONE_MINUTE_ALL_METRICS,
+      "1 minute"
     );
     m.set(
-      shenaiSDK.MeasurementPreset.ONE_MINUTE_BETA_METRICS,
-      "1 minute beta metrics (BP/stress)"
-    );
-    m.set(shenaiSDK.MeasurementPreset.INFINITE_HR, "Infinite HR");
-    m.set(shenaiSDK.MeasurementPreset.INFINITE_METRICS, "Infinite Metrics");
-    m.set(
-      shenaiSDK.MeasurementPreset.FOURTY_FIVE_SECONDS_UNVALIDATED,
-      "45s (Unvalidated)"
+      shenaiSDK.MeasurementPreset.FOURTY_FIVE_SECONDS_ALL_METRICS,
+      "45s"
     );
     m.set(
-      shenaiSDK.MeasurementPreset.THIRTY_SECONDS_UNVALIDATED,
-      "30s (Unvalidated)"
+      shenaiSDK.MeasurementPreset.THIRTY_SECONDS_ALL_METRICS,
+      "30s"
+    );
+    m.set(
+      shenaiSDK.MeasurementPreset.QUICK_HR_MODE,
+      "10s Heart Rate"
     );
     m.set(shenaiSDK.MeasurementPreset.CUSTOM, "Custom");
     return m;

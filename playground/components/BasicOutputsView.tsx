@@ -5,7 +5,7 @@ import { getEnumName } from "../helpers";
 import { ShenaiSDK } from "shenai-sdk";
 
 export const BasicOutputsView: React.FC<{
-  shenaiSDK: ShenaiSDK | undefined;
+  shenaiSDK: ShenaiSDK | null;
   sdkState?: ShenaiSdkState;
 }> = ({ shenaiSDK, sdkState }) => {
   const measurementInProgress =
@@ -109,7 +109,7 @@ switch (measurementState) {
         </div>
         <div className={styles.outputValue}>
           {typeof sdkState?.signalQuality === "number" && measurementInProgress
-            ? `${sdkState.signalQuality.toFixed(1)} dB`
+            ? `${(sdkState.signalQuality * 100).toFixed(0)} %`
             : "-"}
         </div>
       </div>

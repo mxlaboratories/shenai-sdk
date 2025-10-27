@@ -1,6 +1,6 @@
 {
-  "name": "shenai-sdk-playground",
-  "version": "2.4.3",
+  "name": "playground",
+  "version": "2.10.7-13-g93e79c3c",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,23 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.3.0",
+    "@ant-design/icons": "^5.6.1",
     "@hello-pangea/dnd": "^16.6.0",
     "@next/font": "13.5.6",
     "@types/node": "20.11.21",
     "@types/react": "18.2.60",
     "@types/react-dom": "18.2.19",
-    "@types/react-syntax-highlighter": "^15.5.11",
-    "antd": "^5.14.2",
+    "@types/react-syntax-highlighter": "^15.5.13",
+    "antd": "^5.26.0",
     "eslint": "8.57.0",
     "eslint-config-next": "14.1.0",
     "next": "13.5.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-syntax-highlighter": "^15.5.0",
+    "react-syntax-highlighter": "^15.6.1",
     "shenai-sdk": "file:shenai-sdk",
-    "typescript": "5.1.6",
-    "uplot": "^1.6.30",
-    "uplot-react": "^1.1.5"
+    "typescript": "5.8.3",
+    "uplot": "^1.6.32",
+    "uplot-react": "^1.2.2"
   }
 }

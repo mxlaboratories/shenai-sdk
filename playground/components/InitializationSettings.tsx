@@ -5,36 +5,33 @@ import { getEnumName, getEnumNames, makeEnumFromName } from "../helpers";
 import { Dispatch, SetStateAction } from "react";
 
 export const InitializationSettingsComponent: React.FC<{
-  shenaiSDK: ShenaiSDK | undefined;
-  disabled: boolean;
+  shenaiSDK: ShenaiSDK | null;
+  initialized: boolean;
   initializationSettings: InitializationSettings | undefined;
   setInitializationSettings: Dispatch<
     SetStateAction<InitializationSettings | undefined>
   >;
 }> = ({
   shenaiSDK,
-  disabled,
+  initialized,
   initializationSettings,
   setInitializationSettings,
 }) => {
   const settings = initializationSettings;
-  const boolSettings = [
-    {
-      title: "Enable summary screen",
-      value: settings?.enableSummaryScreen,
-      update: (b: boolean) => ({ ...settings, enableSummaryScreen: b }),
-    },
-    {
-      title: "Enable health risks",
-      value: settings?.enableHealthRisks,
-      update: (b: boolean) => ({ ...settings, enableHealthRisks: b }),
-    },
-    {
-      title: "Full-frame processing",
-      value: settings?.enableFullFrameProcessing,
-      update: (b: boolean) => ({ ...settings, enableFullFrameProcessing: b }),
-    },
-  ];
+
+  const excludeOptionsInitMode = ["FAST_CALIBRATION"];
+  const allOptionsInitMode = getEnumNames(shenaiSDK?.InitializationMode);
+  const filteredOptionsInitMode = allOptionsInitMode.filter(
+    (option) => !excludeOptionsInitMode.includes(option)
+  );
+
+  const selectOptionsInitMode = filteredOptionsInitMode.map((value) => {
+    return {
+      value,
+      label: <span style={{ opacity: 1 }}>{value}</span>,
+      disabled: initialized,
+    };
+  });
 
   return (
     <>
@@ -46,11 +43,19 @@ export const InitializationSettingsComponent: React.FC<{
           }))}
           value={getEnumName(
             shenaiSDK?.OnboardingMode,
-            settings?.onboardingMode,
+            initialized
+              ? shenaiSDK?.getOnboardingMode()
+              : settings?.onboardingMode,
             "UNKNOWN"
           )}
           popupMatchSelectWidth={false}
           onSelect={(value) => {
+            if (initialized) {
+              shenaiSDK?.setOnboardingMode(
+                makeEnumFromName(shenaiSDK?.OnboardingMode, value) ??
+                  shenaiSDK?.OnboardingMode.SHOW_ONCE
+              );
+            }
             setInitializationSettings((s) => ({
               ...s,
               onboardingMode:
@@ -58,19 +63,52 @@ export const InitializationSettingsComponent: React.FC<{
                 shenaiSDK?.OnboardingMode.SHOW_ONCE,
             }));
           }}
-          disabled={disabled}
         />
       </div>
-      {boolSettings.map(({ title, value, update }, idx) => (
-        <div className={styles.controlRow} key={idx}>
-          <div className={styles.controlTitle}>{title}</div>
-          <Switch
-            checked={value}
-            onChange={(v) => setInitializationSettings(() => update(v))}
-            disabled={disabled}
-          />
-        </div>
-      ))}
+      <div className={styles.controlRow}>
+        <div className={styles.controlTitle}>Initialization mode:</div>
+        <Select
+          options={selectOptionsInitMode}
+          value={getEnumName(
+            shenaiSDK?.InitializationMode,
+            settings?.initializationMode,
+            "UNKNOWN"
+          )}
+          popupMatchSelectWidth={false}
+          onSelect={(value) => {
+            setInitializationSettings((s) => ({
+              ...s,
+              initializationMode:
+                makeEnumFromName(shenaiSDK?.InitializationMode, value) ??
+                shenaiSDK?.InitializationMode.MEASUREMENT,
+            }));
+          }}
+        />
+      </div>
+      <div className={styles.controlRow}>
+        <div className={styles.controlTitle}>Show disclaimer:</div>
+        <Switch
+          checked={!!settings?.showDisclaimer}
+          onChange={(b) => {
+            setInitializationSettings((s) => ({
+              ...s,
+              showDisclaimer: b,
+            }));
+          }}
+        />
+      </div>
+      <div className={styles.controlRow}>
+       <div className={styles.controlTitle}>Save form data:</div>
+        <Switch
+         checked={!!settings?.saveHealthRisksFactors}
+         onChange={(b) => {
+          setInitializationSettings((s) => ({
+           ...s,
+           saveHealthRisksFactors: b,
+          }));
+        }}
+      />
+</div>      
     </>
   );
 };
@@ -82,6 +120,13 @@ export const getInitializationSettingsSnippetCode = (
   `\
 // to be used in shenaiSDK.initialize()
 const settings = {` +
+  (settings.initializationMode
+    ? `
+  initializationMode: shenaiSDK.InitializationMode.${getEnumName(
+    shenaiSDK.InitializationMode,
+    settings.initializationMode
+  )},`
+    : "") +
   (settings.precisionMode
     ? `
   precisionMode: shenaiSDK.PrecisionMode.${getEnumName(
@@ -130,5 +175,9 @@ const settings = {` +
   enableHealthRisks: ${settings.enableHealthRisks},
   showOutOfRangeResultIndicators: ${settings.showOutOfRangeResultIndicators},
   showTrialMetricLabels: ${settings.showTrialMetricLabels},
+  showStartStopButton: ${settings.showStartStopButton},
+  showInfoButton: ${settings.showInfoButton},
+  showDisclaimer: ${settings.showDisclaimer},
   enableFullFrameProcessing: ${settings.enableFullFrameProcessing},
+  language: "${settings.language}",
 }`;

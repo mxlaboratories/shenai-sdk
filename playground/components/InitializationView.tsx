@@ -17,7 +17,7 @@ import {
 const { Panel } = Collapse;
 
 export const InitializationView: React.FC<{
-  shenaiSDK: ShenaiSDK | undefined;
+  shenaiSDK: ShenaiSDK | null;
   pendingInitialization: boolean;
   initializationSettings: InitializationSettings | undefined;
   setInitializationSettings: Dispatch<
@@ -28,42 +28,92 @@ export const InitializationView: React.FC<{
     settings: InitializationSettings,
     onSuccess?: () => void
   ) => void;
+  sdkVersion: string;
   colorTheme: CustomColorTheme;
   customConfig: CustomMeasurementConfig | undefined;
   sdkState?: ShenaiSdkState;
   apiKey: string;
   setApiKey: (key: string) => void;
+  loadRuntime: () => void;
+  destroyRuntime: () => void;
 }> = ({
   shenaiSDK,
   pendingInitialization,
   initializationSettings,
   setInitializationSettings,
   initializeSdk,
+  sdkVersion,
   colorTheme,
   customConfig,
   sdkState,
   apiKey,
   setApiKey,
+  loadRuntime,
+  destroyRuntime,
 }) => {
   const initialize = () => {
-    initializeSdk(apiKey, initializationSettings ?? {}, () => {
-      if (!shenaiSDK) return;
-      shenaiSDK.setCustomColorTheme(colorTheme);
-      if (
-        initializationSettings?.measurementPreset ==
-          shenaiSDK.MeasurementPreset.CUSTOM &&
-        customConfig
-      ) {
-        shenaiSDK.setCustomMeasurementConfig(customConfig);
-      }
-    });
+    initializeSdk(apiKey, initializationSettings ?? {}, () => {});
   };
 
-  const initializationDisabled =
-    !shenaiSDK || sdkState?.isInitialized === true || pendingInitialization;
+  const replaceCanvas = () => {
+    const newcanvas = document.createElement("canvas");
+    const oldcanvas = document.getElementById("mxcanvas") as HTMLCanvasElement;
+    newcanvas.style.maxHeight = oldcanvas.style.maxHeight;
+    newcanvas.style.aspectRatio = oldcanvas.style.aspectRatio;
+    newcanvas.width = oldcanvas.width;
+    newcanvas.height = oldcanvas.height;
+    oldcanvas.replaceWith(newcanvas);
+    newcanvas.id = "mxcanvas";
+  };
 
+  const initialized = sdkState?.isInitialized === true;
+  
   return (
     <>
+      <div className={styles.controlRow}>
+        <div className={styles.controlTitle}>
+          <Button
+            disabled={shenaiSDK !== null}
+            onClick={loadRuntime}
+            size="small"
+          >
+            Load
+          </Button>
+          <CodeSnippet
+            code={`
+let LoadSDK = (await import("shenai-sdk")).default;
+let shenaiSDK = await LoadSDK({
+  onRuntimeInitialized: () => {
+    console.log("Shen.AI Runtime initialized");
+  },
+});
+)`}
+          />
+        </div>
+        <div className={styles.controlTitle}>
+          <Button
+            disabled={shenaiSDK === null}
+            onClick={() => {
+              destroyRuntime();
+              replaceCanvas();
+            }}
+            size="small"
+          >
+            Unload
+          </Button>
+          <CodeSnippet
+            code={`shenaiSDK.destroyRuntime();
+shenaiSDK = null;`}
+          />
+        </div>
+      </div>
+      <div className={styles.controlRow}>
+        <div className={styles.controlTitle}>
+          SDK version:
+          <CodeSnippet code={`shenaiSDK.getVersion();`} />
+        </div>{" "}
+        <div>{sdkVersion}</div>
+      </div>
       <div className={styles.controlRow}>
         <span style={{ minWidth: 70 }}>API key:</span>
         <Input.Password
@@ -90,7 +140,7 @@ export const InitializationView: React.FC<{
         >
           <InitializationSettingsComponent
             shenaiSDK={shenaiSDK}
-            disabled={initializationDisabled}
+            initialized={initialized}
             initializationSettings={initializationSettings}
             setInitializationSettings={setInitializationSettings}
           />
@@ -105,7 +155,16 @@ export const InitializationView: React.FC<{
       </div>
       <div className={styles.controlRow}>
         <div className={styles.controlTitle}>
-          <Button disabled={initializationDisabled} onClick={initialize}>
+          Pricing plan:
+          <CodeSnippet code={`shenaiSDK.getPricingPlan();`} />
+        </div>{" "}
+        <div className={styles.outputCodeValue}>
+          {sdkState?.pricingPlan ?? "-"}
+        </div>
+      </div>
+      <div className={styles.controlRow}>
+        <div className={styles.controlTitle}>
+          <Button disabled={initialized} onClick={initialize}>
             Initialize {pendingInitialization && <LoadingOutlined />}
           </Button>
           <CodeSnippet
@@ -124,16 +183,7 @@ shenaiSDK.initialize("API_KEY", "USER_ID",
             onClick={() => {
               if (!shenaiSDK) return;
               shenaiSDK.deinitialize();
-              const newcanvas = document.createElement("canvas");
-              const oldcanvas = document.getElementById(
-                "mxcanvas"
-              ) as HTMLCanvasElement;
-              newcanvas.style.maxHeight = oldcanvas.style.maxHeight;
-              newcanvas.style.aspectRatio = oldcanvas.style.aspectRatio;
-              newcanvas.width = oldcanvas.width;
-              newcanvas.height = oldcanvas.height;
-              oldcanvas.replaceWith(newcanvas);
-              newcanvas.id = "mxcanvas";
+              replaceCanvas();
             }}
           >
             Deinitialize

@@ -7,7 +7,7 @@ import { CameraMode, InitializationSettings, ShenaiSDK } from "shenai-sdk";
 import { getEnumName, getEnumNames } from "../helpers";
 
 export const CameraChoice: React.FC<{
-  shenaiSDK: ShenaiSDK | undefined;
+  shenaiSDK: ShenaiSDK | null;
   sdkState?: ShenaiSdkState;
   setInitializationSettings: Dispatch<
     SetStateAction<InitializationSettings | undefined>

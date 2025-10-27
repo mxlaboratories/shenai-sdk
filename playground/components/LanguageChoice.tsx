@@ -10,19 +10,17 @@ interface ManifestResult {
 }
 
 export const LanguageChoice: React.FC<{
-  shenaiSDK: ShenaiSDK | undefined;
+  shenaiSDK: ShenaiSDK | null;
   sdkState?: ShenaiSdkState;
 }> = ({ shenaiSDK, sdkState }) => {
-  const [selectedLanguage, selectLanguage] = useState<string>("en");
 
   const [availableLanguages, setAvailableLanguages] = useState<string[]>([
-    "en",
+    "auto",
   ]);
 
   const onSelectLanguage = (value: string) => {
     if (shenaiSDK?.isInitialized()) {
       shenaiSDK.setLanguage(value);
-      selectLanguage(value);
     }
   };
 
@@ -31,10 +29,12 @@ export const LanguageChoice: React.FC<{
       .then((response) => response.json())
       .then((data: ManifestResult[]) => {
         const dataLanguages = data
-          .map((manifest) => manifest.name?.match(/^(..)\.json$/))
+          .map((manifest) =>
+            manifest.name?.match(/^([a-zA-Z]{2,3}(-[a-zA-Z]+)?)\.json$/)
+          )
           .filter((match) => (match?.length ?? 0) > 1)
           .map((match) => match![1]);
-
+        dataLanguages.unshift("auto");
         setAvailableLanguages(dataLanguages);
       });
   };
@@ -48,14 +48,14 @@ export const LanguageChoice: React.FC<{
       <div className={styles.controlRow}>
         <div className={styles.controlTitle}>
           Language:{" "}
-          <CodeSnippet code={`shenaiSDK.setLanguage("${selectedLanguage}");`} />
+          <CodeSnippet code={`shenaiSDK.setLanguage("${sdkState?.language}");`} />
         </div>
         <Select
           options={availableLanguages.map((lang) => ({
             value: lang,
             label: lang,
           }))}
-          value={selectedLanguage}
+          value={sdkState?.language}
           popupMatchSelectWidth={false}
           onSelect={onSelectLanguage}
           onDropdownVisibleChange={updateLanguageList}

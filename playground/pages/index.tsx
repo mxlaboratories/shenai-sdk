@@ -10,11 +10,12 @@ import {
   MeasurementResults,
   Heartbeat,
   PrecisionMode,
-  Screen,
   InitializationSettings,
   CustomColorTheme,
   CustomMeasurementConfig,
+  HealthRisks,
 } from "shenai-sdk";
+import { Screen as ShenaiScreen } from "shenai-sdk";
 import { Collapse, message } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { CodeSnippet } from "../components/CodeSnippet";
@@ -33,6 +34,8 @@ import { InitializationView } from "../components/InitializationView";
 import { useShenaiSdk } from "../hooks/useShenaiSdk";
 import { getEnumName } from "../helpers";
 import { useDarkMode } from "../hooks/useDarkMode";
+import { HealthIndicesView } from "../components/HealthIndicesView";
+import { MeasurementResultsPdfSection } from "../components/PdfSection";
 
 const { Panel } = Collapse;
 
@@ -44,7 +47,7 @@ export interface ShenaiSdkState {
   measurementPreset: MeasurementPreset;
   cameraMode: CameraMode;
   faceState: FaceState;
-  screen: Screen;
+  screen: ShenaiScreen;
 
   showUserInterface: boolean;
   showFacePositioningOverlay: boolean;
@@ -56,6 +59,17 @@ export interface ShenaiSdkState {
   enableStartAfterSuccess: boolean;
   showOutOfRangeResultIndicators: boolean;
   showTrialMetricLabels: boolean;
+  showSignalTile: boolean;
+  showSignalQualityIndicator: boolean;
+  showStartStopButton: boolean;
+  showInfoButton: boolean;
+  showDisclaimer: boolean;
+  enableMeasurementsDashboard: boolean;
+
+  enableSummaryScreen: boolean;
+  enableHealthRisks: boolean;
+
+  language: string;
 
   bbox: NormalizedFaceBbox | null;
   measurementState: MeasurementState;
@@ -67,6 +81,7 @@ export interface ShenaiSdkState {
   realtimeHrvSdnn: number | null;
   realtimeCardiacStress: number | null;
   results: MeasurementResults | null;
+  healthIndices: HealthRisks | null;
 
   realtimeHeartbeats: Heartbeat[];
 
@@ -79,11 +94,22 @@ export interface ShenaiSdkState {
   metaPredictionImage: number[];
 
   rppgSignal: number[];
+
+  pricingPlan: string;
 }
 
+let ranInitialInit = false;
+
 export default function Home() {
-  const shenaiSDK = useShenaiSdk();
+  const { shenaiSDK, loadShenaiSDK, unloadShenaiSDK } = useShenaiSdk();
   const darkMode = useDarkMode();
+
+  useEffect(() => {
+    if (!ranInitialInit) {
+      ranInitialInit = true;
+      loadShenaiSDK();
+    }
+  }, []);
 
   const [apiKey, setApiKey] = useState<string>("");
   const [sdkState, setSdkState] = useState<ShenaiSdkState>();
@@ -91,6 +117,7 @@ export default function Home() {
   const [pendingInitialization, setPendingInitialization] = useState(false);
   const [initializationSettings, setInitializationSettings] =
     useState<InitializationSettings>();
+
   const [colorTheme, setColorTheme] = useState<CustomColorTheme>({
     themeColor: "#56A0A0",
     textColor: "#000000",
@@ -101,9 +128,7 @@ export default function Home() {
 
   const canvasTopRef = useRef<HTMLDivElement>(null);
   const scrollToCanvas = () => {
-    console.log("would scroll but no element");
     if (canvasTopRef.current) {
-      console.log("should scroll to canvas now");
       canvasTopRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
@@ -124,7 +149,7 @@ export default function Home() {
       } else {
         message.error(
           "License initialization problem: " +
-            getEnumName(shenaiSDK.InitializationResult, res, "UNKNOWN")
+          getEnumName(shenaiSDK.InitializationResult, res, "UNKNOWN")
         );
       }
       setPendingInitialization(false);
@@ -133,7 +158,51 @@ export default function Home() {
 
   useEffect(() => {
     if (!shenaiSDK) return;
+
+    const optionalDefaultConfig = {
+      durationSeconds: 60,
+      infiniteMeasurement: false,
+
+      instantMetrics: [
+        shenaiSDK.Metric.HEART_RATE,
+        shenaiSDK.Metric.BLOOD_PRESSURE,
+      ],
+      summaryMetrics: [
+        shenaiSDK.Metric.HEART_RATE,
+        shenaiSDK.Metric.BLOOD_PRESSURE,
+        shenaiSDK.Metric.HRV_SDNN,
+        shenaiSDK.Metric.BREATHING_RATE,
+        shenaiSDK.Metric.CARDIAC_STRESS,
+        shenaiSDK.Metric.CARDIAC_WORKLOAD,
+        shenaiSDK.Metric.PNS_ACTIVITY,
+        shenaiSDK.Metric.BMI,
+      ],
+
+      healthIndices: [
+        shenaiSDK.HealthIndex.WELLNESS_SCORE,
+        shenaiSDK.HealthIndex.VASCULAR_AGE,
+        shenaiSDK.HealthIndex.CARDIOVASCULAR_DISEASE_RISK,
+        shenaiSDK.HealthIndex.HARD_AND_FATAL_EVENTS_RISKS,
+        shenaiSDK.HealthIndex.CARDIOVASCULAR_RISK_SCORE,
+        shenaiSDK.HealthIndex.HYPERTENSION_RISK,
+        shenaiSDK.HealthIndex.DIABETES_RISK,
+        shenaiSDK.HealthIndex.NON_ALCOHOLIC_FATTY_LIVER_DISEASE_RISK,
+        shenaiSDK.HealthIndex.WAIST_TO_HEIGHT_RATIO,
+        shenaiSDK.HealthIndex.BODY_FAT_PERCENTAGE,
+        shenaiSDK.HealthIndex.BODY_ROUNDNESS_INDEX,
+        shenaiSDK.HealthIndex.A_BODY_SHAPE_INDEX,
+        shenaiSDK.HealthIndex.CONICITY_INDEX,
+        shenaiSDK.HealthIndex.BASAL_METABOLIC_RATE,
+        shenaiSDK.HealthIndex.TOTAL_DAILY_ENERGY_EXPENDITURE,
+      ],
+
+      realtimeHrPeriodSeconds: 10,
+      realtimeHrvPeriodSeconds: 30,
+      realtimeCardiacStressPeriodSeconds: 30,
+    };
+
     const settings: InitializationSettings = {
+      initializationMode: shenaiSDK.InitializationMode.MEASUREMENT,
       precisionMode: shenaiSDK.PrecisionMode.STRICT,
       operatingMode: shenaiSDK.OperatingMode.POSITIONING,
       measurementPreset: shenaiSDK.MeasurementPreset.ONE_MINUTE_BETA_METRICS,
@@ -149,9 +218,17 @@ export default function Home() {
       enableStartAfterSuccess: true,
       enableSummaryScreen: true,
       enableHealthRisks: true,
+      saveHealthRisksFactors: true,
       showOutOfRangeResultIndicators: true,
-      showTrialMetricLabels: true,
+      showTrialMetricLabels: false,
+      showStartStopButton: true,
+      showInfoButton: true,
+      enableMeasurementsDashboard: true,
+      showDisclaimer: false,
       enableFullFrameProcessing: false,
+      language: "auto",
+      customColorTheme: colorTheme,
+      customMeasurementConfig: optionalDefaultConfig,
     };
     setInitializationSettings(settings);
 
@@ -187,7 +264,7 @@ export default function Home() {
           measurementPreset: shenaiSDK.getMeasurementPreset(),
           cameraMode: shenaiSDK.getCameraMode(),
           faceState: shenaiSDK.getFaceState(),
-          screen: shenaiSDK.getScreen(),
+          screen: shenaiSDK.getScreen() as unknown as ShenaiScreen,
 
           showUserInterface: shenaiSDK.getShowUserInterface(),
           showFacePositioningOverlay: shenaiSDK.getShowFacePositioningOverlay(),
@@ -200,6 +277,16 @@ export default function Home() {
           showOutOfRangeResultIndicators:
             shenaiSDK.getShowOutOfRangeResultIndicators(),
           showTrialMetricLabels: shenaiSDK.getShowTrialMetricLabels(),
+          showSignalTile: shenaiSDK.getShowSignalTile(),
+          showSignalQualityIndicator: shenaiSDK.getShowSignalQualityIndicator(),
+          showStartStopButton: shenaiSDK.getShowStartStopButton(),
+          enableMeasurementsDashboard: shenaiSDK.getEnableMeasurementsDashboard(),
+          showInfoButton: shenaiSDK.getShowInfoButton(),
+          showDisclaimer: shenaiSDK.getShowDisclaimer(),
+          language: shenaiSDK.getLanguage(),
+
+          enableSummaryScreen: shenaiSDK.getEnableSummaryScreen(),
+          enableHealthRisks: shenaiSDK.getEnableHealthRisks(),
 
           bbox: shenaiSDK.getNormalizedFaceBbox(),
           measurementState: shenaiSDK.getMeasurementState(),
@@ -211,6 +298,7 @@ export default function Home() {
           realtimeHrvSdnn: shenaiSDK.getRealtimeHrvSdnn(),
           realtimeCardiacStress: shenaiSDK.getRealtimeCardiacStress(),
           results: shenaiSDK.getMeasurementResults(),
+          healthIndices: shenaiSDK.getHealthRisks(),
 
           realtimeHeartbeats: shenaiSDK.getRealtimeHeartbeats(100),
 
@@ -224,9 +312,12 @@ export default function Home() {
           metaPredictionImage: shenaiSDK.getMetaPredictionImagePng(),
 
           rppgSignal: shenaiSDK.getFullPpgSignal(),
+
+          pricingPlan: shenaiSDK.getPricingPlan(),
         };
         setSdkState(newState);
-        //console.log(newState);
+        setCustomConfig(shenaiSDK.getCustomMeasurementConfig());
+        setColorTheme(shenaiSDK.getCustomColorTheme());
       }
     }, 200);
     return () => clearInterval(interval);
@@ -234,6 +325,7 @@ export default function Home() {
 
   const [colorThemeSnippetCode, setColorThemeSnippetCode] = useState("");
   const [measConfigSnippetCode, setMeasConfigSnippetCode] = useState("");
+  const logoSrc = darkMode ? "/shen-logo-darkmode.png" : "/shen-logo.png";
 
   return (
     <>
@@ -241,16 +333,18 @@ export default function Home() {
         <title>Shen.AI SDK Playground</title>
         <meta name="description" content="Shen.AI SDK Playground" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" type="image/png" media="(prefers-color-scheme: light)" />
+        <link rel="icon" href="/favicon-darkmode.png" type="image/png" media="(prefers-color-scheme: dark)" />
       </Head>
       <main className={styles.main}>
         <div className={styles.headerRow}>
-          <div>
+          <div style={{ display: 'flex', alignItems: 'baseline' }}>
             <img
-              style={{ height: 32, marginRight: 8 }}
-              src="/shen-square.png"
+              style={{ height: 20, marginRight: 8, marginTop: 8 }}
+              src={logoSrc}
+              alt="Shen logo"
             />
-            <span>Shen.AI SDK Playground</span>
+            <span style={{ fontSize: 20 }}>SDK Playground</span>
           </div>
           <div style={{ fontSize: "90%" }}>
             <Link href={"https://developer.shen.ai/"} target="_blank">
@@ -261,13 +355,6 @@ export default function Home() {
         </div>
         <div className={styles.contentRow}>
           <div className={styles.controlsCol}>
-            <div className={styles.controlRow} style={{ marginBottom: 10 }}>
-              <div className={styles.controlTitle}>
-                SDK version
-                <CodeSnippet code={`shenaiSDK.getVersion();`} />
-              </div>{" "}
-              <div>{sdkVersion}</div>
-            </div>
             <Collapse defaultActiveKey={[0, 1]}>
               <Panel header="Initialization" key="0">
                 <InitializationView
@@ -276,11 +363,14 @@ export default function Home() {
                   initializationSettings={initializationSettings}
                   setInitializationSettings={setInitializationSettings}
                   initializeSdk={initializeSdk}
+                  sdkVersion={sdkVersion}
                   colorTheme={colorTheme}
                   customConfig={customConfig}
                   sdkState={sdkState}
                   apiKey={apiKey}
                   setApiKey={setApiKey}
+                  loadRuntime={loadShenaiSDK}
+                  destroyRuntime={unloadShenaiSDK}
                 />
               </Panel>
               <Panel header="Controls" key="1">
@@ -325,29 +415,45 @@ export default function Home() {
                   setSnippetCode={setColorThemeSnippetCode}
                 />
               </Panel>
-              <Panel header="UI elements" key="4">
+              <Panel header="User Interface settings" key="4">
                 <UIElementsControls
                   shenaiSDK={shenaiSDK}
                   sdkState={sdkState}
                   setInitializationSettings={setInitializationSettings}
                 />
               </Panel>
-              <Panel header="Visualizations" key="5">
-                <Visualizations sdkState={sdkState} />
-              </Panel>
             </Collapse>
           </div>
           <div ref={canvasTopRef} className={styles.mxcanvasTopHelper} />
           <canvas id="mxcanvas" className={styles.mxcanvas} />
           <div className={styles.outputsCol}>
-            <div className={styles.outputSectionTitle}>Outputs:</div>
-            <BasicOutputsView shenaiSDK={shenaiSDK} sdkState={sdkState} />
-            <ResultsView sdkState={sdkState} />
-            <SignalsPreview sdkState={sdkState} darkMode={darkMode} />
+            <div className={styles.outputSectionTitle}>
+              <h3>Outputs:</h3>
+            </div>
+            <Collapse defaultActiveKey={[0, 1, 3]}>
+              <Panel header="Measurement details" key="0">
+                <BasicOutputsView shenaiSDK={shenaiSDK} sdkState={sdkState} />
+              </Panel>
+              <Panel header="Measurement results" key="1">
+                <ResultsView sdkState={sdkState} shenaiSDK={shenaiSDK} />
+              </Panel>
+              <Panel header="Health indices" key="2">
+                <HealthIndicesView sdkState={sdkState} shenaiSDK={shenaiSDK} />
+              </Panel>
+              <Panel header="Results PDF" key="4">
+                <MeasurementResultsPdfSection
+                  shenaiSDK={shenaiSDK}
+                  sdkState={sdkState}
+                />
+              </Panel>
+              <Panel header="Signals preview" key="3">
+                <SignalsPreview sdkState={sdkState} darkMode={darkMode} />
+              </Panel>
+            </Collapse>
           </div>
         </div>
         <div className={styles.footerRow}>
-          &copy; {new Date().getFullYear()} MX Labs OÜ
+          &copy; {new Date().getFullYear()} Shen.AI OÜ
         </div>
       </main>
     </>

@@ -2,32 +2,40 @@ import { useRef, useState } from "react";
 import { ShenaiSDK } from "shenai-sdk";
 
 export const useShenaiSdk = () => {
-  const [shenaiSdk, setShenaiSdk] = useState<ShenaiSDK>();
-  const sdkRef = useRef<ShenaiSDK | null | undefined>(undefined);
+  const [sdkLoaded, setSdkLoaded] = useState<boolean>(false);
+  const sdkRef = useRef<ShenaiSDK | null>(null);
+  const loadStarted = useRef<boolean>(false);
 
-  if (sdkRef.current) {
-    if (shenaiSdk != sdkRef.current) setShenaiSdk(sdkRef.current);
-  } else if (sdkRef.current !== null) {
-    sdkRef.current = null;
+  const loadShenaiSDK = async () => {
+    if (loadStarted.current) {
+      return;
+    }
     if (typeof window !== "undefined") {
       try {
-        import("shenai-sdk")
-          .then((sdk) =>
-            sdk.default({
-              onRuntimeInitialized: () => {
-                console.log("Shen.AI Runtime initialized");
-              },
-            })
-          )
-          .then((sdk) => {
-            sdkRef.current = sdk;
-            setShenaiSdk(sdk);
-          });
+        loadStarted.current = true;
+        let LoadSDK = (await import("shenai-sdk")).default;
+        let shenaiSDK = await LoadSDK({
+          enableErrorReporting: false,
+          onRuntimeInitialized: () => {
+            console.log("Shen.AI Runtime initialized no sentry");
+          },
+        });
+        sdkRef.current = shenaiSDK;
+        setSdkLoaded(true);
+        loadStarted.current = false;
       } catch (error) {
         console.error("Failed to import Shen.AI SDK:", error);
       }
     }
-  }
+  };
 
-  return shenaiSdk;
+  const unloadShenaiSDK = () => {
+    if (sdkRef.current) {
+      (sdkRef.current as any).destroyRuntime();
+      sdkRef.current = null;
+      setSdkLoaded(false);
+    }
+  };
+
+  return { shenaiSDK: sdkRef.current, loadShenaiSDK, unloadShenaiSDK };
 };

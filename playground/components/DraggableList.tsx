@@ -7,20 +7,26 @@ import {
   DropResult,
 } from "@hello-pangea/dnd";
 import { DeleteFilled, PlusOutlined } from "@ant-design/icons";
-import { Button, Dropdown, Menu } from "antd";
+import { Button, Dropdown, Menu, Tooltip } from "antd";
 
-export const DraggableList: React.FC<{
+interface DraggableListProps {
   items: string[];
   availableItems?: string[];
   newItemTitle: string;
   onChange: (items: string[]) => void;
   disabled?: boolean;
-}> = ({
+  dragDisabled?: boolean;
+  restrictedItems?: string[];
+}
+
+export const DraggableList: React.FC<DraggableListProps> = ({
   items: itemNames,
   availableItems,
   newItemTitle,
   onChange,
   disabled = false,
+  dragDisabled = false,
+  restrictedItems = [],
 }) => {
   const items = useMemo(
     () => itemNames.map((name, i) => ({ id: i + "", name })),
@@ -46,12 +52,14 @@ export const DraggableList: React.FC<{
   };
 
   const handleNewItemMenuClick = (item: string) => {
+    // If item is restricted, don't actually add it, just close menu
+    if (restrictedItems.includes(item)) {
+      setShowNewItemMenu(false);
+      return;
+    }
+
     setShowNewItemMenu(false);
     onChange([...itemNames, item]);
-  };
-
-  const deleteItem = (item: string) => {
-    onChange(itemNames.filter((n) => n != item));
   };
 
   return (
@@ -65,7 +73,7 @@ export const DraggableList: React.FC<{
                   key={item.id}
                   draggableId={item.id}
                   index={index}
-                  isDragDisabled={disabled}
+                  isDragDisabled={disabled || dragDisabled}
                 >
                   {(provided) => (
                     <div
@@ -78,9 +86,11 @@ export const DraggableList: React.FC<{
                     >
                       <div className="name">{item.name}</div>
                       <DeleteFilled
-                        onClick={() => !disabled && deleteItem(item.name)}
+                        onClick={() =>
+                          !disabled &&
+                          onChange(itemNames.filter((n) => n !== item.name))
+                        }
                         className={styles.draggableItemRemove}
-                        disabled={disabled}
                       />
                     </div>
                   )}
@@ -95,9 +105,29 @@ export const DraggableList: React.FC<{
         <Dropdown
           overlay={
             <Menu onClick={(e) => handleNewItemMenuClick(e.key)}>
-              {itemsToAdd.map((item) => (
-                <Menu.Item key={item}>{item}</Menu.Item>
-              ))}
+              {itemsToAdd.map((item) => {
+                const isRestricted = restrictedItems.includes(item);
+                const menuItemContent = (
+                  <Menu.Item
+                    key={item}
+                    disabled={isRestricted || disabled}
+                    style={isRestricted ? { opacity: 0.5 } : undefined}
+                  >
+                    {item}
+                  </Menu.Item>
+                );
+
+                return isRestricted ? (
+                  <Tooltip
+                    title="Available only in Professional Plan"
+                    key={item}
+                  >
+                    {menuItemContent}
+                  </Tooltip>
+                ) : (
+                  menuItemContent
+                );
+              })}
             </Menu>
           }
           visible={showNewItemMenu}

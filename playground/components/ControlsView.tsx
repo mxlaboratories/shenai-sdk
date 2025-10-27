@@ -15,7 +15,7 @@ import {
 import { Dispatch, SetStateAction } from "react";
 
 export const ControlsView: React.FC<{
-  shenaiSDK: ShenaiSDK | undefined;
+  shenaiSDK: ShenaiSDK | null;
   sdkState?: ShenaiSdkState;
   setInitializationSettings: Dispatch<
     SetStateAction<InitializationSettings | undefined>
