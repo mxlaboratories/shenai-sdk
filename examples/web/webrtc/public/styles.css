@@ -1,0 +1,525 @@
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --panel: #ffffff;
+  --ink: #000000;
+  --muted: #646464;
+  --line: #000000;
+  --soft: #ededed;
+  --ok: #176b87;
+  --warn: #8a5a00;
+  --bad: #a73535;
+  --shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  overflow-x: hidden;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button,
+.role-link {
+  align-items: center;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 600;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 18px;
+  text-decoration: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 20px;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.topbar,
+.controls,
+.role-chooser,
+.call-layout {
+  margin: 0 auto;
+  max-width: 1180px;
+  width: 100%;
+}
+
+.topbar {
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  min-height: 64px;
+  padding-bottom: 16px;
+}
+
+.eyebrow {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(26px, 4vw, 34px);
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.room-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.badge,
+.status-pill {
+  align-items: center;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 13px;
+  font-weight: 600;
+  min-height: 32px;
+  padding: 0 12px;
+}
+
+.badge[data-role="doctor"],
+.status-pill[data-state="connected"] {
+  background: var(--ink);
+  color: var(--panel);
+}
+
+.badge.neutral {
+  color: var(--muted);
+}
+
+.status-pill[data-state="failed"],
+.status-pill[data-state="disconnected"] {
+  border-color: var(--bad);
+  color: var(--bad);
+}
+
+.role-chooser {
+  align-self: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  padding: 28px;
+}
+
+.role-chooser p {
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+.role-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.role-link.patient,
+.role-link.doctor {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--panel);
+}
+
+.call-layout {
+  align-items: start;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 380px);
+  min-height: 0;
+}
+
+.video-stage {
+  align-content: start;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  min-width: 0;
+}
+
+.remote-frame,
+.local-frame,
+.exam-panel {
+  background: var(--soft);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  position: relative;
+}
+
+.remote-frame {
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  grid-column: 1 / -1;
+}
+
+.local-frame {
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  grid-column: 2;
+  justify-self: end;
+  width: 220px;
+}
+
+.remote-frame video,
+.local-frame video {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.patient-local-frame #shenaiCanvas {
+  background: var(--soft);
+  border: 0;
+  display: block;
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity 160ms ease;
+  width: 100%;
+  z-index: 2;
+}
+
+.patient-local-frame.sdk-visible #shenaiCanvas {
+  opacity: 1;
+}
+
+.patient-local-frame.sdk-visible video {
+  opacity: 0;
+}
+
+.patient-local-frame .video-label {
+  z-index: 3;
+}
+
+.video-stage.scan-focus-local {
+  align-items: start;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
+}
+
+.video-stage.scan-focus-local .local-frame {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  justify-self: stretch;
+  width: 100%;
+}
+
+.video-stage.scan-focus-local .remote-frame {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: end;
+  width: min(280px, 100%);
+}
+
+.video-label {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 700;
+  left: 12px;
+  padding: 7px 10px;
+  position: absolute;
+  top: 12px;
+}
+
+.empty-state {
+  color: var(--muted);
+  font-weight: 700;
+  left: 50%;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.exam-panel {
+  background: var(--panel);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 18px;
+}
+
+.panel-heading,
+.quality-list > div,
+.progress-row > div:first-child {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.metric-card span,
+.progress-row span,
+.quality-list span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.scan-notice {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 12px;
+}
+
+.scan-notice[data-tone="good"] {
+  color: var(--ok);
+}
+
+.scan-notice[data-tone="warn"] {
+  color: var(--warn);
+}
+
+.scan-notice[data-tone="bad"] {
+  border-color: var(--bad);
+  color: var(--bad);
+}
+
+.metrics-grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.metric-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 112px;
+  padding: 10px;
+}
+
+.metric-card strong {
+  display: block;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.progress-row,
+.quality-list {
+  display: grid;
+  gap: 10px;
+}
+
+.progress-track {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  height: 12px;
+  overflow: hidden;
+}
+
+.progress-track div {
+  background: var(--ink);
+  height: 100%;
+  transition: width 180ms ease;
+  width: 0;
+}
+
+.quality-list {
+  border-top: 1px solid var(--line);
+  padding-top: 8px;
+}
+
+.quality-list > div {
+  min-height: 34px;
+}
+
+#shenaiCanvas {
+  height: 894px;
+  left: -10000px;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  width: 480px;
+}
+
+.patient-local-frame #shenaiCanvas {
+  left: 0;
+  top: 0;
+}
+
+.controls {
+  align-items: center;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding-top: 16px;
+}
+
+.controls .primary {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--panel);
+}
+
+.controls .ghost {
+  background: var(--panel);
+}
+
+.controls .danger {
+  border-color: var(--bad);
+  color: var(--bad);
+}
+
+@media (max-width: 980px) {
+  .call-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .video-stage {
+    grid-template-columns: minmax(0, 1fr) 220px;
+  }
+
+  .local-frame {
+    justify-self: end;
+    width: 220px;
+  }
+}
+
+@media (max-width: 680px) {
+  .app-shell {
+    padding: 16px;
+  }
+
+  .topbar,
+  .controls,
+  .role-chooser,
+  .call-layout {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .topbar,
+  .role-chooser {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .role-chooser {
+    min-width: 0;
+    padding: 28px;
+    width: calc(100vw - 64px);
+  }
+
+  .role-chooser p {
+    overflow-wrap: anywhere;
+  }
+
+  .role-actions,
+  .controls {
+    width: 100%;
+  }
+
+  .role-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .role-link {
+    width: 100%;
+  }
+
+  .controls button {
+    flex: 1 1 120px;
+  }
+
+  .video-stage {
+    grid-template-columns: 1fr;
+  }
+
+  .local-frame {
+    grid-column: 1;
+    justify-self: center;
+    width: min(220px, 78vw);
+  }
+
+  .video-stage.scan-focus-local .local-frame {
+    width: 100%;
+  }
+
+  .video-stage.scan-focus-local .remote-frame {
+    width: min(220px, 78vw);
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}

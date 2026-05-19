@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shen.AI WebRTC Teleconference</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">Shen.AI WebRTC</div>
+          <h1 id="screenTitle">Teleconference exam</h1>
+        </div>
+        <div class="room-strip">
+          <span id="roleBadge" class="badge">Role</span>
+          <span id="roomBadge" class="badge neutral">Room</span>
+        </div>
+      </header>
+
+      <section id="roleChooser" class="role-chooser hidden">
+        <div>
+          <h2>Choose a role</h2>
+          <p>Open the same room in two browser tabs or devices.</p>
+        </div>
+        <div class="role-actions">
+          <a id="patientLink" class="role-link patient" href="#">Patient</a>
+          <a id="doctorLink" class="role-link doctor" href="#">Doctor</a>
+        </div>
+      </section>
+
+      <section id="callView" class="call-layout hidden">
+        <section class="video-stage">
+          <div class="remote-frame">
+            <video id="remoteVideo" autoplay playsinline></video>
+            <div class="video-label" id="remoteLabel">Remote participant</div>
+            <div class="empty-state" id="remoteEmpty">Waiting for peer</div>
+          </div>
+
+          <div class="local-frame">
+            <video id="localVideo" autoplay muted playsinline></video>
+            <div class="video-label">You</div>
+          </div>
+        </section>
+
+        <aside class="exam-panel">
+          <div class="panel-heading">
+            <div>
+              <div class="eyebrow" id="panelEyebrow">Exam</div>
+              <h2 id="panelTitle">Vitals scan</h2>
+            </div>
+            <span id="connectionBadge" class="status-pill">Starting</span>
+          </div>
+
+          <div id="scanNotice" class="scan-notice">No active scan</div>
+
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <span>Heart rate</span>
+              <strong id="heartRateValue">--</strong>
+            </div>
+            <div class="metric-card">
+              <span>Breathing</span>
+              <strong id="breathingValue">--</strong>
+            </div>
+            <div class="metric-card">
+              <span>Stress</span>
+              <strong id="stressValue">--</strong>
+            </div>
+            <div class="metric-card">
+              <span>Signal</span>
+              <strong id="signalValue">--</strong>
+            </div>
+          </div>
+
+          <div class="progress-row">
+            <div>
+              <span>Measurement</span>
+              <strong id="measurementStateValue">Positioning</strong>
+            </div>
+            <div class="progress-track">
+              <div id="progressFill"></div>
+            </div>
+          </div>
+
+          <div class="quality-list">
+            <div>
+              <span>Face</span>
+              <strong id="faceStateValue">--</strong>
+            </div>
+            <div>
+              <span>Consent</span>
+              <strong id="consentValue">--</strong>
+            </div>
+          </div>
+
+          <canvas id="shenaiCanvas"></canvas>
+        </aside>
+      </section>
+
+      <footer id="controls" class="controls hidden">
+        <button id="cameraButton" type="button">Camera off</button>
+        <button id="primaryAction" type="button" class="primary">Request scan</button>
+        <button id="secondaryAction" type="button" class="ghost hidden">Decline</button>
+        <button id="leaveButton" type="button" class="danger">Leave</button>
+      </footer>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
