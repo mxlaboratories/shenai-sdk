@@ -1,0 +1,20 @@
+name: shenai_sdk_flow_example
+description: Simple Shen.AI SDK Flutter UI-flow example.
+version: 3.1.0
+
+publish_to: 'none'
+
+environment:
+  sdk: ">=3.9.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  shenai_sdk:
+    path: ./shenai_sdk
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

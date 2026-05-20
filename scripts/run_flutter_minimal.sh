@@ -19,5 +19,5 @@ then
     prefix="fvm"
 fi
 
-cd $rootdir/examples/flutter/flutter_minimal
-$prefix flutter run
+cd "$rootdir/examples/flutter/flutter_minimal"
+$prefix flutter run "$@"

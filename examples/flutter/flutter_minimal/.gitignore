@@ -51,4 +51,5 @@ app.*.map.json
 /.fvm/flutter_sdk
 
 # FVM Version Cache
-.fvm/
+.fvm/*
+!.fvm/fvm_config.json

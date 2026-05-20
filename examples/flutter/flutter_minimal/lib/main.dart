@@ -1,125 +1,238 @@
-import 'package:flutter/foundation.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:shenai_sdk/pigeon.dart';
 import 'package:shenai_sdk/shenai_sdk.dart';
 import 'package:shenai_sdk/shenai_view.dart';
-import 'dart:async';
 
-const String shenApiKey = "YOUR_API_KEY";
+const String shenApiKey = String.fromEnvironment('SHENAI_API_KEY');
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();  
-  await ShenaiSdk.initialize(shenApiKey, "");
-  await ShenaiSdk.setCustomMeasurementConfig(CustomMeasurementConfig(
-    instantMetrics: [Metric.heartRate,Metric.systolicBp,Metric.diastolicBp],
-    summaryMetrics: [Metric.age],
-  ));
-  ShenaiSdk.setEventCallback((event) {
-    print("Shen.AI event: $event");
-  });
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final initializationResult = shenApiKey.isEmpty
+      ? null
+      : await ShenaiSdk.initialize(
+          shenApiKey,
+          '',
+          settings: _minimalExampleSettings(),
+        );
+
+  runApp(MinimalExampleApp(initializationResult: initializationResult));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+InitializationSettings _minimalExampleSettings() {
+  return InitializationSettings(
+    precisionMode: PrecisionMode.relaxed,
+    operatingMode: OperatingMode.measure,
+    measurementPreset: MeasurementPreset.thirtySecondsAllMetrics,
+    cameraMode: CameraMode.facingUser,
+    onboardingMode: OnboardingMode.showOnce,
+    showUserInterface: true,
+    showFacePositioningOverlay: true,
+    showVisualWarnings: true,
+    enableCameraSwap: true,
+    showFaceMask: true,
+    showBloodFlow: true,
+    enableStartAfterSuccess: false,
+    enableSummaryScreen: true,
+    showResultsFinishButton: true,
+    enableHealthRisks: true,
+    showHealthIndicesFinishButton: true,
+    saveHealthRisksFactors: true,
+    showOutOfRangeResultIndicators: true,
+    applyPrecisionModeToBloodPressure: false,
+    showSignalQualityIndicator: true,
+    showSignalTile: true,
+    showStartStopButton: true,
+    showInfoButton: true,
+    showDisclaimer: true,
+    uiVersion: UiVersion.v2,
+    risksFactors: _exampleRiskFactors(),
+  );
+}
 
-  // This widget is the root of your application.
+RisksFactors _exampleRiskFactors() {
+  return RisksFactors(
+    age: 45,
+    cholesterol: 190,
+    cholesterolHdl: 52,
+    sbp: 128,
+    dbp: 82,
+    isSmoker: false,
+    hypertensionTreatment: HypertensionTreatment.no,
+    hasDiabetes: false,
+    bodyHeight: 172,
+    bodyWeight: 74,
+    waistCircumference: 84,
+    neckCircumference: 38,
+    hipCircumference: 98,
+    gender: Gender.female,
+    physicalActivity: PhysicalActivity.moderately,
+    country: 'US',
+    race: Race.white,
+    vegetableFruitDiet: true,
+    historyOfHighGlucose: false,
+    historyOfHypertension: false,
+    triglyceride: 120,
+    fastingGlucose: 92,
+    familyDiabetes: FamilyHistory.noneFirstDegree,
+    parentalHypertension: ParentalHistory.none,
+  );
+}
+
+class MinimalExampleApp extends StatelessWidget {
+  const MinimalExampleApp({super.key, required this.initializationResult});
+
+  final InitializationResult? initializationResult;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      title: 'Shen.AI Minimal',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF176B87)),
+        useMaterial3: true,
+      ),
+      home: MinimalExamplePage(initializationResult: initializationResult),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+class MinimalExamplePage extends StatefulWidget {
+  const MinimalExamplePage({super.key, required this.initializationResult});
+
+  final InitializationResult? initializationResult;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MinimalExamplePage> createState() => _MinimalExamplePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  bool _isInitialized = true;
-
-  String _title = "Shen.ai SDK";
-
-  Timer? timer;
+class _MinimalExamplePageState extends State<MinimalExamplePage>
+    with WidgetsBindingObserver {
+  late InitializationResult? _initializationResult;
+  late bool _isSdkInitialized;
+  late bool _showSdkView;
+  bool _appResumed = true;
+  int _sdkViewGeneration = 0;
 
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) async {
-      var res = await ShenaiSdk.getMeasurementState();
-      var results = await ShenaiSdk.getMeasurementResults();
-      if (results != null && results.systolic_blood_pressure_mmhg != null) {
-        setState(() {
-          _title = "Systolic: " + results.systolic_blood_pressure_mmhg.toString() + " mmHg";
-        });
-      }
-      else {
-        setState(() {        
-          _title = res.toString();
-        });
-      }
-    });
+    WidgetsBinding.instance.addObserver(this);
+    _initializationResult = widget.initializationResult;
+    _isSdkInitialized =
+        widget.initializationResult == InitializationResult.success;
+    _showSdkView = _isSdkInitialized;
   }
 
   @override
   void dispose() {
-    timer?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final appResumed = state == AppLifecycleState.resumed;
+    if (_appResumed == appResumed) {
+      return;
+    }
+    _appResumed = appResumed;
+    _syncSdkViewVisibility();
+  }
+
+  void _syncSdkViewVisibility() {
+    final shouldShowSdkView = _isSdkInitialized && _appResumed;
+    if (_showSdkView == shouldShowSdkView) {
+      return;
+    }
+    setState(() {
+      _showSdkView = shouldShowSdkView;
+      if (shouldShowSdkView) {
+        _sdkViewGeneration++;
+      }
+    });
+    unawaited(
+      _setCameraMode(
+        shouldShowSdkView ? CameraMode.facingUser : CameraMode.off,
+      ),
+    );
+  }
+
+  Future<void> _setCameraMode(CameraMode mode) async {
+    try {
+      await ShenaiSdk.setCameraMode(mode);
+    } catch (_) {
+      // The SDK can already be deinitialized while lifecycle callbacks settle.
+    }
+  }
+
+  Future<void> _toggleSdkInitialization() async {
+    if (shenApiKey.isEmpty) {
+      return;
+    }
+
+    if (_isSdkInitialized) {
+      await ShenaiSdk.deinitialize();
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _isSdkInitialized = false;
+        _showSdkView = false;
+      });
+      return;
+    }
+
+    final result = await ShenaiSdk.initialize(
+      shenApiKey,
+      '',
+      settings: _minimalExampleSettings(),
+    );
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _initializationResult = result;
+      _isSdkInitialized = result == InitializationResult.success;
+      _showSdkView = _isSdkInitialized && _appResumed;
+      if (_showSdkView) {
+        _sdkViewGeneration++;
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_title),        
-        leading: GestureDetector(
-          onTap: () async { 
-            if (await ShenaiSdk.isInitialized()) {
-              ShenaiSdk.deinitialize().then((value) => print("Deinitialized!"));
-              setState(() {
-                _isInitialized = false;
-              });
-            } else {
-              await ShenaiSdk.initialize(shenApiKey, "");
-
-              setState(() {
-                _isInitialized = true;
-              });
-
-              var factors = RisksFactors(
-                age: 45,
-                cholesterol: 220,
-                cholesterolHdl: 47,
-                sbp: 137,
-                isSmoker: true,
-                hypertensionTreatment: true,
-                hasDiabetes: true,
-                bodyHeight: 180,
-                bodyWeight: 50,
-                gender: Gender.male,
-                race: Race.white,
-                country: "US",      
-              );
-
-              var risks = await ShenaiSdk.computeHealthRisks(factors);
-              print("Risks:");
-              print(risks.hardAndFatalEvents.coronaryDeathEventRisk);
-              print(risks.cvDiseases.overallRisk);
-              print(risks.vascularAge);
-              print(risks.scores.ageScore);
-            }
-          },
-          child: const Icon(Icons.menu),
+        leading: IconButton(
+          tooltip: _isSdkInitialized ? 'Deinitialize SDK' : 'Initialize SDK',
+          onPressed: _toggleSdkInitialization,
+          icon: Icon(
+            _isSdkInitialized ? Icons.power_settings_new : Icons.power_outlined,
+          ),
         ),
+        title: const Text('Shen.AI Minimal'),
       ),
-      body: Center(child: _isInitialized ? ShenaiView() : const Text("Not initialized")),
+      body: _showSdkView
+          ? KeyedSubtree(key: ValueKey(_sdkViewGeneration), child: ShenaiView())
+          : Center(child: Text(_statusMessage())),
     );
+  }
+
+  String _statusMessage() {
+    if (shenApiKey.isEmpty) {
+      return 'Missing SHENAI_API_KEY';
+    }
+    if (_isSdkInitialized) {
+      return 'SDK view paused';
+    }
+    if (_initializationResult == InitializationResult.success) {
+      return 'SDK deinitialized';
+    }
+    return 'Initialization failed: ${_initializationResult?.name ?? 'unknown'}';
   }
 }

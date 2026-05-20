@@ -26,6 +26,16 @@ android {
     namespace "ai.mxlabs.shenai_sdk.flutter_minimal_example"
 
     compileSdkVersion flutter.compileSdkVersion
+    ndkVersion "29.0.14206865"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
 
     defaultConfig {
         applicationId "ai.mxlabs.shenai_sdk.flutter_minimal_example"
