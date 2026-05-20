@@ -1,6 +1,6 @@
-# Shen.AI Android Java Minimal
+# Shen.AI Android Kotlin Minimal
 
-This is a small native Android Java app that embeds the Shen.AI SDK, starts the
+This is a small native Android Kotlin app that embeds the Shen.AI SDK, starts the
 native camera UI, and runs a 30 second all-metrics measurement flow.
 
 ## Setup
@@ -11,7 +11,7 @@ Download the Android SDK package and place the SDK AAR in this directory as
 Run the example from the repository root:
 
 ```bash
-./scripts/run_android_java_minimal.sh -PshenaiApiKey=<your-api-key>
+./scripts/run_android_kotlin_minimal.sh -PshenaiApiKey=<your-api-key>
 ```
 
 The API key is required at build time and is intentionally not stored in this

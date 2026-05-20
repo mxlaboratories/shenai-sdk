@@ -1,7 +1,8 @@
-# Shen.AI Android Java Minimal
+# Shen.AI Android Kotlin Flow
 
-This is a small native Android Java app that embeds the Shen.AI SDK, starts the
-native camera UI, and runs a 30 second all-metrics measurement flow.
+This native Android Kotlin app embeds the Shen.AI SDK and shows two SDK-driven
+flows: the dashboard and a measurement flow with results, health risks, and an
+Open PDF action.
 
 ## Setup
 
@@ -11,7 +12,7 @@ Download the Android SDK package and place the SDK AAR in this directory as
 Run the example from the repository root:
 
 ```bash
-./scripts/run_android_java_minimal.sh -PshenaiApiKey=<your-api-key>
+./scripts/run_android_kotlin_flow.sh -PshenaiApiKey=<your-api-key>
 ```
 
 The API key is required at build time and is intentionally not stored in this

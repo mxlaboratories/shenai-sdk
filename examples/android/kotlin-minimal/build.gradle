@@ -5,6 +5,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.12.1'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.22'
     }
 }
 
@@ -25,9 +26,10 @@ allprojects {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
-    namespace 'ai.mxlabs.sdk_android_minimal_example'
+    namespace 'ai.mxlabs.sdk_android_kotlin_minimal_example'
     compileSdkVersion 35
     buildToolsVersion "36.0.0"
     defaultConfig {
@@ -51,12 +53,21 @@ android {
             shrinkResources false
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
     implementation platform("org.jetbrains.kotlin:kotlin-bom:1.8.22")
-    implementation "androidx.activity:activity:1.9.3"
-    implementation "androidx.core:core:1.13.1"
+    implementation "androidx.activity:activity-ktx:1.9.3"
+    implementation "androidx.core:core-ktx:1.13.1"
     if (project.hasProperty("shenaiSdkVersion")) {
         implementation "ai.shen:shenai-sdk:${project.property("shenaiSdkVersion")}"
     } else {
