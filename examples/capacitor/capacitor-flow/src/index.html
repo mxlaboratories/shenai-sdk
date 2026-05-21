@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0" />
+    <title>Shen.AI Capacitor Flow</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main id="home" class="home">
+      <section class="panel">
+        <h1>Shen.AI Flow</h1>
+        <p id="status" class="status"></p>
+        <button id="dashboard" class="action" type="button">Dashboard</button>
+        <button id="measurement" class="action" type="button">Measurement</button>
+      </section>
+    </main>
+
+    <main id="pdf-actions" class="home hidden">
+      <section class="panel">
+        <h1>Measurement PDF</h1>
+        <p id="pdf-status" class="status">Measurement finished. Open the PDF report.</p>
+        <button id="open-pdf" class="action" type="button">Open PDF</button>
+        <button id="finish" class="primary" type="button">Finish</button>
+      </section>
+    </main>
+
+    <script src="./js/example.js" type="module"></script>
+  </body>
+</html>

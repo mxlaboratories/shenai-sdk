@@ -1,16 +1,57 @@
-### Running this example
+# Shen.AI Capacitor Minimal
 
-1. **Add the plugin**  
-   Copy the `capacitor-shenai-sdk` (Shenai Capacitor plugin) folder into the **root directory** of this project.
+Minimal Capacitor example that initializes the SDK with
+`MeasurementPreset.THIRTY_SECONDS_ALL_METRICS` and shows the embedded SDK UI.
+The only app-level control is the top-left initialize/deinitialize button.
 
-2. **Set your API key**  
-   Open `src/js/example.js` and replace the placeholder with your Shen.AI API key.
+## Setup
 
-3. **Install, build, and run**
+Copy or link the Capacitor SDK package into this directory as
+`capacitor-shenai-sdk`. The SDK directory must include `package.json`,
+`android`, and `ios`.
+
+The API key is intentionally not stored in the project. Pass it to Vite at build
+time with `VITE_SHENAI_API_KEY=<your-api-key>`. The generated `dist` directory is
+ignored and should not be committed.
+
+## Android
+
+Run from the repository root:
 
 ```bash
+cd examples/capacitor/capacitor-minimal
+
 npm install
-npm run build
-npx cap sync ios   # or android
-npx cap run ios    # or android
+VITE_SHENAI_API_KEY=<your-api-key> npm run build
+npx cap sync android
+npx cap run android
 ```
+
+Android builds require JDK 21 or newer because Capacitor compiles its Android
+library with Java 21. On macOS with Android Studio installed, this JDK is
+available as the bundled JetBrains Runtime:
+
+```bash
+export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+npx cap run android
+```
+
+## iOS
+
+Run from the repository root:
+
+```bash
+cd examples/capacitor/capacitor-minimal
+
+npm install
+VITE_SHENAI_API_KEY=<your-api-key> npm run build
+npx cap sync ios
+npx cap open ios
+```
+
+In Xcode, select the `App` target, choose your development team, verify the
+bundle identifier, select a physical iPhone, and run the app. Rebuild and run
+`npx cap sync ios` again whenever you change the API key or web code.
+
+Dependency lockfiles are intentionally not committed for this example. Run
+`npm install` and `npx cap sync ios` to regenerate them locally when needed.

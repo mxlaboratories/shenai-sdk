@@ -1,0 +1,10 @@
+{
+  "appId": "ai.mxlabs.shenai.capacitor.flow",
+  "appName": "Shen.AI Capacitor Flow",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false
+    }
+  }
+}

@@ -1,6 +1,6 @@
 {
-  "appId": "com.example.app",
-  "appName": "Shen.AI Capacitor Example",
+  "appId": "ai.mxlabs.shenai.capacitor.minimal",
+  "appName": "Shen.AI Capacitor Minimal",
   "webDir": "dist",
   "plugins": {
     "SplashScreen": {

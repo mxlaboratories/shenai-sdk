@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0" />
+    <title>Shen.AI Capacitor Custom UI</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main id="measurement-screen" class="screen measurement-screen">
+      <header class="topbar">
+        <h1>Custom UI</h1>
+        <button class="text-button" data-open-profile type="button">Health form</button>
+      </header>
+
+      <section class="measure-content">
+        <div id="camera-window" class="camera-window">
+          <span id="camera-placeholder">Camera paused</span>
+        </div>
+
+        <div class="progress-track"><div id="progress-fill"></div></div>
+        <p id="measurement-line" class="measurement-line">Ready - 0%</p>
+
+        <section class="quality-section">
+          <h2>Live quality</h2>
+          <p id="quality-empty" class="muted">Quality will appear during the measurement.</p>
+          <div id="quality-rows" class="quality-rows"></div>
+        </section>
+
+        <div class="button-row">
+          <button id="start-button" class="primary-button" type="button" disabled>Start</button>
+          <button id="stop-button" type="button" disabled>Stop</button>
+        </div>
+        <button id="see-results-button" class="primary-button" type="button" hidden>SEE RESULTS</button>
+
+        <div id="headline-grid" class="value-grid"></div>
+      </section>
+    </main>
+
+    <main id="profile-screen" class="screen form-screen" hidden>
+      <header class="topbar">
+        <button id="profile-back-button" class="text-button" type="button">Back</button>
+        <h1>Health form</h1>
+        <span></span>
+      </header>
+      <form id="risk-form" class="profile-form">
+        <div class="form-grid">
+          <label>Age<input name="age" type="number" /></label>
+          <label>Gender<select name="gender"></select></label>
+          <label>Height cm<input name="bodyHeight" type="number" step="0.1" /></label>
+          <label>Weight kg<input name="bodyWeight" type="number" step="0.1" /></label>
+          <label>Waist cm<input name="waistCircumference" type="number" step="0.1" /></label>
+          <label>Neck cm<input name="neckCircumference" type="number" step="0.1" /></label>
+          <label>Hip cm<input name="hipCircumference" type="number" step="0.1" /></label>
+          <label>Activity<select name="physicalActivity"></select></label>
+          <label>Cholesterol<input name="cholesterol" type="number" step="0.1" /></label>
+          <label>HDL<input name="cholesterolHdl" type="number" step="0.1" /></label>
+          <label>Triglyceride<input name="triglyceride" type="number" step="0.1" /></label>
+          <label>Fasting glucose<input name="fastingGlucose" type="number" step="0.1" /></label>
+          <label>SBP<input name="sbp" type="number" step="0.1" /></label>
+          <label>DBP<input name="dbp" type="number" step="0.1" /></label>
+          <label>Country<input name="country" type="text" /></label>
+          <label>Race<select name="race"></select></label>
+          <label>Treatment<select name="hypertensionTreatment"></select></label>
+          <label>Family diabetes<select name="familyDiabetes"></select></label>
+          <label>Parental hypertension<select name="parentalHypertension"></select></label>
+        </div>
+        <div class="check-grid">
+          <label><input name="isSmoker" type="checkbox" /> Smoker</label>
+          <label><input name="hasDiabetes" type="checkbox" /> Diabetes</label>
+          <label><input name="vegetableFruitDiet" type="checkbox" /> Fruit and vegetables</label>
+          <label><input name="historyOfHighGlucose" type="checkbox" /> High glucose history</label>
+          <label><input name="historyOfHypertension" type="checkbox" /> Hypertension history</label>
+        </div>
+        <button class="primary-button" type="submit">Save</button>
+      </form>
+    </main>
+
+    <main id="results-screen" class="screen results-screen" hidden>
+      <header class="topbar">
+        <button id="results-back-button" class="text-button" type="button">Back</button>
+        <h1>Results</h1>
+        <button class="text-button" data-open-profile type="button">Health form</button>
+      </header>
+      <section class="results-content">
+        <section class="quality-section">
+          <h2>Measurement quality</h2>
+          <p id="final-quality-empty" class="muted">Quality will appear during the measurement.</p>
+          <div id="final-quality-rows" class="quality-rows"></div>
+        </section>
+        <div id="metrics-grid" class="value-grid"></div>
+        <h2>Health indices</h2>
+        <div id="risks-grid" class="value-grid"></div>
+      </section>
+    </main>
+
+    <script src="./js/example.js" type="module"></script>
+  </body>
+</html>

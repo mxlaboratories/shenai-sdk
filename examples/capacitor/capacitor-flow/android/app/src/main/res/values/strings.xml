@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Shen.AI Flow</string>
+    <string name="title_activity_main">Shen.AI Flow</string>
+    <string name="package_name">ai.mxlabs.shenai.capacitor.flow</string>
+    <string name="custom_url_scheme">ai.mxlabs.shenai.capacitor.flow</string>
+</resources>

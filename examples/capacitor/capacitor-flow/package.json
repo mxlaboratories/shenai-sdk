@@ -1,0 +1,26 @@
+{
+  "name": "capacitor_flow",
+  "version": "1.0.0",
+  "description": "Shen.AI Capacitor UI-flow example",
+  "private": true,
+  "type": "module",
+  "keywords": [
+    "capacitor",
+    "mobile"
+  ],
+  "scripts": {
+    "start": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.3.1",
+    "@capacitor/core": "8.3.1",
+    "@capacitor/ios": "8.3.1",
+    "capacitor-shenai-sdk": "file:./capacitor-shenai-sdk"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.3.1",
+    "vite": "^8.0.10"
+  }
+}

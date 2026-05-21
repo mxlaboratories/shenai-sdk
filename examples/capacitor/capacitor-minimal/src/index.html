@@ -1,24 +1,14 @@
 <!doctype html>
-<html lang="en" dir="ltr" class="hydrated">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Shen.AI Capacitor Example</title>
-    <meta
-      name="viewport"
-      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0" />
+    <title>Shen.AI Capacitor Minimal</title>
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main>
-      <h1>Shen.AI SDK Plugin for Capacitor</h1>
-      <p>
-        This project can be used to test out the functionality of Shen.AI SDK
-        plugin.
-      </p>
-      <button onclick="initShenai()">Start Shen.AI SDK</button>
-    </main>
-
+    <button id="toggle-sdk" class="icon-button" type="button">I/O</button>
+    <p id="status" class="status">Initializing SDK...</p>
     <script src="./js/example.js" type="module"></script>
   </body>
 </html>

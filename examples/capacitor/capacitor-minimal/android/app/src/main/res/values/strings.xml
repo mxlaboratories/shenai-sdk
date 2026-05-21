@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">shenai-capacitor-example</string>
-    <string name="title_activity_main">shenai-capacitor-example</string>
-    <string name="package_name">com.example.plugin</string>
-    <string name="custom_url_scheme">com.example.plugin</string>
+    <string name="app_name">Shen.AI Minimal</string>
+    <string name="title_activity_main">Shen.AI Minimal</string>
+    <string name="package_name">ai.mxlabs.shenai.capacitor.minimal</string>
+    <string name="custom_url_scheme">ai.mxlabs.shenai.capacitor.minimal</string>
 </resources>

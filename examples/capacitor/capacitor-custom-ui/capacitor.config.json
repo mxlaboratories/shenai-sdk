@@ -1,0 +1,10 @@
+{
+  "appId": "ai.mxlabs.shenai.capacitor.customui",
+  "appName": "Shen.AI Capacitor Custom UI",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false
+    }
+  }
+}
