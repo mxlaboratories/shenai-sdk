@@ -1,9 +1,9 @@
 using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
-using CommunityToolkit.Maui; // UseMauiCommunityToolkit
+using CommunityToolkit.Maui;
 using Shenai.Maui;
 
-namespace Shenai.Maui.Minimal;
+namespace Shenai.Maui.CustomUi;
 
 public static class MauiProgram
 {

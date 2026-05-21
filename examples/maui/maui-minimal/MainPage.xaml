@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Shenai.Maui.Minimal.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:shenai="clr-namespace:Shenai.Maui;assembly=Shenai.Maui"
+    BackgroundColor="White">
+
+  <Grid>
+    <shenai:ShenaiSdkView x:Name="ShenaiView"
+                          VerticalOptions="Fill"
+                          HorizontalOptions="Fill" />
+    <Label x:Name="StatusLabel"
+           HorizontalOptions="Center"
+           VerticalOptions="Center"
+           HorizontalTextAlignment="Center"
+           TextColor="Black"
+           IsVisible="False" />
+    <Button x:Name="ToggleButton"
+            Text="Initialize"
+            Clicked="OnToggleClicked"
+            WidthRequest="132"
+            HeightRequest="52"
+            Margin="12"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            BackgroundColor="White"
+            BorderColor="Black"
+            BorderWidth="1"
+            TextColor="Black"
+            CornerRadius="8" />
+  </Grid>
+</ContentPage>

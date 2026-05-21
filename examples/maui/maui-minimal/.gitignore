@@ -1,0 +1,43 @@
+# ---- General .NET / MAUI ----
+**/bin/
+**/obj/
+.dotnet/
+*.binlog
+*.log
+*.tmp
+*.tmp.*
+*.user
+*.userprefs
+*.suo
+*.orig
+*.swp
+
+# ---- iOS artifacts ----
+**/*.app/
+**/*.ipa
+**/*.dSYM
+**/*.xcarchive
+**/*.a
+**/*.o
+
+# ---- Android artifacts ----
+**/*.apk
+**/*.aab
+
+# ---- NuGet output ----
+*.nupkg
+packages/
+
+# ---- IDE / OS ----
+.DS_Store
+.vs/
+.vscode/
+.idea/
+Thumbs.db
+
+# ---- Local test data (optional) ----
+*.coverage*
+TestResults/
+
+Shenai.Maui.SDK/
+shenai_sdk_maui*.zip

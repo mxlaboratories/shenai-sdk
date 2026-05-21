@@ -11,9 +11,9 @@
     <!-- Exclude SDK sources from this app's default item globs -->
     <DefaultItemExcludes>$(DefaultItemExcludes);Shenai.Maui.SDK/**</DefaultItemExcludes>
 
-    <ApplicationTitle>Shenai Minimal</ApplicationTitle>
+    <ApplicationTitle>Shen.AI Flow</ApplicationTitle>
     <!-- Use a single bundle id across platforms to avoid launching stale builds -->
-    <ApplicationId>ai.mxlabs.shenai-maui-minimal</ApplicationId>
+    <ApplicationId>ai.mxlabs.shenai.maui.flow</ApplicationId>
 
     <!-- Min OS versions -->
     <SupportedOSPlatformVersion Condition="'$(TargetFramework)'=='net9.0-android'">26</SupportedOSPlatformVersion>
@@ -23,20 +23,32 @@
     <AndroidTargetSdkVersion Condition="'$(TargetFramework)'=='net9.0-android'">35</AndroidTargetSdkVersion>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <ShenaiApiKey Condition="'$(ShenaiApiKey)' == ''">$([System.Environment]::GetEnvironmentVariable('SHENAI_API_KEY'))</ShenaiApiKey>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>SHENAI_API_KEY</_Parameter1>
+      <_Parameter2>$(ShenaiApiKey)</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>
+
   <!-- iOS build tweaks -->
   <PropertyGroup Condition="'$(TargetFramework)'=='net9.0-ios'">
     <!-- Use dynamic registrar to avoid link-time ObjC class references -->
     <Registrar>dynamic</Registrar>
   </PropertyGroup>
 
-  <!-- iOS Debug: disable linker to avoid trimming protocol wrappers from bindings -->
+  <!-- iOS Debug: link only framework SDK assemblies and disable the IDE debugger transport. -->
   <PropertyGroup Condition="'$(TargetFramework)'=='net9.0-ios' and '$(Configuration)'=='Debug'">
-    <MtouchLink>None</MtouchLink>
+    <MtouchLink>SdkOnly</MtouchLink>
+    <MtouchDebug>false</MtouchDebug>
   </PropertyGroup>
 
   <!-- MAUI .NET 9 explicit Controls package -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
   </ItemGroup>
 
   <!-- MAUI splash so iOS generates a proper launch storyboard (prevents 320x480 fallback) -->
@@ -49,9 +61,15 @@
                       Condition="'$(TargetFramework)' == 'net9.0-ios' or '$(TargetFramework)' == 'net9.0-android'" />
   </ItemGroup>
 
+  <Target Name="ValidateShenaiMauiSdk"
+          BeforeTargets="PrepareForBuild"
+          Condition="!Exists('Shenai.Maui.SDK/src/Shenai.Maui/Shenai.Maui.csproj')">
+    <Error Text="Shen.AI MAUI SDK not found. Place the SDK at Shenai.Maui.SDK so src/Shenai.Maui/Shenai.Maui.csproj exists." />
+  </Target>
+
   <!-- Ensure native iOS framework from binding is linked at app level -->
   <ItemGroup Condition="'$(TargetFramework)'=='net9.0-ios'">
-    <NativeReference Include="Shenai.Maui.SDK/src/Shenai.iOS.Binding/native/ShenaiSDK.framework">
+    <NativeReference Include="Shenai.Maui.SDK/src/Shenai.iOS.Binding/native/ShenaiSDK.xcframework">
       <Kind>Framework</Kind>
       <ForceLoad>true</ForceLoad>
       <SmartLink>true</SmartLink>

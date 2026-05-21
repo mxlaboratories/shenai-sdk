@@ -17,6 +17,8 @@
 **/*.ipa
 **/*.dSYM
 **/*.xcarchive
+**/*.a
+**/*.o
 
 # ---- Android artifacts ----
 **/*.apk
@@ -36,3 +38,6 @@ Thumbs.db
 # ---- Local test data (optional) ----
 *.coverage*
 TestResults/
+
+Shenai.Maui.SDK/
+shenai_sdk_maui*.zip
