@@ -5,20 +5,18 @@
 # Requires: Yarn, Node.js, Android SDK platform‑tools (adb)
 #
 # Usage:
-#   ./scripts/run_react_native_android.sh
+#   SHENAI_API_KEY="<key>" ./scripts/run_react_native_android.sh
 #
 # Exit codes:
 #   0  success
 #   1  missing prerequisite
 #   2  SDK not unpacked
-#   3  API key still placeholder
 # -------------------------------------------------------------
 set -euo pipefail
 
 ###############  CONFIG  ######################################
 EXAMPLE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )/examples/react-native/react_native_minimal"
 SDK_DIR="$EXAMPLE_DIR/react-native-shenai-sdk"
-APP_FILE="$EXAMPLE_DIR/App.tsx"
 ANDROID_DIR="$EXAMPLE_DIR/android"
 ###############################################################
 
@@ -33,9 +31,12 @@ command -v adb  >/dev/null 2>&1 || fail "Android platform‑tools (adb) not foun
 ### 2 ▸ Validate SDK presence
 [[ -d "$SDK_DIR" ]] || fail "Shen.AI React Native SDK directory not found at $SDK_DIR" 2
 
-### 3 ▸ Warn if API key placeholder still present
-if grep -q 'initialize("API_KEY"' "$APP_FILE"; then
-  fail "App.tsx still contains the placeholder \"API_KEY\". Replace it with your real key before running." 3
+### 3 ▸ Forward API key to Metro/Babel
+export SHENAI_API_KEY="${SHENAI_API_KEY:-}"
+if [[ -z "$SHENAI_API_KEY" ]]; then
+  say "SHENAI_API_KEY is not set. The app will show a missing-key screen."
+else
+  say "Using SHENAI_API_KEY from the environment."
 fi
 
 ### 4 ▸ JS dependencies
@@ -54,4 +55,4 @@ fi
 
 ### 7 ▸ Build & launch
 cd "$EXAMPLE_DIR"
-yarn android
+yarn android "$@"

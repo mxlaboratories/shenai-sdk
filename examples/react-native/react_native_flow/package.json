@@ -1,0 +1,34 @@
+{
+  "name": "react_native_flow",
+  "version": "3.1.0",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start"
+  },
+  "dependencies": {
+    "react": "19.1.0",
+    "react-native": "0.80.1",
+    "react-native-shenai-sdk": "file:./react-native-shenai-sdk"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "@babel/runtime": "^7.27.6",
+    "@react-native-community/cli": "^19.1.0",
+    "@react-native-community/cli-platform-android": "^18.0.0",
+    "@react-native/babel-preset": "0.80.1",
+    "@react-native/eslint-config": "0.80.1",
+    "@react-native/metro-config": "0.80.1",
+    "@react-native/typescript-config": "0.80.1",
+    "@types/react": "^19.1.8",
+    "@types/react-test-renderer": "^19.1.0",
+    "react-test-renderer": "19.1.0",
+    "typescript": "5.8.3"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}

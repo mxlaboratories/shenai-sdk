@@ -1,0 +1,273 @@
+import {StyleSheet} from "react-native";
+
+import {
+  CAMERA_PREVIEW_HEIGHT,
+  CAMERA_PREVIEW_TOP,
+  CAMERA_VIEW_SIZE,
+} from "./constants";
+
+export const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#FFFFFF",
+    flex: 1,
+  },
+  header: {
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    borderBottomColor: "#000000",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    minHeight: 56,
+    paddingHorizontal: 16,
+  },
+  headerTitle: {
+    color: "#000000",
+    fontSize: 20,
+    fontWeight: "700",
+  },
+  headerActions: {
+    flexDirection: "row",
+    gap: 8,
+  },
+  headerButton: {
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    borderColor: "#000000",
+    borderRadius: 999,
+    borderWidth: 1,
+    justifyContent: "center",
+    minHeight: 36,
+    paddingHorizontal: 12,
+  },
+  headerButtonText: {
+    color: "#000000",
+    fontSize: 14,
+    fontWeight: "700",
+  },
+  scrollContent: {
+    padding: 16,
+    paddingBottom: 32,
+  },
+  cameraShell: {
+    alignSelf: "center",
+    backgroundColor: "#EDEDED",
+    borderColor: "#000000",
+    borderRadius: CAMERA_VIEW_SIZE / 2,
+    borderWidth: 2,
+    height: CAMERA_VIEW_SIZE,
+    justifyContent: "center",
+    marginVertical: 12,
+    overflow: "hidden",
+    position: "relative",
+    width: CAMERA_VIEW_SIZE,
+  },
+  sdkView: {
+    height: CAMERA_PREVIEW_HEIGHT,
+    left: 0,
+    position: "absolute",
+    top: CAMERA_PREVIEW_TOP,
+    width: CAMERA_VIEW_SIZE,
+  },
+  messageBox: {
+    padding: 24,
+  },
+  messageTitle: {
+    color: "#000000",
+    fontSize: 18,
+    fontWeight: "700",
+    textAlign: "center",
+  },
+  messageText: {
+    color: "#333333",
+    marginTop: 8,
+    textAlign: "center",
+  },
+  section: {
+    marginTop: 16,
+  },
+  sectionTitle: {
+    color: "#000000",
+    fontSize: 16,
+    fontWeight: "700",
+    marginBottom: 10,
+  },
+  progressTrack: {
+    backgroundColor: "#FFFFFF",
+    borderColor: "#000000",
+    borderWidth: 1,
+    height: 12,
+    overflow: "hidden",
+  },
+  progressFill: {
+    backgroundColor: "#000000",
+    height: "100%",
+  },
+  statusText: {
+    color: "#333333",
+    marginTop: 10,
+    textAlign: "center",
+  },
+  qualityList: {
+    gap: 8,
+  },
+  qualityRow: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: 10,
+  },
+  qualityLabel: {
+    color: "#333333",
+    fontSize: 13,
+    width: 56,
+  },
+  qualityTrack: {
+    backgroundColor: "#FFFFFF",
+    borderColor: "#000000",
+    borderWidth: 1,
+    flex: 1,
+    height: 12,
+    overflow: "hidden",
+  },
+  qualityFill: {
+    backgroundColor: "#000000",
+    height: "100%",
+  },
+  qualityValue: {
+    color: "#000000",
+    fontSize: 13,
+    textAlign: "right",
+    width: 44,
+  },
+  mutedText: {
+    color: "#333333",
+  },
+  actions: {
+    flexDirection: "row",
+    gap: 12,
+    marginTop: 18,
+  },
+  primaryButton: {
+    alignItems: "center",
+    backgroundColor: "#000000",
+    borderColor: "#000000",
+    borderRadius: 999,
+    borderWidth: 1,
+    flex: 1,
+    justifyContent: "center",
+    minHeight: 44,
+  },
+  secondaryButton: {
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    borderColor: "#000000",
+    borderRadius: 999,
+    borderWidth: 1,
+    flex: 1,
+    justifyContent: "center",
+    minHeight: 44,
+  },
+  resultsButton: {
+    alignItems: "center",
+    backgroundColor: "#000000",
+    borderColor: "#000000",
+    borderRadius: 999,
+    borderWidth: 1,
+    justifyContent: "center",
+    marginTop: 12,
+    minHeight: 44,
+  },
+  primaryButtonText: {
+    color: "#FFFFFF",
+    fontSize: 15,
+    fontWeight: "700",
+  },
+  secondaryButtonText: {
+    color: "#000000",
+    fontSize: 15,
+    fontWeight: "700",
+  },
+  disabledButton: {
+    opacity: 0.45,
+  },
+  pressedButton: {
+    opacity: 0.75,
+  },
+  grid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+  },
+  tile: {
+    backgroundColor: "#FFFFFF",
+    borderColor: "#000000",
+    borderWidth: 1,
+    minHeight: 78,
+    padding: 10,
+    width: "48.7%",
+  },
+  tileLabel: {
+    color: "#333333",
+    fontSize: 12,
+  },
+  tileValue: {
+    color: "#000000",
+    fontSize: 22,
+    fontWeight: "700",
+    marginTop: 6,
+  },
+  tileUnit: {
+    color: "#333333",
+    fontSize: 12,
+    marginTop: 2,
+  },
+  formField: {
+    marginBottom: 14,
+  },
+  formLabel: {
+    color: "#222222",
+    fontSize: 14,
+    fontWeight: "600",
+    marginBottom: 6,
+  },
+  input: {
+    backgroundColor: "#FFFFFF",
+    borderColor: "#999999",
+    borderWidth: 1,
+    color: "#000000",
+    minHeight: 42,
+    paddingHorizontal: 10,
+  },
+  switchRow: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    minHeight: 44,
+  },
+  segmented: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+  },
+  segment: {
+    backgroundColor: "#FFFFFF",
+    borderColor: "#000000",
+    borderRadius: 999,
+    borderWidth: 1,
+    minHeight: 36,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+  },
+  segmentSelected: {
+    backgroundColor: "#000000",
+    borderColor: "#000000",
+  },
+  segmentText: {
+    color: "#333333",
+    fontSize: 13,
+    fontWeight: "600",
+  },
+  segmentTextSelected: {
+    color: "#FFFFFF",
+  },
+});
