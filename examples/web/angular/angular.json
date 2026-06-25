@@ -25,7 +25,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "shenai-sdk",
+                "input": "node_modules/@shenai/sdk",
                 "output": "shenai-sdk"
               }
             ],
@@ -89,7 +89,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "shenai-sdk",
+                "input": "node_modules/@shenai/sdk",
                 "output": "shenai-sdk"
               }
             ],

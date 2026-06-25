@@ -21,6 +21,7 @@ From the repository root:
 
 ```bash
 cd examples/web/webrtc
+npm install
 npm start
 ```
 
@@ -45,15 +46,16 @@ const API_KEY = "YOUR_API_KEY";
 
 Do not open `public/index.html` directly from the filesystem. The Shen.AI Web SDK needs `SharedArrayBuffer`, so the page must be served with `Cross-Origin-Opener-Policy` and `Cross-Origin-Embedder-Policy` headers. `server.js` adds these headers.
 
-## SDK location
+## SDK package
 
-The server serves the Web SDK from:
+The Web SDK is restored from npm as `@shenai/sdk`. `npm start` copies the
+installed package into the served asset directory:
 
 ```text
 examples/web/webrtc/public/shenai-sdk
 ```
 
-Place the Shen.AI Web SDK files there so this file exists:
+After `npm start`, this file should exist:
 
 ```text
 examples/web/webrtc/public/shenai-sdk/index.mjs

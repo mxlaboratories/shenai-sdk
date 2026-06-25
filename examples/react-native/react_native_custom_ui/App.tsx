@@ -24,11 +24,11 @@ import {
   setOperatingMode,
   ShenaiSdkView,
   startMeasurement,
-} from "react-native-shenai-sdk";
+} from "@shenai/react-native-sdk";
 import type {
   HealthRisks,
   MeasurementResults,
-} from "react-native-shenai-sdk";
+} from "@shenai/react-native-sdk";
 
 import {
   BooleanRow,

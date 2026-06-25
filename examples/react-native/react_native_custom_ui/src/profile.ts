@@ -1,7 +1,7 @@
 import type {
   MeasurementResults,
   RisksFactors,
-} from "react-native-shenai-sdk";
+} from "@shenai/react-native-sdk";
 
 import {RiskFactorValue, SettingsValue} from "./constants";
 import {readNumber} from "./measurement";

@@ -1648,7 +1648,7 @@ PODS:
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
     - SocketRocket
-  - react-native-shenai-sdk (3.1.0):
+  - react-native-shenai-sdk (3.1.2):
     - boost
     - DoubleConversion
     - fast_float
@@ -1675,6 +1675,7 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
+    - ShenaiSDK (= 3.1.2)
     - SocketRocket
     - Yoga
   - React-NativeModulesApple (0.80.1):
@@ -2151,6 +2152,7 @@ PODS:
     - React-perflogger (= 0.80.1)
     - React-utils (= 0.80.1)
     - SocketRocket
+  - ShenaiSDK (3.1.2)
   - SocketRocket (0.7.1)
   - Yoga (0.0.0)
 
@@ -2196,7 +2198,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
-  - react-native-shenai-sdk (from `../node_modules/react-native-shenai-sdk`)
+  - "react-native-shenai-sdk (from `../node_modules/@shenai/react-native-sdk`)"
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-oscompat (from `../node_modules/react-native/ReactCommon/oscompat`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -2233,6 +2235,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - ShenaiSDK
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -2318,7 +2321,7 @@ EXTERNAL SOURCES:
   React-microtasksnativemodule:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/microtasks"
   react-native-shenai-sdk:
-    :path: "../node_modules/react-native-shenai-sdk"
+    :path: "../node_modules/@shenai/react-native-sdk"
   React-NativeModulesApple:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios"
   React-oscompat:
@@ -2425,7 +2428,7 @@ SPEC CHECKSUMS:
   React-logger: 984ebd897afad067555d081deaf03f57c4315723
   React-Mapbuffer: 0c045c844ce6d85cde53e85ab163294c6adad349
   React-microtasksnativemodule: d9499269ad1f484ae71319bac1d9231447f2094e
-  react-native-shenai-sdk: c465d88c87e33215fbc1131eed7868ecb80925a2
+  react-native-shenai-sdk: 4210c904661a30f91d4aca310dcb3a7be8e6ce04
   React-NativeModulesApple: 983f3483ef0a3446b56d490f09d579fba2442e17
   React-oscompat: 114036cd8f064558c9c1a0c04fc9ae5e1453706a
   React-perflogger: e7287fee27c16e3c8bd4d470f2361572b63be16b
@@ -2457,6 +2460,7 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: afd905e84ee36e1678016ae04d7370c75ed539be
   ReactCodegen: f8d5fb047c4cd9d2caade972cad9edac22521362
   ReactCommon: 17fd88849a174bf9ce45461912291aca711410fc
+  ShenaiSDK: 7ccf63be8e7133d878ed4b9b50fb1bf86e731c9d
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: daa1e4de4b971b977b23bc842aaa3e135324f1f3
 

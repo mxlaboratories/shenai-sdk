@@ -11,14 +11,12 @@
 # Exit codes:
 #   0  success
 #   1  missing prerequisite
-#   2  SDK not unpacked
 # -------------------------------------------------------------
 set -euo pipefail
 
 ###############  CONFIG  ######################################
 ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
 EXAMPLE_DIR="$ROOT_DIR/examples/react-native/react_native_custom_ui"
-SDK_DIR="$EXAMPLE_DIR/react-native-shenai-sdk"
 NODE_MODULES_DIR="$EXAMPLE_DIR/node_modules"
 YARN_CACHE_DIR="${TMPDIR:-/tmp}/shenai-react-native-custom-ui-yarn-cache"
 METRO_PORT="${RCT_METRO_PORT:-8083}"
@@ -41,10 +39,7 @@ command -v node       >/dev/null 2>&1 || fail "Node.js not found. Install from h
 command -v xcodebuild >/dev/null 2>&1 || fail "Xcode command‑line tools missing. Run 'xcode-select --install'." 1
 pod --version         >/dev/null 2>&1 || fail "CocoaPods missing. Install with 'sudo gem install cocoapods'." 1
 
-### 2 ▸ Validate SDK presence
-[[ -d "$SDK_DIR" ]] || fail "Shen.AI React Native SDK directory not found at $SDK_DIR" 2
-
-### 3 ▸ Forward API key to Metro/Babel
+### 2 ▸ Forward API key to Metro/Babel
 export SHENAI_API_KEY="${SHENAI_API_KEY:-}"
 if [[ -z "$SHENAI_API_KEY" ]]; then
   say "SHENAI_API_KEY is not set. The app will show a missing-key screen."
@@ -54,7 +49,7 @@ fi
 export RCT_METRO_PORT="$METRO_PORT"
 say "Using Metro port $METRO_PORT."
 
-### 4 ▸ JS dependencies
+### 3 ▸ JS dependencies
 cd "$EXAMPLE_DIR"
 if [[ -d "$NODE_MODULES_DIR" ]]; then
   say "Using existing JS dependencies."
@@ -63,12 +58,12 @@ else
   YARN_CACHE_FOLDER="$YARN_CACHE_DIR" yarn install --silent --force
 fi
 
-### 5 ▸ CocoaPods
+### 4 ▸ CocoaPods
 cd "$IOS_DIR"
 say "Installing CocoaPods dependencies…"
 pod install --silent
 
-### 6 ▸ Build & launch
+### 5 ▸ Build & launch
 cd "$EXAMPLE_DIR"
 if [[ "${1:-}" == "--device" && -n "${2:-}" ]]; then
   DEVICE_ID="$2"

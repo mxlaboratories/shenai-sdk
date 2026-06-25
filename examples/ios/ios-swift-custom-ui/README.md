@@ -4,12 +4,10 @@ Native Swift custom UI example. It hides the embedded SDK UI, renders a custom m
 
 ## Setup
 
-Copy the SDK package into the example:
-
-```bash
-mkdir -p examples/ios/ios-swift-custom-ui/Frameworks
-cp -R /path/to/ShenaiSDK.xcframework examples/ios/ios-swift-custom-ui/Frameworks/
-```
+The iOS SDK is restored with Swift Package Manager from
+`https://github.com/mxlaboratories/ShenaiSDK.git` pinned to exact version `3.1.2`.
+Xcode resolves the `ShenaiSDK` package product when the project is opened or
+built.
 
 Open `ios-swift-custom-ui.xcodeproj` in Xcode, select a physical iPhone, and set your signing team.
 

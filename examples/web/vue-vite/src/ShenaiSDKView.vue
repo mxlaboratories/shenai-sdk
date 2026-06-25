@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { computed, inject, ref, type Ref } from "vue";
-import { type ShenaiSDK } from "shenai-sdk";
+import { type ShenaiSDK } from "@shenai/sdk";
 import { useRealtimeHeartRate } from "./useRealtimeHeartRate";
 
 // We inject the sdk from ShenaiProvider

@@ -21,14 +21,6 @@ has_gradle_property() {
 rootdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && cd .. && pwd )"
 example_dir="$rootdir/examples/android/kotlin-custom-ui"
 
-mkdir -p "$example_dir/libs"
-
-sdk_target="$example_dir/libs/shenai_sdk.aar"
-
-if ! has_gradle_property "shenaiSdkVersion" "$@" && [ ! -f "$sdk_target" ]; then
-    fail "Shen.ai SDK not found - place the SDK in $sdk_target or pass -PshenaiSdkVersion=<version>." 1
-fi
-
 if ! has_gradle_property "shenaiApiKey" "$@" && [ -z "${SHENAI_API_KEY:-}" ]; then
     fail "SHENAI_API_KEY is required. Pass -PshenaiApiKey=<your-api-key> or set SHENAI_API_KEY." 2
 fi

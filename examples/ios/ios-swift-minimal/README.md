@@ -4,12 +4,10 @@ Native Swift minimal example. It initializes the SDK, embeds the SDK UI, and exp
 
 ## Setup
 
-Copy the SDK package into the example:
-
-```bash
-mkdir -p examples/ios/ios-swift-minimal/Frameworks
-cp -R /path/to/ShenaiSDK.xcframework examples/ios/ios-swift-minimal/Frameworks/
-```
+The iOS SDK is restored with Swift Package Manager from
+`https://github.com/mxlaboratories/ShenaiSDK.git` pinned to exact version `3.1.2`.
+Xcode resolves the `ShenaiSDK` package product when the project is opened or
+built.
 
 Open `ios-swift-minimal.xcodeproj` in Xcode, select a physical iPhone, and set your signing team.
 

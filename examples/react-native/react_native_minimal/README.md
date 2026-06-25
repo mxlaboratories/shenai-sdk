@@ -7,10 +7,9 @@ This repository shows the **minimum glue code** required to embed the Shen.AI 
 ## 0. Quick start (TL;DR)
 
 ```bash
-# 1  Download the React Native SDK from https://admin.shen.ai/sdk/keys-downloads, unzip it and place it next to package.json
+# 1  Install JavaScript dependencies. This restores @shenai/react-native-sdk from npm.
 cd examples/react-native/react_native_minimal
-mv ~/Downloads/shenai_sdk_react_native.zip ./shenai_sdk_react_native.zip
-unzip ./shenai_sdk_react_native.zip
+yarn install
 
 # 2  Return to the repository root and provide your API key for the React Native bundle
 cd ../../..
@@ -40,7 +39,7 @@ export SHENAI_API_KEY=your-real-key
 ```
 react_native_minimal/
 ├── App.tsx                   # ← reads SHENAI_API_KEY at bundle time
-├── react-native-shenai-sdk/  # ← unzipped proprietary SDK (native + JS)
+├── package.json              # ← restores @shenai/react-native-sdk from npm
 ├── ios/…
 ├── android/…
 └── ../../../scripts/
@@ -48,8 +47,8 @@ react_native_minimal/
     └── run_react_native_android.sh
 ```
 
-The scripts encapsulate **all set‑up steps** (dependency download, CocoaPods,
-Gradle wrapper, device checks) so you can focus on the SDK.
+The scripts encapsulate **all set‑up steps** (JavaScript dependency install,
+CocoaPods, Gradle wrapper, device checks) so you can focus on the SDK.
 
 ---
 
@@ -97,7 +96,6 @@ If `SHENAI_API_KEY` is missing, the app starts and shows a missing-key screen in
 | Symptom                                                                                                                                    | Fix                                                                                                                                                                                                         |
 | ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `Yarn not found`                                                                                                                           | Install Yarn globally: `npm i -g yarn` or follow [https://yarnpkg.com/getting-started/install](https://yarnpkg.com/getting-started/install).                                                                |
-| `SDK not found…`                                                                                                                           | Ensure the **unzipped** folder is named exactly **`react-native-shenai-sdk`** and placed next to `package.json`. The SDK can be downloaded from the Customer Portal at https://admin.shen.ai/sdk/keys-downloads |
 | iOS build fails with _“pod: command not found”_                                                                                            | Run `sudo gem install cocoapods` or use Homebrew (`brew install cocoapods`).                                                                                                                                |
 | Android build times out downloading Gradle                                                                                                 | Set the `ANDROID_HOME` environment variable and install command‑line tools & platform 34 via Android Studio.                                                                                                |
 | `Initialization failed`                                                                                                                    | Double-check your API key.                                                                                                                                                                                  |
@@ -111,8 +109,6 @@ If `SHENAI_API_KEY` is missing, the app starts and shows a missing-key screen in
 | ---- | ---------------------------------------- |
 | 0    | Success                                  |
 | 1    | Missing prerequisite (Node, Yarn, adb …) |
-| 2    | SDK directory missing                    |
-
 ---
 
 ## 7. Next steps

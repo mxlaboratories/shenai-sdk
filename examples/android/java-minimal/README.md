@@ -5,8 +5,9 @@ native camera UI, and runs a 30 second all-metrics measurement flow.
 
 ## Setup
 
-Download the Android SDK package and place the SDK AAR in this directory as
-`libs/shenai_sdk.aar`.
+The Android SDK is restored from Maven Central as `ai.shen:shenai-sdk`. The
+default version is set in `gradle.properties` as `shenaiSdkVersion=3.1.2`; pass
+`-PshenaiSdkVersion=<version>` to use a different SDK version.
 
 Run the example from the repository root:
 

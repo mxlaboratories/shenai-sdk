@@ -8,9 +8,10 @@ A lightweight Expo dev-client project that showcases the Shen.AI React Native SD
 - Xcode 14.3+ with a provisioned iPhone or simulator
 - A Shen.AI API key
 
-## Prepare the SDK once
-The React Native plugin must be available at `examples/expo/expo-minimal/react-native-shenai-sdk`.
-Drop the published `react-native-shenai-sdk` package into that folder so it contains `package.json`, `android/libs/shenai_sdk.aar`, and `ios/ShenaiSDK.xcframework`.
+## SDK package
+The React Native SDK is restored from npm as `@shenai/react-native-sdk`. The
+package resolves the Android SDK from Maven Central and the iOS SDK from
+CocoaPods during the native build.
 
 ## Run the demo
 ```bash

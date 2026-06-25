@@ -4,8 +4,7 @@ This is a minimal web example for Shen.AI SDK using Angular.
 
 ## How to run the app
 
-1. Download the web SDK from the Developer Portal and extract it in this directory as `shenai-sdk`.
-2. Run `npm i` to install the dependencies.
+1. Run `npm i` to install the dependencies. This restores the Web SDK from npm as `@shenai/sdk`.
 3. Paste your API key in [`API_KEY`](./src/app/app.component.ts).
 4. Run the app using `ng serve`.
 

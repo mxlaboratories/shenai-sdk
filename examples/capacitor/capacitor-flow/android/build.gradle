@@ -3,9 +3,6 @@ buildscript {
         google()
         mavenCentral()
         mavenLocal()
-        flatDir {
-            dirs "$rootDir/../capacitor-shenai-sdk/android/libs"
-        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.12.1'
@@ -20,8 +17,16 @@ allprojects {
         google()
         mavenCentral()
         mavenLocal()
-        flatDir {
-            dirs "$rootDir/../capacitor-shenai-sdk/android/libs"
+    }
+}
+
+subprojects { subproject ->
+    afterEvaluate {
+        if (subproject.plugins.hasPlugin('com.android.application') || subproject.plugins.hasPlugin('com.android.library')) {
+            subproject.android.compileOptions {
+                sourceCompatibility JavaVersion.VERSION_17
+                targetCompatibility JavaVersion.VERSION_17
+            }
         }
     }
 }

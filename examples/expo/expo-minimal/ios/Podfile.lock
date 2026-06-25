@@ -903,10 +903,11 @@ PODS:
   - React-Mapbuffer (0.73.4):
     - glog
     - React-debug
-  - react-native-shenai-sdk (2.10.6):
+  - react-native-shenai-sdk (3.1.2):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
+    - ShenaiSDK (= 3.1.2)
   - React-nativeconfig (0.73.4)
   - React-NativeModulesApple (0.73.4):
     - glog
@@ -1074,6 +1075,7 @@ PODS:
     - React-jsi (= 0.73.4)
     - React-logger (= 0.73.4)
     - React-perflogger (= 0.73.4)
+  - ShenaiSDK (3.1.2)
   - SocketRocket (0.6.1)
   - Yoga (1.14.0)
 
@@ -1114,7 +1116,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector-modern`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
-  - react-native-shenai-sdk (from `../node_modules/react-native-shenai-sdk`)
+  - "react-native-shenai-sdk (from `../node_modules/@shenai/react-native-sdk`)"
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -1141,6 +1143,7 @@ SPEC REPOS:
   trunk:
     - fmt
     - libevent
+    - ShenaiSDK
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -1212,7 +1215,7 @@ EXTERNAL SOURCES:
   React-Mapbuffer:
     :path: "../node_modules/react-native/ReactCommon"
   react-native-shenai-sdk:
-    :path: "../node_modules/react-native-shenai-sdk"
+    :path: "../node_modules/@shenai/react-native-sdk"
   React-nativeconfig:
     :path: "../node_modules/react-native/ReactCommon"
   React-NativeModulesApple:
@@ -1292,7 +1295,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 9ac353eccf6ab54d1e0a33862ba91221d1e88460
   React-logger: 5295f5eac9d7624fe9a33a473442d8f4c1074197
   React-Mapbuffer: f7ba4d5459e546d741791a55664388e97b31df7c
-  react-native-shenai-sdk: d15d7a61788c472bf2962d59cf9a13303a60a5b3
+  react-native-shenai-sdk: cab3e76f0d302b9471f47829411a3955e31cb632
   React-nativeconfig: d7af5bae6da70fa15ce44f045621cf99ed24087c
   React-NativeModulesApple: 7a561c2792b0a2b74aff6c58d2554dcf824372aa
   React-perflogger: 8a1e1af5733004bdd91258dcefbde21e0d1faccd
@@ -1313,9 +1316,10 @@ SPEC CHECKSUMS:
   React-runtimescheduler: ceaeeb19e75912958625f72883d240640e8f40da
   React-utils: 8439db27c3745f6de9d67eb61f5600c8d624274c
   ReactCommon: cc18bd33c0fab03c67620da6a602dcc1704e66b4
+  ShenaiSDK: 7ccf63be8e7133d878ed4b9b50fb1bf86e731c9d
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 1b901a6d6eeba4e8a2e8f308f708691cdb5db312
 
-PODFILE CHECKSUM: aa3897e72b5105bff98c989129c12e021e7ca064
+PODFILE CHECKSUM: 03449ee1734d1111b9a707171af010d06b0ac7d5
 
 COCOAPODS: 1.16.2

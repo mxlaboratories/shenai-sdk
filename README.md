@@ -10,7 +10,7 @@ For more information and SDK documentation please visit the Shen.AI Developer Po
 
 - [developer.shen.ai](https://developer.shen.ai)
 
-You'll need to download the SDK from the Developer Portal and place it in the relevant example directory in order to run the example. You'll also need an API key that can be accessed on the Developer Portal.
+Examples restore the SDK through the platform package manager, as described in the installation guide on the Developer Portal. You'll also need an API key that can be accessed on the Developer Portal.
 
 ## Supported platforms
 

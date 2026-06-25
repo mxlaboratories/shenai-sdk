@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@shenai/sdk@3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@shenai/sdk/-/sdk-3.1.2.tgz#acb28fb42a3d6801a6034030cba6a4ef30585d89"
+  integrity sha512-2NObXkWWg4KnCGziUw1/iqR0jzEVycPSpPsTkyfVULQsnZtktEZWquBan/rW0DQzjLMaWuqsO9e6IaINzmhVgA==
+
 "@zeit/schemas@2.36.0":
   version "2.36.0"
   resolved "https://registry.yarnpkg.com/@zeit/schemas/-/schemas-2.36.0.tgz#7a1b53f4091e18d0b404873ea3e3c83589c765f2"

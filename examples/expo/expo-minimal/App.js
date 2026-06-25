@@ -5,7 +5,7 @@ import {
   initialize,
   ShenaiSdkView,
   InitializationResult,
-} from "react-native-shenai-sdk";
+} from "@shenai/react-native-sdk";
 
 export default function App() {
   const [initResult, setInitResult] = useState(null);

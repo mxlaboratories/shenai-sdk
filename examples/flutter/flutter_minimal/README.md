@@ -5,12 +5,7 @@ starts the native camera UI, and runs a 30 second all-metrics measurement flow.
 
 ## Setup
 
-Link or unzip the Flutter SDK package into this directory as `shenai_sdk`.
-When working from this repository, use:
-
-```bash
-ln -sf /path/to/shenai-sdk/flutter shenai_sdk
-```
+The Flutter SDK is restored from pub.dev as `shenai_sdk`.
 
 Run the example:
 

@@ -9,7 +9,7 @@ export class ShenaiSdkService {
 
   constructor() {
       const sdkModuleUrl = '/shenai-sdk/index.mjs';
-      (import(/* @vite-ignore */ sdkModuleUrl) as Promise<typeof import('shenai-sdk')>)
+      (import(/* @vite-ignore */ sdkModuleUrl) as Promise<typeof import('@shenai/sdk')>)
       .then((LoadSDK) => {
       LoadSDK.default({
         onRuntimeInitialized: () => {

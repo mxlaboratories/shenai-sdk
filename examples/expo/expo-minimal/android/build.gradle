@@ -36,9 +36,5 @@ allprojects {
         google()
         mavenCentral()
         maven { url 'https://www.jitpack.io' }
-
-        flatDir {
-            dirs project(':react-native-shenai-sdk').file('libs')
-        }
     }
 }

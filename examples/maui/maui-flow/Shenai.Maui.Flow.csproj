@@ -7,8 +7,6 @@
     <SingleProject>true</SingleProject>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-
-    <!-- Exclude SDK sources from this app's default item globs -->
     <DefaultItemExcludes>$(DefaultItemExcludes);Shenai.Maui.SDK/**</DefaultItemExcludes>
 
     <ApplicationTitle>Shen.AI Flow</ApplicationTitle>
@@ -49,6 +47,7 @@
   <!-- MAUI .NET 9 explicit Controls package -->
   <ItemGroup>
     <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
+    <PackageReference Include="Shenai.Maui" Version="3.1.2" />
   </ItemGroup>
 
   <!-- MAUI splash so iOS generates a proper launch storyboard (prevents 320x480 fallback) -->
@@ -56,28 +55,10 @@
     <MauiSplashScreen Include="Resources/Splash/splash.svg" Color="#000000" BaseSize="128,128" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="Shenai.Maui.SDK/src/Shenai.Maui/Shenai.Maui.csproj"
-                      Condition="'$(TargetFramework)' == 'net9.0-ios' or '$(TargetFramework)' == 'net9.0-android'" />
-  </ItemGroup>
-
-  <Target Name="ValidateShenaiMauiSdk"
-          BeforeTargets="PrepareForBuild"
-          Condition="!Exists('Shenai.Maui.SDK/src/Shenai.Maui/Shenai.Maui.csproj')">
-    <Error Text="Shen.AI MAUI SDK not found. Place the SDK at Shenai.Maui.SDK so src/Shenai.Maui/Shenai.Maui.csproj exists." />
-  </Target>
-
-  <!-- Ensure native iOS framework from binding is linked at app level -->
   <ItemGroup Condition="'$(TargetFramework)'=='net9.0-ios'">
-    <NativeReference Include="Shenai.Maui.SDK/src/Shenai.iOS.Binding/native/ShenaiSDK.xcframework">
-      <Kind>Framework</Kind>
-      <ForceLoad>true</ForceLoad>
-      <SmartLink>true</SmartLink>
-    </NativeReference>
     <!-- Root the binding assembly to prevent the trimmer from removing protocol types used by the registrar -->
     <TrimmerRootAssembly Include="Shenai.iOS.Binding" />
     <TrimmerRootDescriptor Include="Linker/PreserveShenai.xml" />
-    <!-- Removed extra linker args and stub lib; NativeReference is sufficient -->
   </ItemGroup>
 
   <!-- Workaround: some bindings emit ReferenceNativeSymbol items (-u _OBJC_CLASS_*) which

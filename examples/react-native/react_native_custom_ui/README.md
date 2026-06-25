@@ -11,8 +11,9 @@ measurement experience around the native camera view:
 
 ## Setup
 
-Download the React Native SDK from the Customer Portal and unzip it next to
-`package.json` as `react-native-shenai-sdk`.
+The React Native SDK is restored from npm as `@shenai/react-native-sdk`. The
+package resolves the Android SDK from Maven Central and the iOS SDK from
+CocoaPods during the native build.
 
 ## Run
 

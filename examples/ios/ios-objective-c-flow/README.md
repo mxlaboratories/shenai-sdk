@@ -4,12 +4,10 @@ Native Objective-C flow example. It opens the SDK dashboard flow and a measureme
 
 ## Setup
 
-Copy the SDK package into the example:
-
-```bash
-mkdir -p examples/ios/ios-objective-c-flow/Frameworks
-cp -R /path/to/ShenaiSDK.xcframework examples/ios/ios-objective-c-flow/Frameworks/
-```
+The iOS SDK is restored with Swift Package Manager from
+`https://github.com/mxlaboratories/ShenaiSDK.git` pinned to exact version `3.1.2`.
+Xcode resolves the `ShenaiSDK` package product when the project is opened or
+built.
 
 Open `ios-objective-c-flow.xcodeproj` in Xcode, select a physical iPhone, and set your signing team.
 

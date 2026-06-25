@@ -17,7 +17,7 @@
     "@capacitor/android": "8.3.1",
     "@capacitor/core": "8.3.1",
     "@capacitor/ios": "8.3.1",
-    "capacitor-shenai-sdk": "file:./capacitor-shenai-sdk"
+    "@shenai/capacitor-sdk": "3.1.2"
   },
   "devDependencies": {
     "@capacitor/cli": "8.3.1",

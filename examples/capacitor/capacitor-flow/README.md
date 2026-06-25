@@ -9,9 +9,9 @@ Simple black-on-white Capacitor example with two SDK UI-flow entry points:
 
 ## Setup
 
-Copy or link the Capacitor SDK package into this directory as
-`capacitor-shenai-sdk`. The SDK directory must include `package.json`,
-`android`, and `ios`.
+The Capacitor SDK is restored from npm as `@shenai/capacitor-sdk`. The plugin
+resolves the Android SDK from Maven Central and the iOS SDK from CocoaPods
+during the native build.
 
 The API key is intentionally not stored in the project. Pass it to Vite at build
 time with `VITE_SHENAI_API_KEY=<your-api-key>`. The generated `dist` directory is

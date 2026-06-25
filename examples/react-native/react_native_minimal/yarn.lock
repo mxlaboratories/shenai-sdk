@@ -1589,6 +1589,11 @@
     invariant "^2.2.4"
     nullthrows "^1.1.1"
 
+"@shenai/react-native-sdk@3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@shenai/react-native-sdk/-/react-native-sdk-3.1.2.tgz#024ac61337680ed9d439bb4ace6fbacbb679b483"
+  integrity sha512-5aK+6ef1z98Gtb6jadAqnn25G7FTYAdOOFRiPu4xlHBFS8QEyC76BYBKPRw8vrvMrbiqfT/QTa451umio9e6sg==
+
 "@sideway/address@^4.1.5":
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/@sideway/address/-/address-4.1.5.tgz#4bc149a0076623ced99ca8208ba780d65a99b9d5"
@@ -4678,9 +4683,6 @@ react-is@^19.1.0:
   version "19.2.6"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-19.2.6.tgz#aeee6159b159eb7f520d672cffcc69e7052d288f"
   integrity sha512-XjBR15BhXuylgWGuslhDKqlSayuqvqBX91BP8pauG8kd1zY8kotkNWbXksTCNRarse4kuGbe2kIY05ARtwNIvw==
-
-"react-native-shenai-sdk@file:./react-native-shenai-sdk":
-  version "3.1.0"
 
 react-native@0.80.1:
   version "0.80.1"

@@ -7,26 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63DA299A76EFCE679C000001 /* ShenaiSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 63DA299A76EFCE679C000002 /* ShenaiSDK */; };
 		35273FB62940C1AC00E6A2D8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 35273FB52940C1AC00E6A2D8 /* AppDelegate.m */; };
 		35273FC72940C1AD00E6A2D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 35273FC62940C1AD00E6A2D8 /* main.m */; };
-		35273FD02941311000E6A2D8 /* ShenaiSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35273FCE2941304900E6A2D8 /* ShenaiSDK.xcframework */; };
-		35273FD12941311000E6A2D8 /* ShenaiSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 35273FCE2941304900E6A2D8 /* ShenaiSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		35EA05002949029F00E5DD11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35EA04FF2949029F00E5DD11 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		35273FD22941311000E6A2D8 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				35273FD12941311000E6A2D8 /* ShenaiSDK.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		35273FB12940C1AC00E6A2D8 /* ios-objective-c-minimal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-objective-c-minimal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -34,7 +20,6 @@
 		35273FB52940C1AC00E6A2D8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		35273FC52940C1AD00E6A2D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		35273FC62940C1AD00E6A2D8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		35273FCE2941304900E6A2D8 /* ShenaiSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ShenaiSDK.xcframework; path = Frameworks/ShenaiSDK.xcframework; sourceTree = SOURCE_ROOT; };
 		35EA04FF2949029F00E5DD11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -43,7 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35273FD02941311000E6A2D8 /* ShenaiSDK.xcframework in Frameworks */,
+				63DA299A76EFCE679C000001 /* ShenaiSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +67,6 @@
 		35273FCD2941304900E6A2D8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				35273FCE2941304900E6A2D8 /* ShenaiSDK.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -97,13 +81,15 @@
 				35273FAD2940C1AC00E6A2D8 /* Sources */,
 				35273FAE2940C1AC00E6A2D8 /* Frameworks */,
 				35273FAF2940C1AC00E6A2D8 /* Resources */,
-				35273FD22941311000E6A2D8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "ios-objective-c-minimal";
+			packageProductDependencies = (
+				63DA299A76EFCE679C000002 /* ShenaiSDK */,
+			);
 			productName = "ios-objective-c-minimal";
 			productReference = 35273FB12940C1AC00E6A2D8 /* ios-objective-c-minimal.app */;
 			productType = "com.apple.product-type.application";
@@ -131,6 +117,9 @@
 				Base,
 			);
 			mainGroup = 35273FA82940C1AC00E6A2D8;
+			packageReferences = (
+				63DA299A76EFCE679C000003 /* XCRemoteSwiftPackageReference "ShenaiSDK" */,
+			);
 			productRefGroup = 35273FB22940C1AC00E6A2D8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -162,6 +151,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		63DA299A76EFCE679C000003 /* XCRemoteSwiftPackageReference "ShenaiSDK" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mxlaboratories/ShenaiSDK.git";
+			requirement = {
+				kind = exactVersion;
+				version = 3.1.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		63DA299A76EFCE679C000002 /* ShenaiSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63DA299A76EFCE679C000003 /* XCRemoteSwiftPackageReference "ShenaiSDK" */;
+			productName = ShenaiSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCBuildConfiguration section */
 		35273FC82940C1AD00E6A2D8 /* Debug */ = {
@@ -200,7 +208,6 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -259,7 +266,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

@@ -1,4 +1,4 @@
-import CreateShenaiSDK, { type ShenaiSDK } from "shenai-sdk";
+import CreateShenaiSDK, { type ShenaiSDK } from "@shenai/sdk";
 
 let sdkPromise: Promise<ShenaiSDK> | null = null;
 let sdkInstance: ShenaiSDK | null = null;

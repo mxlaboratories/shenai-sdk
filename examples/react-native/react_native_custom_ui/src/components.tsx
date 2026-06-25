@@ -6,7 +6,7 @@ import {
   TextInput,
   View,
 } from "react-native";
-import type {MeasurementResults} from "react-native-shenai-sdk";
+import type {MeasurementResults} from "@shenai/react-native-sdk";
 
 import type {TileValue} from "./measurement";
 import {formatNumber, normalizedQuality, qualityRows} from "./measurement";

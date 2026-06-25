@@ -18,12 +18,7 @@ the SDK camera view.
 
 ## Setup
 
-Link or unzip the Flutter SDK package into this directory as `shenai_sdk`.
-When working from this repository, use:
-
-```bash
-ln -sf /path/to/shenai-sdk/flutter shenai_sdk
-```
+The Flutter SDK is restored from pub.dev as `shenai_sdk`.
 
 Run the example:
 
@@ -39,9 +34,6 @@ example. From the repository root, you can also run:
 ```bash
 ./scripts/run_flutter_custom_ui.sh --dart-define=SHENAI_API_KEY=<your-api-key>
 ```
-
-The local Android build requires the generated SDK AAR at
-`shenai_sdk/android/libs/shenai_sdk.aar`.
 
 ## iOS device signing
 

@@ -142,10 +142,11 @@ packages:
   shenai_sdk:
     dependency: "direct main"
     description:
-      path: shenai_sdk
-      relative: true
-    source: path
-    version: "3.1.0"
+      name: shenai_sdk
+      sha256: "02ce4dcdfc47f48c7e0f419f9af94d02d228f572cab52a37d324eb797743e658"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.2"
   sky_engine:
     dependency: transitive
     description: flutter

@@ -11,13 +11,11 @@
 # Exit codes:
 #   0  success
 #   1  missing prerequisite
-#   2  SDK not unpacked
 # -------------------------------------------------------------
 set -euo pipefail
 
 ###############  CONFIG  ######################################
 EXAMPLE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )/examples/react-native/react_native_minimal"
-SDK_DIR="$EXAMPLE_DIR/react-native-shenai-sdk"
 IOS_DIR="$EXAMPLE_DIR/ios"
 ###############################################################
 
@@ -30,10 +28,7 @@ command -v node       >/dev/null 2>&1 || fail "Node.js not found. Install from h
 command -v xcodebuild >/dev/null 2>&1 || fail "Xcode command‑line tools missing. Run 'xcode-select --install'." 1
 pod --version         >/dev/null 2>&1 || fail "CocoaPods missing. Install with 'sudo gem install cocoapods'." 1
 
-### 2 ▸ Validate SDK presence
-[[ -d "$SDK_DIR" ]] || fail "Shen.AI React Native SDK directory not found at $SDK_DIR" 2
-
-### 3 ▸ Forward API key to Metro/Babel
+### 2 ▸ Forward API key to Metro/Babel
 export SHENAI_API_KEY="${SHENAI_API_KEY:-}"
 if [[ -z "$SHENAI_API_KEY" ]]; then
   say "SHENAI_API_KEY is not set. The app will show a missing-key screen."
@@ -41,23 +36,23 @@ else
   say "Using SHENAI_API_KEY from the environment."
 fi
 
-### 4 ▸ Native toolchain
+### 3 ▸ Native toolchain
 unset TOOLCHAINS LD LDPLUSPLUS
 export CC="$(xcrun --find clang)"
 export CXX="$(xcrun --find clang++)"
 say "Using Xcode toolchain: $CC"
 
-### 5 ▸ JS dependencies
+### 4 ▸ JS dependencies
 cd "$EXAMPLE_DIR"
 say "Installing JS dependencies with Yarn…"
 yarn install --silent
 
-### 6 ▸ CocoaPods
+### 5 ▸ CocoaPods
 cd "$IOS_DIR"
 say "Installing CocoaPods dependencies…"
 pod install --silent
 
-### 7 ▸ Build & launch
+### 6 ▸ Build & launch
 cd "$EXAMPLE_DIR"
 if [[ "${1:-}" == "--device" && -n "${2:-}" ]]; then
   DEVICE_ID="$2"

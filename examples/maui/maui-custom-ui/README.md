@@ -7,9 +7,8 @@ results screen after measurement completion.
 
 ## Setup
 
-Download the Shen.AI MAUI SDK package and place it in this directory as
-`Shenai.Maui.SDK`. The SDK directory must include
-`src/Shenai.Maui/Shenai.Maui.csproj`.
+The MAUI SDK is restored from NuGet as `Shenai.Maui`. The default package
+version is set in the project file as `3.1.2`.
 
 The API key is intentionally not stored in the project. Pass it at build time
 with `-p:ShenaiApiKey=<your-api-key>`, or set `SHENAI_API_KEY` in your shell.

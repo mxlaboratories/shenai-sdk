@@ -1,6 +1,6 @@
 // ShenaiContext.tsx
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { ShenaiSDK } from "shenai-sdk";
+import { ShenaiSDK } from "@shenai/sdk";
 import { getShenaiSDK, destroyShenaiSDK } from "./globalShenaiSDK";
 
 const ShenaiContext = createContext<ShenaiSDK | null>(null);

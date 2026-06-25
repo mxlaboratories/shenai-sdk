@@ -12,12 +12,7 @@ Shen.AI UI-flow screens. The home page has two actions:
 
 ## Setup
 
-Link or unzip the Flutter SDK package into this directory as `shenai_sdk`.
-When working from this repository, use:
-
-```bash
-ln -sf /path/to/shenai-sdk/flutter shenai_sdk
-```
+The Flutter SDK is restored from pub.dev as `shenai_sdk`.
 
 Run the example:
 

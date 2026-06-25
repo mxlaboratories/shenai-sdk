@@ -17,7 +17,7 @@ import {
   Race,
   ShenaiSdkCapacitor,
   UiVersion
-} from "capacitor-shenai-sdk";
+} from "@shenai/capacitor-sdk";
 
 const shenApiKey = import.meta.env.VITE_SHENAI_API_KEY ?? "";
 const missingApiKeyMessage = "Missing VITE_SHENAI_API_KEY. Rebuild the app with your API key.";

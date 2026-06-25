@@ -7,32 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		298268882F3CAB54CA000001 /* ShenaiSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 298268882F3CAB54CA000002 /* ShenaiSDK */; };
 		355A57762A9650630026F4C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A57752A9650630026F4C9 /* AppDelegate.swift */; };
 		355A577F2A9650630026F4C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 355A577E2A9650630026F4C9 /* Assets.xcassets */; };
-		355A578B2A9652B40026F4C9 /* ShenaiSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 355A57892A9650AD0026F4C9 /* ShenaiSDK.xcframework */; };
-		355A578C2A9652B40026F4C9 /* ShenaiSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 355A57892A9650AD0026F4C9 /* ShenaiSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		355A578D2A9652B40026F4C9 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				355A578C2A9652B40026F4C9 /* ShenaiSDK.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		355A57722A9650630026F4C9 /* ios-swift-flow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-swift-flow.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		355A57752A9650630026F4C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		355A577E2A9650630026F4C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		355A57832A9650630026F4C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		355A57892A9650AD0026F4C9 /* ShenaiSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = ShenaiSDK.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,7 +25,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				355A578B2A9652B40026F4C9 /* ShenaiSDK.xcframework in Frameworks */,
+				298268882F3CAB54CA000001 /* ShenaiSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,7 +62,6 @@
 		355A578E2A9652B40026F4C9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				355A57892A9650AD0026F4C9 /* ShenaiSDK.xcframework */,
 			);
 			path = Frameworks;
 			sourceTree = SOURCE_ROOT;
@@ -92,13 +76,15 @@
 				355A576E2A9650630026F4C9 /* Sources */,
 				355A576F2A9650630026F4C9 /* Frameworks */,
 				355A57702A9650630026F4C9 /* Resources */,
-				355A578D2A9652B40026F4C9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "ios-swift-flow";
+			packageProductDependencies = (
+				298268882F3CAB54CA000002 /* ShenaiSDK */,
+			);
 			productName = "ios-swift-flow";
 			productReference = 355A57722A9650630026F4C9 /* ios-swift-flow.app */;
 			productType = "com.apple.product-type.application";
@@ -127,6 +113,9 @@
 				Base,
 			);
 			mainGroup = 355A57692A9650620026F4C9;
+			packageReferences = (
+				298268882F3CAB54CA000003 /* XCRemoteSwiftPackageReference "ShenaiSDK" */,
+			);
 			productRefGroup = 355A57732A9650630026F4C9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -157,6 +146,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		298268882F3CAB54CA000003 /* XCRemoteSwiftPackageReference "ShenaiSDK" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mxlaboratories/ShenaiSDK.git";
+			requirement = {
+				kind = exactVersion;
+				version = 3.1.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		298268882F3CAB54CA000002 /* ShenaiSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 298268882F3CAB54CA000003 /* XCRemoteSwiftPackageReference "ShenaiSDK" */;
+			productName = ShenaiSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCBuildConfiguration section */
 		355A57842A9650630026F4C9 /* Debug */ = {
@@ -281,7 +289,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S46GDQG7Y5;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ios-swift-flow/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -308,7 +315,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S46GDQG7Y5;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ios-swift-flow/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

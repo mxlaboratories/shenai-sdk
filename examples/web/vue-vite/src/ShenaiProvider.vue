@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { ref, provide, onMounted, onUnmounted } from "vue";
-import type { ShenaiSDK } from "shenai-sdk";
+import type { ShenaiSDK } from "@shenai/sdk";
 import { getShenaiSDK, destroyShenaiSDK } from "./globalShenaiSDK";
 
 // We store the loaded sdk in a ref:
