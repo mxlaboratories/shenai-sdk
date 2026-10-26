@@ -22,7 +22,7 @@ CreateShenaiSDK().then((shenai) => {
         // example usage of initialization settings
         // for more information see: https://developer.shen.ai/getting-started/initialization#initialization-settings
         {
-            
+
             // set measurement preset
             measurementPreset: shenai.MeasurementPreset.THIRTY_SECONDS_ALL_METRICS,
 
@@ -60,7 +60,7 @@ CreateShenaiSDK().then((shenai) => {
             },
             onCameraError: () => console.log("camera error"),
         },
-        
+
         // initialization results handling
         // for more information see: https://developer.shen.ai/getting-started/initialization#error-handling
         (result) => {

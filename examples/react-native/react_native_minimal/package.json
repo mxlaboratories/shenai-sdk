@@ -10,7 +10,7 @@
   "dependencies": {
     "react": "19.1.0",
     "react-native": "0.80.1",
-    "@shenai/react-native-sdk": "3.1.2"
+    "react-native-shenai-sdk": "npm:@shenai/react-native-sdk@3.1.17"
   },
   "devDependencies": {
     "@babel/core": "^7.28.0",

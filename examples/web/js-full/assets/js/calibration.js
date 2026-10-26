@@ -29,7 +29,7 @@ CreateShenaiSDK().then((shenai) => {
             },
             onCameraError: () => console.log("camera error"),
         },
-        
+
         // initialization results handling
         // for more information see: https://developer.shen.ai/getting-started/initialization#error-handling
         (result) => {

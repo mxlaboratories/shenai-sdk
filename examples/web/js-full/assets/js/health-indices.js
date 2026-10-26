@@ -69,7 +69,7 @@ let factors = {};
 
 export function calculate() {
     // computing health indices
-    // for more information see: https://developer.shen.ai/health-indices/integration  
+    // for more information see: https://developer.shen.ai/health-indices/integration
     const indices = shenai.computeHealthRisks(factors);
     // output.textContent = JSON.stringify(indices, null, 2);
     document.getElementById("output").textContent = formatFactorsAsJSObject(indices);
@@ -84,19 +84,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     shenai.initialize(
       API_KEY,
       APP_CONFIG.USER_ID,
-  
+
       // camera mode in initialization settings
       // for more information see: https://developer.shen.ai/getting-started/initialization#initialization-settings
       {
         cameraMode: CameraMode.OFF
       },
-  
+
       // initialization results handling
       // for more information see: https://developer.shen.ai/getting-started/initialization#error-handling
       (result) => {
         if (result === shenai.InitializationResult.OK) {
             console.log("Shen.AI SDK initialized");
-            
+
             // example risk factors object
             // for more information see: https://developer.shen.ai/health-indices/integration
             factors = {
@@ -105,43 +105,43 @@ document.addEventListener("DOMContentLoaded", async () => {
                 cholesterolHdl: 55,            // mg/dL
                 sbp: 132,                      // mmHg
                 dbp: 85,                       // mmHg
-               
+
                 isSmoker: false,
                 hypertensionTreatment: shenai.HypertensionTreatment.NO,
                 //   ↳ HypertensionTreatment.NOT_NEEDED | .NO | .YES
-               
+
                 hasDiabetes: true,
-               
+
                 bodyHeight: 178,               // centimeters
                 bodyWeight: 85,                // kilograms
                 waistCircumference: 92,        // centimeters
-               
+
                 gender: shenai.Gender.MALE,
                 //   ↳ Gender.MALE | .FEMALE | .OTHER
-               
+
                 country: "US",                 // 2-letter ISO code, e.g. "US"
-               
+
                 race: shenai.Race.WHITE,
                 //   ↳ Race.WHITE | .AFRICAN_AMERICAN | .OTHER
-               
+
                 physicalActivity: shenai.PhysicalActivity.MODERATELY,
-                //   ↳ PhysicalActivity.SEDENTARY | .LIGHTLY_ACTIVE 
+                //   ↳ PhysicalActivity.SEDENTARY | .LIGHTLY_ACTIVE
                 //     | .MODERATELY | .VERY_ACTIVE | .EXTRA_ACTIVE
-               
+
                 vegetableFruitDiet: true,
                 historyOfHypertension: false,
                 historyOfHighGlucose: true,
-               
+
                 fastingGlucose: 95,            // mg/dL
                 triglyceride: 160,             // mg/dL
-               
+
                 parentalHypertension: shenai.ParentalHistory.ONE,
                 //   ↳ ParentalHistory.NONE | .ONE | .BOTH
-               
+
                 familyDiabetes: shenai.FamilyHistory.NONE_FIRST_DEGREE,
                 //   ↳ FamilyHistory.NONE | .NONE_FIRST_DEGREE | .FIRST_DEGREE
             };
-        
+
             document.getElementById("input").textContent = formatFactorsAsJSObject(factors);
 
         } else {
@@ -149,10 +149,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
       }
     );
-  
+
     // providing the user interface
     // for more information see: https://developer.shen.ai/getting-started/initialization#providing-the-user-interface
     window.shenai = shenai;
 });
-
-  

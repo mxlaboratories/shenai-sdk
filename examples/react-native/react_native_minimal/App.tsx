@@ -13,7 +13,7 @@ import {
   deinitialize,
   initialize,
   ShenaiSdkView,
-} from "@shenai/react-native-sdk";
+} from "react-native-shenai-sdk";
 
 declare const process: {
   env: {

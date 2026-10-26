@@ -4,11 +4,11 @@
   "private": true,
   "main": "index.js",
   "dependencies": {
-    "@shenai/sdk": "3.1.2",
-    "serve": "^14.2.4"
+    "serve": "^14.2.4",
+    "shenai-sdk": "npm:@shenai/sdk@3.1.17"
   },
   "scripts": {
-    "build": "rm -rf build && mkdir build && cp pages/*.html build/ && cp -r assets build/assets && cp -R node_modules/@shenai/sdk build/shenai-sdk && cp app-config.js build/",
+    "build": "rm -rf build && mkdir build && cp pages/*.html build/ && cp -r assets build/assets && cp -r node_modules/shenai-sdk build/shenai-sdk && cp app-config.js build/",
     "serve": "serve build --config=../serve.json",
     "start": "yarn build && yarn serve"
   }

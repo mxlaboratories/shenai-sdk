@@ -9,7 +9,7 @@ android {
 
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
-    implementation project(':shenai-capacitor-sdk')
+    implementation project(':capacitor-shenai-sdk')
 
 }
 

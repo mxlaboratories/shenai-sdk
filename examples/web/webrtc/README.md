@@ -41,25 +41,16 @@ examples/web/webrtc/public/app.js
 Update:
 
 ```js
-const API_KEY = "YOUR_API_KEY";
+const API_KEY = "YOUR_API_KEY"
 ```
 
 Do not open `public/index.html` directly from the filesystem. The Shen.AI Web SDK needs `SharedArrayBuffer`, so the page must be served with `Cross-Origin-Opener-Policy` and `Cross-Origin-Embedder-Policy` headers. `server.js` adds these headers.
 
-## SDK package
+## SDK dependency
 
-The Web SDK is restored from npm as `@shenai/sdk`. `npm start` copies the
-installed package into the served asset directory:
-
-```text
-examples/web/webrtc/public/shenai-sdk
-```
-
-After `npm start`, this file should exist:
-
-```text
-examples/web/webrtc/public/shenai-sdk/index.mjs
-```
+The public example installs `@shenai/sdk` through the `shenai-sdk` npm alias in
+`package.json`. `npm start` copies the installed package into `public/shenai-sdk`
+before starting the server. Keep the API key in a local edit only.
 
 ## Flow
 
@@ -87,3 +78,4 @@ npm start
 ```
 
 Then open the app from `http://127.0.0.1:3000`, not from a `file://` URL.
+

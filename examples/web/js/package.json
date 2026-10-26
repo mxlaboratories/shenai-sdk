@@ -3,11 +3,11 @@
   "version": "2.0.0-beta.18",
   "private": true,
   "dependencies": {
-    "@shenai/sdk": "3.1.2",
-    "serve": "^13.0.2"
+    "serve": "^13.0.2",
+    "shenai-sdk": "npm:@shenai/sdk@3.1.17"
   },
   "scripts": {
-    "build": "rm -rf build && mkdir build && cp -r src/* build/ && cp -R node_modules/@shenai/sdk build/shenai-sdk",
+    "build": "rm -rf build && mkdir build && cp -r src/* node_modules/shenai-sdk build/",
     "serve": "serve -s build --config=../serve.json",
     "start": "yarn build && yarn serve"
   }

@@ -4,12 +4,11 @@ Native Swift flow example. It opens the SDK dashboard flow and a measurement flo
 
 ## Setup
 
-The iOS SDK is restored with Swift Package Manager from
-`https://github.com/mxlaboratories/ShenaiSDK.git` pinned to exact version `3.1.2`.
-Xcode resolves the `ShenaiSDK` package product when the project is opened or
-built.
+The public example resolves `ShenaiSDK` through Swift Package Manager. The SDK
+repository and exact version are declared in the Xcode project. Xcode downloads
+the dependency when opening or building the project.
 
-Open `ios-swift-flow.xcodeproj` in Xcode, select a physical iPhone, and set your signing team.
+From this example directory, open `ios-swift-flow.xcodeproj` in Xcode, select a physical iPhone, and set your signing team.
 
 Set the API key for local Xcode runs:
 
@@ -18,7 +17,7 @@ Set the API key for local Xcode runs:
 3. Add an enabled environment variable:
 
 ```text
-SHENAI_API_KEY=<your-api-key>
+SHENAI_API_KEY=YOUR_API_KEY
 ```
 
 The app also accepts `SHENAI_API_KEY` as an `xcodebuild` build setting for command-line builds. Do not store a real API key in source files, shared schemes, or committed project settings.
@@ -26,3 +25,4 @@ The app also accepts `SHENAI_API_KEY` as an `xcodebuild` build setting for comma
 ## Run
 
 Press Run in Xcode after selecting the `ios-swift-flow` target and your device.
+

@@ -7,12 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8EA572B57F9A8B5DDD000001 /* ShenaiSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 8EA572B57F9A8B5DDD000002 /* ShenaiSDK */; };
 		35273FB62940C1AC00E6A2D8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 35273FB52940C1AC00E6A2D8 /* AppDelegate.m */; };
 		35273FC72940C1AD00E6A2D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 35273FC62940C1AD00E6A2D8 /* main.m */; };
 		35EA05002949029F00E5DD11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35EA04FF2949029F00E5DD11 /* Assets.xcassets */; };
+		5627E4479A712BBA5767B0E3 /* ShenaiSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 0175BD7C8441C075E16D2F95 /* ShenaiSDK */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		35273FD22941311000E6A2D8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		35273FB12940C1AC00E6A2D8 /* ios-objective-c-custom-ui.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-objective-c-custom-ui.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -28,7 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EA572B57F9A8B5DDD000001 /* ShenaiSDK in Frameworks */,
+				5627E4479A712BBA5767B0E3 /* ShenaiSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,17 +93,18 @@
 				35273FAD2940C1AC00E6A2D8 /* Sources */,
 				35273FAE2940C1AC00E6A2D8 /* Frameworks */,
 				35273FAF2940C1AC00E6A2D8 /* Resources */,
+				35273FD22941311000E6A2D8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "ios-objective-c-custom-ui";
-			packageProductDependencies = (
-				8EA572B57F9A8B5DDD000002 /* ShenaiSDK */,
-			);
 			productName = "ios-objective-c-custom-ui";
 			productReference = 35273FB12940C1AC00E6A2D8 /* ios-objective-c-custom-ui.app */;
+			packageProductDependencies = (
+				0175BD7C8441C075E16D2F95 /* ShenaiSDK */,
+			);
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -117,10 +130,10 @@
 				Base,
 			);
 			mainGroup = 35273FA82940C1AC00E6A2D8;
-			packageReferences = (
-				8EA572B57F9A8B5DDD000003 /* XCRemoteSwiftPackageReference "ShenaiSDK" */,
-			);
 			productRefGroup = 35273FB22940C1AC00E6A2D8 /* Products */;
+			packageReferences = (
+				22B2D33E6ADEF70FC6369693 /* XCRemoteSwiftPackageReference "ShenaiSDK" */,
+			);
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -152,21 +165,22 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+
 /* Begin XCRemoteSwiftPackageReference section */
-		8EA572B57F9A8B5DDD000003 /* XCRemoteSwiftPackageReference "ShenaiSDK" */ = {
+		22B2D33E6ADEF70FC6369693 /* XCRemoteSwiftPackageReference "ShenaiSDK" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mxlaboratories/ShenaiSDK.git";
+			repositoryURL = "https://github.com/mxlaboratories/ShenaiSDK";
 			requirement = {
 				kind = exactVersion;
-				version = 3.1.2;
+				version = 3.1.17;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		8EA572B57F9A8B5DDD000002 /* ShenaiSDK */ = {
+		0175BD7C8441C075E16D2F95 /* ShenaiSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8EA572B57F9A8B5DDD000003 /* XCRemoteSwiftPackageReference "ShenaiSDK" */;
+			package = 22B2D33E6ADEF70FC6369693 /* XCRemoteSwiftPackageReference "ShenaiSDK" */;
 			productName = ShenaiSDK;
 		};
 /* End XCSwiftPackageProductDependency section */
@@ -208,6 +222,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -266,6 +281,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

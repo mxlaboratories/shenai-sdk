@@ -4,15 +4,15 @@
   "version": "2.6.5",
   "type": "module",
   "scripts": {
-    "dev": "rimraf public/shenai-sdk && cp -R node_modules/@shenai/sdk public/shenai-sdk && vite",
-    "build": "rimraf public/shenai-sdk && cp -R node_modules/@shenai/sdk public/shenai-sdk && tsc -b && vite build",
+    "dev": "rimraf public/shenai-sdk && cp -r node_modules/shenai-sdk public/shenai-sdk && vite",
+    "build": "rimraf public/shenai-sdk && cp -r node_modules/shenai-sdk public/shenai-sdk && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@shenai/sdk": "3.1.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "shenai-sdk": "npm:@shenai/sdk@3.1.17"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

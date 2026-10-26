@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "dependencies": {
-    "@shenai/sdk": "3.1.2"
-  },
   "scripts": {
-    "prepare:sdk": "rm -rf public/shenai-sdk && mkdir -p public && cp -R node_modules/@shenai/sdk public/shenai-sdk",
-    "start": "npm run prepare:sdk && node server.js"
+    "start": "rm -rf public/shenai-sdk && cp -r node_modules/shenai-sdk public/shenai-sdk && node server.js"
+  },
+  "dependencies": {
+    "shenai-sdk": "npm:@shenai/sdk@3.1.17"
   }
 }

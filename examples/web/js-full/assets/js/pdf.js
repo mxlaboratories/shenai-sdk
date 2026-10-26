@@ -9,7 +9,7 @@ CreateShenaiSDK().then((shenai) => {
   shenai.initialize(
     API_KEY,
     APP_CONFIG.USER_ID,
-    
+
     // example usage of custom measurement config
     // for more information see: https://developer.shen.ai/getting-started/configuration#custom-measurement-configuration
     {

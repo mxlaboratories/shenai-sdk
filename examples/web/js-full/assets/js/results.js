@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const raw = sessionStorage.getItem("shenaiResults");
     const output = document.getElementById("output");
-  
+
     if (raw) {
       try {
         const parsed = JSON.parse(raw);
@@ -14,4 +14,3 @@ document.addEventListener("DOMContentLoaded", () => {
       output.textContent = "No results available.";
     }
 });
-  

@@ -8,24 +8,37 @@ screen:
 
 ## Setup
 
-The React Native SDK is restored from npm as `@shenai/react-native-sdk`. The
-package resolves the Android SDK from Maven Central and the iOS SDK from
-CocoaPods during the native build.
+The public example installs `@shenai/react-native-sdk` from npm through the
+`react-native-shenai-sdk` alias in `package.json`. Native dependencies resolve
+through Maven Central and CocoaPods. Versions come from the package manifests.
 
-## Run
-
-From the repository root:
+Use Node.js compatible with `package.json`, Yarn Classic, JDK 17 and Android
+Studio for Android, and Xcode plus CocoaPods for iOS. Run from this example directory:
 
 ```bash
-SHENAI_API_KEY=<your-api-key> ./scripts/run_react_native_flow_android.sh
-SHENAI_API_KEY=<your-api-key> ./scripts/run_react_native_flow_ios.sh
+yarn install
+export SHENAI_API_KEY="YOUR_API_KEY"
+yarn start
 ```
 
-The run scripts use Metro port `8082` by default. Override it with
-`RCT_METRO_PORT=<port>` if needed.
+Keep Metro running. In a second terminal in the same example directory, launch
+Android with a connected device or running emulator:
 
-iOS simulators do not provide camera frames, so measurements need a physical
-device.
+```bash
+yarn android
+```
+
+For iOS, install the pods on macOS and open the workspace:
+
+```bash
+cd ios
+pod install
+open react_native_flow.xcworkspace
+```
+
+In Xcode, select your development team and physical iPhone, then press Run.
+Use a physical device for camera measurements. Set the key before starting Metro;
+restart Metro after changing it. Do not commit a real key.
 
 ## Flow Behavior
 
@@ -35,3 +48,4 @@ device.
 screens. When the SDK emits `USER_FLOW_FINISHED`, the example shows a PDF action
 screen where the user can request the generated measurement report and then
 finish the flow.
+

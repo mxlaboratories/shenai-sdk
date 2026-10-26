@@ -7,11 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		87FC288286C47CE5E4000001 /* ShenaiSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 87FC288286C47CE5E4000002 /* ShenaiSDK */; };
 		355A57762A9650630026F4C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A57752A9650630026F4C9 /* AppDelegate.swift */; };
 		355A577F2A9650630026F4C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 355A577E2A9650630026F4C9 /* Assets.xcassets */; };
+		4A00F7FDA90E6185EE9F4FB2 /* ShenaiSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 20A1B0003B2861E8FCC19591 /* ShenaiSDK */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		355A578D2A9652B40026F4C9 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		355A57722A9650630026F4C9 /* ios-swift-minimal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-swift-minimal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -25,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87FC288286C47CE5E4000001 /* ShenaiSDK in Frameworks */,
+				4A00F7FDA90E6185EE9F4FB2 /* ShenaiSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,17 +80,18 @@
 				355A576E2A9650630026F4C9 /* Sources */,
 				355A576F2A9650630026F4C9 /* Frameworks */,
 				355A57702A9650630026F4C9 /* Resources */,
+				355A578D2A9652B40026F4C9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "ios-swift-minimal";
-			packageProductDependencies = (
-				87FC288286C47CE5E4000002 /* ShenaiSDK */,
-			);
 			productName = "ios-swift-minimal";
 			productReference = 355A57722A9650630026F4C9 /* ios-swift-minimal.app */;
+			packageProductDependencies = (
+				20A1B0003B2861E8FCC19591 /* ShenaiSDK */,
+			);
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -105,10 +118,10 @@
 				Base,
 			);
 			mainGroup = 355A57692A9650620026F4C9;
-			packageReferences = (
-				87FC288286C47CE5E4000003 /* XCRemoteSwiftPackageReference "ShenaiSDK" */,
-			);
 			productRefGroup = 355A57732A9650630026F4C9 /* Products */;
+			packageReferences = (
+				9A78D8A29D27F7B78017EFCC /* XCRemoteSwiftPackageReference "ShenaiSDK" */,
+			);
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -139,21 +152,22 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+
 /* Begin XCRemoteSwiftPackageReference section */
-		87FC288286C47CE5E4000003 /* XCRemoteSwiftPackageReference "ShenaiSDK" */ = {
+		9A78D8A29D27F7B78017EFCC /* XCRemoteSwiftPackageReference "ShenaiSDK" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mxlaboratories/ShenaiSDK.git";
+			repositoryURL = "https://github.com/mxlaboratories/ShenaiSDK";
 			requirement = {
 				kind = exactVersion;
-				version = 3.1.2;
+				version = 3.1.17;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		87FC288286C47CE5E4000002 /* ShenaiSDK */ = {
+		20A1B0003B2861E8FCC19591 /* ShenaiSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 87FC288286C47CE5E4000003 /* XCRemoteSwiftPackageReference "ShenaiSDK" */;
+			package = 9A78D8A29D27F7B78017EFCC /* XCRemoteSwiftPackageReference "ShenaiSDK" */;
 			productName = ShenaiSDK;
 		};
 /* End XCSwiftPackageProductDependency section */
@@ -281,6 +295,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S46GDQG7Y5;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ios-swift-minimal/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -307,6 +322,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S46GDQG7Y5;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ios-swift-minimal/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

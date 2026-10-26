@@ -4,10 +4,12 @@ This is a minimal web example for Shen.AI SDK using React and Vite.
 
 ## How to run the app
 
-1. Install dependencies using `pnpm install`. This restores the Web SDK from npm as `@shenai/sdk`.
+1. The public example installs `@shenai/sdk` from npm through the `shenai-sdk` alias
+   declared in `package.json`.
 2. Open `src/globalShenaiSDK.ts` in your favorite text editor.
 3. Set your API key in [`API_KEY`](./src/globalShenaiSDK.ts#L6). You can access your API keys in the Developer Portal.
-4. Start the example using `pnpm dev`. Open the output URL (probably `http://localhost:5173`) in a browser (Google Chrome preferably).
+4. Install dependencies using `pnpm install`.
+5. Start the example using `pnpm dev`. Open the output URL (probably `http://localhost:5173`) in a browser (Google Chrome preferably).
 
 ## Using the app
 
@@ -23,7 +25,8 @@ To understand better the integration with Shen.AI SDK, please see the [Web docum
 
 Note that the Vite build system does not handle webassembly and js worker files properly.
 Therefore the recommended approach is to host the SDK in the 'public' directory, bypassing the build system.
-Note that the provided dev/build scripts copy `node_modules/@shenai/sdk` to the public directory, and the extra parameter [`locateFile`](./src/globalShenaiSDK.ts#L13) is passed when initializing the SDK in order for SDK's files to be loaded from the public directory.
+Note that the provided dev/build scripts are copying the SDK to the public directory, and the extra parameter [`locateFile`](./src/globalShenaiSDK.ts#L13) is passed when initializing the SDK in order for SDK's files to be loaded from the public directory.
 
 Worker format is changed to 'es' in `vite.config.ts` file to support directly loading the SDK as an NPM module.
 An alternative is to not specify it as an npm dependency at all and dynamically import it from the public directory at runtime (as in the `js-minimal` example).
+

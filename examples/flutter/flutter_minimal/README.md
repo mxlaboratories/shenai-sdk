@@ -3,24 +3,23 @@
 This is the smallest Flutter app in this repository that embeds the Shen.AI SDK,
 starts the native camera UI, and runs a 30 second all-metrics measurement flow.
 
-## Setup
+## Setup and run
 
-The Flutter SDK is restored from pub.dev as `shenai_sdk`.
+The public example uses `shenai_sdk` from pub.dev at the version pinned in
+`pubspec.yaml`. Its Android dependency resolves through Maven Central; iOS uses
+the SDK's Swift Package Manager integration.
 
-Run the example:
-
-```bash
-fvm install
-fvm flutter pub get
-fvm flutter run --dart-define=SHENAI_API_KEY=<your-api-key>
-```
-
-The API key is required at runtime and is intentionally not stored in this
-example. From the repository root, you can also run:
+Install Flutter with Dart compatible with `pubspec.yaml`, Android Studio for
+Android, and Xcode for iOS. Run from this example directory:
 
 ```bash
-./scripts/run_flutter_minimal.sh --dart-define=SHENAI_API_KEY=<your-api-key>
+flutter pub get
+flutter run --dart-define=SHENAI_API_KEY="YOUR_API_KEY"
 ```
+
+Choose your connected device when prompted. iOS builds require an app deployment
+target of at least 14.0. Use a physical device for camera measurements. Keep the
+client API key out of committed files.
 
 ## iOS device signing
 
@@ -30,8 +29,9 @@ error such as `No Account for Team` or `No profiles for ... were found`, open
 the workspace in Xcode and configure signing for the Runner target:
 
 ```bash
-open examples/flutter/flutter_minimal/ios/Runner.xcworkspace
+open ios/Runner.xcworkspace
 ```
 
 Select your team and use a bundle identifier that belongs to your account, then
 build or run the app again.
+

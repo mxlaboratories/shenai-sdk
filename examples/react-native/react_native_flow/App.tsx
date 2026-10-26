@@ -19,7 +19,7 @@ import {
   setEnableMeasurementsDashboard,
   setScreen,
   ShenaiSdkView,
-} from "@shenai/react-native-sdk";
+} from "react-native-shenai-sdk";
 
 declare const process: {
   env: {

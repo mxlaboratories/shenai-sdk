@@ -1,7 +1,7 @@
 import type {
   HealthRisks,
   MeasurementResults,
-} from "@shenai/react-native-sdk";
+} from "react-native-shenai-sdk";
 
 import {
   EnvironmentConditionValue,

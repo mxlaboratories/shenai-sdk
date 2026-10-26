@@ -38,9 +38,10 @@
         ><input type="number" name="sbp" id="sbp" />
         <label for="smoker">Current smoker:</label
         ><input type="checkbox" name="smoker" id="smoker" />
-        <label for="hypertensionTreatment">Have hypertension treatment:</label
+        <label for="hypertensionTreatment">Hypertension Treatment:</label
         ><input
-          type="checkbox"
+          type="text"
+          list="hypertension-treatment-list"
           name="hypertensionTreatment"
           id="hypertensionTreatment"
         />
@@ -68,6 +69,12 @@
         <option value="Male"></option>
         <option value="Female"></option>
         <option value="Other"></option>
+      </datalist>
+
+      <datalist id="hypertension-treatment-list">
+        <option value="Yes"></option>
+        <option value="No"></option>
+        <option value="Not Needed"></option>
       </datalist>
 
       <datalist id="race-list">

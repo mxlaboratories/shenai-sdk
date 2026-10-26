@@ -2,12 +2,15 @@
   "name": "shenai-sdk-example-js-minimal",
   "version": "2.4.0",
   "private": true,
+  "engines": {
+    "node": "24.x"
+  },
   "dependencies": {
-    "@shenai/sdk": "3.1.2",
-    "serve": "^13.0.2"
+    "serve": "^13.0.2",
+    "shenai-sdk": "npm:@shenai/sdk@3.1.17"
   },
   "scripts": {
-    "build": "rm -rf build && mkdir build && cp index.html build/ && cp -R node_modules/@shenai/sdk build/shenai-sdk",
+    "build": "rm -rf build && mkdir build && cp index.html build/ && cp -r node_modules/shenai-sdk build/shenai-sdk",
     "serve": "serve -s build --config=../serve.json",
     "start": "yarn build && yarn serve"
   }

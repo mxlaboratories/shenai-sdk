@@ -1,5 +1,5 @@
 import { computed, ref, watchEffect, type Ref } from "vue";
-import type { ShenaiSDK } from "@shenai/sdk";
+import type { ShenaiSDK } from "shenai-sdk";
 
 /**
  * Hook that reads Shen.AI's real-time heart rate every ~200ms,

@@ -4,14 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "rimraf public/shenai-sdk && cp -R node_modules/@shenai/sdk public/shenai-sdk && vite",
-    "build": "rimraf public/shenai-sdk && cp -R node_modules/@shenai/sdk public/shenai-sdk && run-p type-check \"build-only {@}\" --",
+    "dev": "rimraf public/shenai-sdk && cp -r node_modules/shenai-sdk public/shenai-sdk && vite",
+    "build": "rimraf public/shenai-sdk && cp -r node_modules/shenai-sdk public/shenai-sdk && run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
-    "@shenai/sdk": "3.1.2",
+    "shenai-sdk": "npm:@shenai/sdk@3.1.17",
     "vue": "^3.5.13"
   },
   "devDependencies": {

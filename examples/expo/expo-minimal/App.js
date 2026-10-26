@@ -1,11 +1,10 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react";
 
-import {
-  initialize,
-  ShenaiSdkView,
-  InitializationResult,
-} from "@shenai/react-native-sdk";
+import { initialize, ShenaiSdkView } from "react-native-shenai-sdk";
+
+const shenApiKey = process.env.EXPO_PUBLIC_SHENAI_API_KEY ?? "";
+const initializationResultOk = 0;
 
 export default function App() {
   const [initResult, setInitResult] = useState(null);
@@ -15,7 +14,8 @@ export default function App() {
     async function initSDK() {
       try {
         console.log("Initializing SDK");
-        const result = await initialize("YOUR_API_KEY", "YOUR_USER_ID");
+        if (!shenApiKey) throw new Error("Missing EXPO_PUBLIC_SHENAI_API_KEY");
+        const result = await initialize(shenApiKey, "");
         console.log("Initialization result", result);
         setInitResult(result);
       } catch (error) {
@@ -29,7 +29,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {initResult === InitializationResult.OK ? (
+      {initResult === initializationResultOk ? (
         <ShenaiSdkView style={StyleSheet.absoluteFillObject} />
       ) : (
         <View style={styles.placeholder}>
@@ -37,8 +37,8 @@ export default function App() {
             {initResult === null
               ? "Initializing Shen.AI SDK..."
               : error
-              ? "Initialization failed"
-              : "SDK not available"}
+                ? "Initialization failed"
+                : "SDK not available"}
           </Text>
         </View>
       )}
@@ -49,11 +49,11 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000",
+    backgroundColor: "#000"
   },
   placeholder: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
-  },
+    justifyContent: "center"
+  }
 });

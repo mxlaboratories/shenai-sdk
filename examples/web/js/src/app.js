@@ -1,6 +1,10 @@
 import CreateShenaiSDK from "./shenai-sdk/index.mjs";
 
-const API_KEY = "YOUR_API_KEY";
+if (typeof window !== "undefined" && window.__forceCanvasCapture) {
+  window.MediaStreamTrackProcessor = undefined;
+}
+
+const API_KEY = new URLSearchParams(window.location.search).get("apiKey") || "YOUR_API_KEY";
 const USER_ID = "";
 
 function error(message) {
@@ -21,28 +25,47 @@ async function initialize() {
     const shenai = await CreateShenaiSDK({
       onRuntimeInitialized: () => console.log("Shen.AI SDK ready"),
     });
+    if (typeof window !== "undefined") {
+      window.__shenai = shenai;
+      window.__shenaiTestState = window.__shenaiTestState || {};
+    }
 
-    shenai.initialize(API_KEY, USER_ID, {}, (result) => {
-      if (result === shenai.InitializationResult.OK) {
-        console.log("Shen.AI initialized (license activated)");
-        document.getElementById("stage").className = "state-loaded";
-        beginPolling(shenai);
-        document
-          .getElementById("compute-risks")
-          .addEventListener("click", () =>
-            showElement(document.getElementById("health-risks-factors"))
-          );
-        document
-          .getElementById("health-risks-factors")
-          .addEventListener("submit", (e) => {
-            e.preventDefault();
-            const data = Object.fromEntries(new FormData(e.target).entries());
-            computeRisks(shenai, data);
-          });
-      } else {
-        error("Shen.AI license activation error " + result.toString());
+    shenai.initialize(
+      API_KEY,
+      USER_ID,
+      {
+        eventCallback: (event) => {
+          if (event === "MEASUREMENT_FINISHED") {
+            finishMeasurement(shenai);
+          } else if (event === "MEASUREMENT_FAILED" && !finished) {
+            finished = true;
+            releaseWakeLock();
+            error("Measurement failed");
+          }
+        }
+      },
+      (result) => {
+        if (result === shenai.InitializationResult.OK) {
+          console.log("Shen.AI initialized (license activated)");
+          document.getElementById("stage").className = "state-loaded";
+          beginPolling(shenai);
+          document
+            .getElementById("compute-risks")
+            .addEventListener("click", () =>
+              showElement(document.getElementById("health-risks-factors"))
+            );
+          document
+            .getElementById("health-risks-factors")
+            .addEventListener("submit", (e) => {
+              e.preventDefault();
+              const data = Object.fromEntries(new FormData(e.target).entries());
+              computeRisks(shenai, data);
+            });
+        } else {
+          error("Shen.AI license activation error " + result.toString());
+        }
       }
-    });
+    );
   } catch (e) {
     error("Error: " + e);
   }
@@ -50,6 +73,10 @@ async function initialize() {
 
 let finished = false;
 let wakeLock = "wakeLock" in navigator ? null : false;
+
+function releaseWakeLock() {
+  if (wakeLock) wakeLock.release().then(() => (wakeLock = null));
+}
 
 function beginPolling(shenai) {
   setInterval(() => pollHeartRate(shenai), 300);
@@ -74,8 +101,10 @@ function FacePositionInstructions(shenai, faceState) {
       return "Move your head away from the camera";
     case shenai.FaceState.TOO_FAR:
       return "Move your head closer to the camera";
-    case shenai.FaceState.UNSTABLE:
-      return "Too much head movement";
+    case shenai.FaceState.NOT_VISIBLE:
+      return "Make sure your face is visible";
+    case shenai.FaceState.TURNED_AWAY:
+      return "Turn your face towards the camera";
   }
   return "";
 }
@@ -134,14 +163,19 @@ function presentResults(results) {
   document.getElementById("progress").innerText = "";
 }
 
+function finishMeasurement(shenai) {
+  if (finished) return;
+  finished = true;
+  releaseWakeLock();
+  const results = shenai.getMeasurementResults();
+  presentResults(results);
+}
+
 function pollMeasurement(shenai) {
   const measurementState = shenai.getMeasurementState();
 
   if (measurementState === shenai.MeasurementState.FINISHED) {
-    finished = true;
-    if (wakeLock) wakeLock.release().then(() => (wakeLock = null));
-    const results = shenai.getMeasurementResults();
-    presentResults(results);
+    finishMeasurement(shenai);
     return;
   }
 
@@ -162,15 +196,34 @@ function presentRisks(shenai, risksFactors) {
   if (risks && minRisks && maxRisks) {
     showElement(document.getElementById("risks"));
 
-    const displayRisks = (subRisks, subMinRisks, subMaxRisks) => (name) => {
-      const risk = subRisks[name];
-      const minRisk = subMinRisks[name];
-      const maxRisk = subMaxRisks[name];
-      if (risk !== null && minRisk !== null && maxRisk !== null) {
+    const hasNumericValue = (val) => typeof val === "number" && !Number.isNaN(val);
+
+    const displayRisks =
+      (subRisks = {}, subMinRisks = {}, subMaxRisks = {}) =>
+      (name) => {
         const riskElem = document.getElementById(name);
-        riskElem.innerText += `(${minRisk}-${maxRisk}): ${risk.toFixed(1)}`;
-      }
-    };
+        if (!riskElem) {
+          return;
+        }
+        const risk = subRisks[name];
+        const minRisk = subMinRisks[name];
+        const maxRisk = subMaxRisks[name];
+        const hasRisk = hasNumericValue(risk);
+        const hasRange = hasNumericValue(minRisk) && hasNumericValue(maxRisk);
+
+        if (!hasRisk && !hasRange) {
+          return;
+        }
+
+        let suffix = "";
+        if (hasRange) {
+          suffix += `(${minRisk}-${maxRisk})`;
+        }
+        if (hasRisk) {
+          suffix += `${hasRange ? " " : ""}: ${risk.toFixed(1)}`;
+        }
+        riskElem.innerText += suffix;
+      };
 
     if (
       risks.hardAndFatalEvents &&
@@ -214,7 +267,10 @@ function presentRisks(shenai, risksFactors) {
         "totalScore",
       ].forEach(displayRisks(subRisks, subMinRisks, subMaxRisks));
     }
-    if (risks.vascularAge && minRisks.vascularAge && maxRisks.vascularAge) {
+    const hasVascularAgeValue = hasNumericValue(risks.vascularAge);
+    const hasVascularAgeRange =
+      hasNumericValue(minRisks.vascularAge) && hasNumericValue(maxRisks.vascularAge);
+    if (hasVascularAgeValue || hasVascularAgeRange) {
       displayRisks(risks, minRisks, maxRisks)("vascularAge");
     }
   }
@@ -227,7 +283,12 @@ function computeRisks(shenai, data) {
     cholesterolHdl: data.cholesterolHdl,
     sbp: data.sbp,
     isSmoker: !!data.smoker,
-    hypertensionTreatment: !!data.hypertensionTreatment,
+    hypertensionTreatment:
+      data.hypertensionTreatment === "Yes"
+        ? shenai.HypertensionTreatment.YES
+        : data.hypertensionTreatment === "No"
+        ? shenai.HypertensionTreatment.NO
+        : shenai.HypertensionTreatment.NOT_NEEDED,
     hasDiabetes: !!data.diabetes,
     bodyHeight: data.bodyHeight,
     bodyWeight: data.bodyWeight,

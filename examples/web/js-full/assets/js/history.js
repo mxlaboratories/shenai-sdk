@@ -9,7 +9,7 @@ export function showHistory() {
     // getting history from local memory
     // for more information see: https://developer.shen.ai/video-measurement/local-memory
     const output = document.getElementById("output");
-  
+
     const history = shenai.getMeasurementResultsHistory();
 
     if (history.length === 0) {
@@ -54,4 +54,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     // for more information see: https://developer.shen.ai/getting-started/initialization#providing-the-user-interface
   window.shenai = shenai;
 });
-  

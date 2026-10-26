@@ -7,22 +7,23 @@ results screen after measurement completion.
 
 ## Setup
 
-The MAUI SDK is restored from NuGet as `Shenai.Maui`. The default package
-version is set in the project file as `3.1.2`.
+The public example restores the `Shenai.Maui` NuGet package. Its version is
+pinned in the project file; the package includes the platform binding dependencies.
+Install .NET 9 and the MAUI workload for your target platform.
 
 The API key is intentionally not stored in the project. Pass it at build time
-with `-p:ShenaiApiKey=<your-api-key>`, or set `SHENAI_API_KEY` in your shell.
+with `-p:ShenaiApiKey="YOUR_API_KEY"`, or set `SHENAI_API_KEY` in your shell.
 
 ## Android
 
-Run from this example directory:
+From the repository root:
 
 ```bash
 cd examples/maui/maui-custom-ui
 
 dotnet restore -p:TargetFrameworks=net9.0-android
-dotnet build Shenai.Maui.CustomUi.csproj -f net9.0-android -c Debug -p:TargetFrameworks=net9.0-android -p:ShenaiApiKey=<your-api-key>
-dotnet build Shenai.Maui.CustomUi.csproj -t:Run -f net9.0-android -c Debug -p:TargetFrameworks=net9.0-android -p:ShenaiApiKey=<your-api-key>
+dotnet build Shenai.Maui.CustomUi.csproj -f net9.0-android -c Debug -p:TargetFrameworks=net9.0-android -p:ShenaiApiKey="YOUR_API_KEY"
+dotnet build Shenai.Maui.CustomUi.csproj -t:Run -f net9.0-android -c Debug -p:TargetFrameworks=net9.0-android -p:ShenaiApiKey="YOUR_API_KEY"
 ```
 
 ## iOS
@@ -50,7 +51,7 @@ dotnet build Shenai.Maui.CustomUi.csproj \
   -p:TargetFrameworks=net9.0-ios \
   -p:ValidateXcodeVersion=false \
   -p:ApplicationId="$APP_ID" \
-  -p:ShenaiApiKey=<your-api-key> \
+  -p:ShenaiApiKey="YOUR_API_KEY" \
   --no-restore
 
 xcrun devicectl device install app \
@@ -65,3 +66,4 @@ xcrun devicectl device process launch \
 
 MAUI CLI requires an installed Apple development certificate and a development
 provisioning profile matching the bundle id.
+

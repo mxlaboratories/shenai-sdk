@@ -1,116 +1,38 @@
-# Shen.AI SDK – React Native **Minimal Example** (iOS & Android)
+# Shen.AI SDK — React Native Minimal
 
-This repository shows the **minimum glue code** required to embed the Shen.AI SDK in a React Native application.
+Minimal React Native example that embeds the SDK and its camera interface.
 
----
+## Setup
 
-## 0. Quick start (TL;DR)
+The public example installs `@shenai/react-native-sdk` from npm through the
+`react-native-shenai-sdk` alias in `package.json`. Native dependencies resolve
+through Maven Central and CocoaPods. Versions come from the package manifests.
+
+Use Node.js compatible with `package.json`, Yarn Classic, JDK 17 and Android
+Studio for Android, and Xcode plus CocoaPods for iOS. Run from this example directory:
 
 ```bash
-# 1  Install JavaScript dependencies. This restores @shenai/react-native-sdk from npm.
-cd examples/react-native/react_native_minimal
 yarn install
-
-# 2  Return to the repository root and provide your API key for the React Native bundle
-cd ../../..
-export SHENAI_API_KEY=your-real-key
-
-# 3  Run on a connected iOS device
-./scripts/run_react_native_ios.sh
-
-# 4  Run on a connected Android device
-./scripts/run_react_native_android.sh
+export SHENAI_API_KEY="YOUR_API_KEY"
+yarn start
 ```
 
----
-
-## 1. Prerequisites
-
-| Platform | Requirements                                                                                                              |
-| -------- | ------------------------------------------------------------------------------------------------------------------------- |
-| General  | **Node 18 +**, **Yarn ≥ 1.22** (mandatory), React Native CLI (`npm i -g react-native@latest`)                             |
-| iOS      | macOS 13 +, Xcode 15 +, Xcode Command‑Line Tools (`xcode-select --install`), **CocoaPods** (`sudo gem install cocoapods`) |
-| Android  | Android Studio Giraffe +, Android SDK 34 +, `adb` in `$PATH`, an unlocked physical device or emulator                     |
-
----
-
-## 2. Project layout
-
-```
-react_native_minimal/
-├── App.tsx                   # ← reads SHENAI_API_KEY at bundle time
-├── package.json              # ← restores @shenai/react-native-sdk from npm
-├── ios/…
-├── android/…
-└── ../../../scripts/
-    ├── run_react_native_ios.sh
-    └── run_react_native_android.sh
-```
-
-The scripts encapsulate **all set‑up steps** (JavaScript dependency install,
-CocoaPods, Gradle wrapper, device checks) so you can focus on the SDK.
-
----
-
-## 3. Running the example
-
-### iOS
+Keep Metro running. In a second terminal in the same example directory, launch
+Android with a connected device or running emulator:
 
 ```bash
-cd ../../../
-./scripts/run_react_native_ios.sh                               # default
-./scripts/run_react_native_ios.sh --device "DVTDeviceIdentifier"  # explicit device
+yarn android
 ```
 
-_Without flags_, React Native will deploy to the first **connected physical device** if one is unlocked; otherwise it falls back to the first simulator.
-**Note:** iOS simulators do not provide camera frames, so Shen.AI measurement will not start there.
-
-### Android
+For iOS, install the pods on macOS and open the workspace:
 
 ```bash
-cd ../../../
-./scripts/run_react_native_android.sh
+cd ios
+pod install
+open react_native_minimal.xcworkspace
 ```
 
-The script aborts if no _unlocked_ emulator or physical device is detected.
+In Xcode, select your development team and physical iPhone, then press Run.
+Use a physical device for camera measurements. Set the key before starting Metro;
+restart Metro after changing it. Do not commit a real key.
 
----
-
-## 4. Providing the API key
-
-The example reads the key from `SHENAI_API_KEY` when Metro/Babel builds the JavaScript bundle:
-
-```bash
-export SHENAI_API_KEY=your-real-key
-./scripts/run_react_native_ios.sh
-# or
-./scripts/run_react_native_android.sh
-```
-
-If `SHENAI_API_KEY` is missing, the app starts and shows a missing-key screen instead of initializing the SDK. Restart Metro after changing the environment variable so the new value is bundled.
-
----
-
-## 5. Common pitfalls
-
-| Symptom                                                                                                                                    | Fix                                                                                                                                                                                                         |
-| ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Yarn not found`                                                                                                                           | Install Yarn globally: `npm i -g yarn` or follow [https://yarnpkg.com/getting-started/install](https://yarnpkg.com/getting-started/install).                                                                |
-| iOS build fails with _“pod: command not found”_                                                                                            | Run `sudo gem install cocoapods` or use Homebrew (`brew install cocoapods`).                                                                                                                                |
-| Android build times out downloading Gradle                                                                                                 | Set the `ANDROID_HOME` environment variable and install command‑line tools & platform 34 via Android Studio.                                                                                                |
-| `Initialization failed`                                                                                                                    | Double-check your API key.                                                                                                                                                                                  |
-| iOS build fails with `error: No profiles were found` when running on physical device                                                        | Run `open ios/react_native_minimal.xcworkspace`, configure Signing in the Xcode project and run the build from Xcode                                                                                        |
-
----
-
-## 6. Script exit codes
-
-| Code | Meaning                                  |
-| ---- | ---------------------------------------- |
-| 0    | Success                                  |
-| 1    | Missing prerequisite (Node, Yarn, adb …) |
----
-
-## 7. Next steps
-
-Read the [SDK Documentation](https://developer.shen.ai) to learn how to adjust Shen.AI SDK to your needs.

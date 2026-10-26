@@ -6,12 +6,13 @@ a final results section revealed after measurement completion.
 
 ## Setup
 
-The Capacitor SDK is restored from npm as `@shenai/capacitor-sdk`. The plugin
-resolves the Android SDK from Maven Central and the iOS SDK from CocoaPods
-during the native build.
+The public example installs `@shenai/capacitor-sdk` through the
+`capacitor-shenai-sdk` npm alias declared in `package.json`. Android resolves the
+native SDK from Maven Central and iOS through CocoaPods. The version is pinned in
+the package manifest.
 
 The API key is intentionally not stored in the project. Pass it to Vite at build
-time with `VITE_SHENAI_API_KEY=<your-api-key>`. The generated `dist` directory is
+time with `VITE_SHENAI_API_KEY="YOUR_API_KEY"`. The generated `dist` directory is
 ignored and should not be committed.
 
 ## Android
@@ -22,7 +23,7 @@ Run from the repository root:
 cd examples/capacitor/capacitor-custom-ui
 
 npm install
-VITE_SHENAI_API_KEY=<your-api-key> npm run build
+VITE_SHENAI_API_KEY="YOUR_API_KEY" npm run build
 npx cap sync android
 npx cap run android
 ```
@@ -44,7 +45,7 @@ Run from the repository root:
 cd examples/capacitor/capacitor-custom-ui
 
 npm install
-VITE_SHENAI_API_KEY=<your-api-key> npm run build
+VITE_SHENAI_API_KEY="YOUR_API_KEY" npm run build
 npx cap sync ios
 npx cap open ios
 ```
@@ -55,3 +56,4 @@ bundle identifier, select a physical iPhone, and run the app. Rebuild and run
 
 Dependency lockfiles are intentionally not committed for this example. Run
 `npm install` and `npx cap sync ios` to regenerate them locally when needed.
+

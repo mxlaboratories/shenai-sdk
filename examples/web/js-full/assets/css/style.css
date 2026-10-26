@@ -5,7 +5,7 @@ body {
     flex-direction: column;
     align-items: center;
 }
-  
+
 .wrapper {
     position: relative;
     width: 100vw;
@@ -64,7 +64,7 @@ h2 {
 h4 {
     margin-bottom: 2rem;
 }
-  
+
 .button-column {
     display: flex;
     flex-direction: column;
@@ -73,7 +73,7 @@ h4 {
     justify-content: center;
     height: 60vh;
 }
-  
+
 button {
     font-size: 1.2rem;
     padding: 0.75rem 2rem;
@@ -83,7 +83,7 @@ button {
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 }
-  
+
 button:hover {
     background-color: #ddd;
     transform: scale(1.05);
@@ -137,4 +137,3 @@ pre {
     border-top: 1px solid #ddd;
     margin: 4px 0;
 }
-  

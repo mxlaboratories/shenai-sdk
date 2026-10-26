@@ -68,5 +68,5 @@ dependencies {
     implementation platform("org.jetbrains.kotlin:kotlin-bom:1.8.22")
     implementation "androidx.activity:activity-ktx:1.9.3"
     implementation "androidx.core:core-ktx:1.13.1"
-    implementation "ai.shen:shenai-sdk:${project.property("shenaiSdkVersion")}"
+    implementation "ai.shen:shenai-sdk:3.1.17"
 }
